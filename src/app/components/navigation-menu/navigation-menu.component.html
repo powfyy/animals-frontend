@@ -1,0 +1,34 @@
+<nav>
+  <ul>
+    <li><mat-icon class="logo">pets</mat-icon></li>
+    <li><a href="home">Питомцы</a></li>
+    <li><a href="about">О нас</a></li>
+    <li *ngIf="isAuthenticated(); else loginLink">
+      <mat-icon [matMenuTriggerFor]="menu" class="icon_account" >account_circle</mat-icon>
+    </li>
+    <ng-template #loginLink>
+      <li>
+        <div class="hyperlink">
+        <a href="login">Войти</a>
+        <a href="signup">Зарегистрироваться</a>
+      </div>
+      </li>
+    </ng-template>
+  </ul>
+</nav>
+
+<mat-menu #menu="matMenu" class="menu_account">
+  <button mat-menu-item class="btn_menu">
+    <mat-icon class="icon_menu">perm_identity</mat-icon>
+    <span>Мой профиль</span>
+  </button>
+  <button mat-menu-item class="btn_menu">
+    <mat-icon class="icon_menu">message</mat-icon>
+    <span>Сообщения</span>
+  </button>
+  <button mat-menu-item class="btn_menu" (click)="logout()">
+    <mat-icon class="icon_menu">exit_to_app</mat-icon>
+    <span>Выйти</span>
+  </button>
+</mat-menu>
+

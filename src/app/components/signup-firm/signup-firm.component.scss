@@ -1,41 +1,5 @@
-nav {
-  background-color: rgb(73, 180, 96);
-  height: 50px;
-}
-
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-li {
-  float: left;
-  margin: 0 0 0 8vh;
-}
-
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-.screen{
-  display: flex;
-  justify-content: center;
-  margin: 0 0 0 0;
-  align-items: center;
-  height: 90vh;
-}
-
 .container {
-
+  margin: 10vh auto;
   padding: 0 0 20px 0;
   border: 2px solid rgb(250, 164, 73);
   border-radius: 15px;
@@ -89,11 +53,14 @@ li a {
 }
 
 .hyperlink {
-  color:rgb(93, 213, 119);
+  color:rgb(76, 171, 97);
   text-decoration: none;
   &:hover{
     text-decoration: underline;
   }
+}
+.back{
+  margin: 5px 0 0 0;
 }
 .btn:hover {
   opacity: 0.8;

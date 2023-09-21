@@ -3,13 +3,7 @@
 </div>
 
 <ng-template #signupForm>
-  <nav>
-    <ul>
-      <li><a href="home">Питомцы</a></li>
-      <li><a href="about">О нас</a></li>
-    </ul>
-  </nav>
-  <div class="screen">
+  <app-navigation-menu></app-navigation-menu>
   <div class="container">
     <h1 mat-title class="title">Регистрация</h1>
     <div mat-content class="content">
@@ -50,10 +44,9 @@
       У вас уже есть учетная запись?
       <a href="login" style="text-decoration: none;"><p class="hyperlink">&nbsp;Войти</p></a>
     </div>
-      <a href = "signup" style="text-decoration: none;"><p class="hyperlink"> Назад </p></a>
+      <a href = "signup" style="text-decoration: none;"><p class="hyperlink back"> Назад </p></a>
       </div>
     </div>
-  </div>
   </div>
 </ng-template>
 

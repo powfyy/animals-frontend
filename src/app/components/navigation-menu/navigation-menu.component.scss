@@ -1,0 +1,66 @@
+nav {
+  background-color: rgb(73, 180, 96);
+  height: 50px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.logo{
+  font-size: 30px;
+  margin: 9px 0;
+  color: white;
+}
+
+li {
+  float: left;
+  margin: 0 0 0 8vh;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  margin: 14px 16px;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+nav li:last-child {
+  float: right;
+
+}
+
+.icon_account {
+  font-size: 40px;
+  margin: 4px 4vh 0 0;
+  &:hover{
+    cursor: pointer;
+  }
+  color: white;
+}
+
+
+
+::ng-deep .menu_account{
+  border: 2px solid rgb(250, 164, 73);
+}
+
+.btn_menu{
+  color: rgb(34, 93, 47);
+}
+
+.icon_menu{
+  color:rgb(34, 93, 47);
+}
+
+.hyperlink{
+  display: flex;
+}
+

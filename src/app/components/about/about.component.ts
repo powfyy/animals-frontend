@@ -12,11 +12,4 @@ export class AboutComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  showAccountMenu(){
-    console.log("MenuShow")
-  }
-
-  isAuthenticated(){
-    return true;
-  }
 }
