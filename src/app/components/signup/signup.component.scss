@@ -15,7 +15,6 @@ li {
   margin: 0 0 0 8vh;
 }
 
-
 li a {
   display: block;
   color: white;
@@ -51,7 +50,7 @@ li a {
   display: flex;
   justify-content: center;
   font-family: Arial, sans-serif;
-  margin: 8vh 0 10vh 0;
+  margin: 8vh 0 6vh 0;
   font-weight: bold;
   color: rgb(250, 164, 73);
 }
@@ -65,10 +64,7 @@ li a {
 
 .input {
   width: 34vh;
-}
-
-.password{
-  margin-top: 4vh;
+  margin-top: 8px;
 }
 
 .actions{
@@ -76,22 +72,24 @@ li a {
   align-items: center;
   flex-direction: column;
 }
-.signin {
+.signup {
   color: white;
   background-color: rgb(73, 180, 96);
   margin: 4vh 0 3vh ;
-  width: 15vh;
+
 }
 
-.signup {
-  background-color: white;
+.signin{
+  display: flex;
+}
+
+.hyperlink {
   color:rgb(93, 213, 119);
   text-decoration: none;
   &:hover{
     text-decoration: underline;
   }
 }
-
 .btn:hover {
   opacity: 0.8;
 }

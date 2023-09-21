@@ -1,0 +1,9 @@
+<nav>
+  <ul>
+    <li><a href="home">Питомцы</a></li>
+    <li><a href="about">О нас</a></li>
+    <li>
+      <mat-icon class="account_icon" (click)="showAccountMenu()" *ngIf="isAuthenticated()">account_circle</mat-icon>
+    </li>
+  </ul>
+</nav>

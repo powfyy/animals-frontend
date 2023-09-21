@@ -1,0 +1,59 @@
+<div *ngIf="isSignedUp; else signupForm">
+  Your registration is successful. Please login!
+</div>
+
+<ng-template #signupForm>
+  <nav>
+    <ul>
+      <li><a href="home">Питомцы</a></li>
+      <li><a href="about">О нас</a></li>
+    </ul>
+  </nav>
+  <div class="screen">
+  <div class="container">
+    <h1 mat-title class="title">Регистрация</h1>
+    <div mat-content class="content">
+      <div class="inputsgroup">
+      <div class ="inputs">
+      <mat-form-field  >
+        <input matInput type="text" placeholder="Логин" [(ngModel)]="form.login" required>
+      </mat-form-field>
+      <mat-form-field  >
+        <input matInput type="text" placeholder="Пароль" [(ngModel)]="form.password" required>
+      </mat-form-field>
+      <mat-form-field  >
+        <input matInput type="text" placeholder="Название организации" [(ngModel)]="form.nameOrganization" required>
+      </mat-form-field>
+      <mat-form-field  >
+        <input matInput type="text" placeholder="Номер телефона" [(ngModel)]="form.phoneNumber" required>
+      </mat-form-field>
+      </div>
+      <div class="inputs">
+      <mat-form-field  >
+        <input matInput type="text" placeholder="Имя" [(ngModel)]="form.name" required>
+      </mat-form-field>
+      <mat-form-field  >
+        <input matInput type="text" placeholder="Фамилия" [(ngModel)]="form.lastname" required>
+      </mat-form-field>
+      <mat-form-field  >
+        <input matInput type="text" placeholder="Серия паспорта" [(ngModel)]="form.name" required>
+      </mat-form-field>
+      <mat-form-field  >
+        <input matInput type="text" placeholder="Номер паспорта" [(ngModel)]="form.name" required>
+      </mat-form-field>
+      </div>
+      </div>
+      <mat-error class="errorMessageLogin" *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+      <div mat-actions class="actions">
+      <button mat-raised-button class="signup" (click)="goRegisterOrganization()">Зарегистрироваться</button>
+      <div class="signin">
+      У вас уже есть учетная запись?
+      <a href="login" style="text-decoration: none;"><p class="hyperlink">&nbsp;Войти</p></a>
+    </div>
+      <a href = "signup" style="text-decoration: none;"><p class="hyperlink"> Назад </p></a>
+      </div>
+    </div>
+  </div>
+  </div>
+</ng-template>
+

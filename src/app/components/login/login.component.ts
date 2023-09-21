@@ -1,4 +1,9 @@
+
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoginInfo } from 'src/app/models/login-info';
+import { AuthService } from 'src/app/services/auth.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +12,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  form: any = {};
+  errorMessage = '';
+  errorMessageLogin='';
+  role: string = '';
+  public loginInfo: LoginInfo = {
+    login: '',
+    password: ''
+  };
 
-  ngOnInit(): void {
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router) { }
+
+  ngOnInit() {
+    if (this.tokenStorage.getToken()) {
+      this.role = this.tokenStorage.getAuthorities();
+    }
+  }
+
+  onSubmit() {
+    if (!this.form.login || !this.form.password) {
+      this.errorMessage = "Пожалуйста, заполните поле";
+      return;
+    }
+
+    this.loginInfo = new LoginInfo(
+      this.form.login,
+      this.form.password);
+
+    this.authService.attemptAuth(this.loginInfo).subscribe(
+      data => {
+        this.tokenStorage.saveToken(data.token);
+        this.tokenStorage.saveUsername(data.login);
+        this.tokenStorage.saveAuthorities(data.role);
+
+        this.role = this.tokenStorage.getAuthorities();
+        this.router.navigate(['table']);
+      },
+      (error) => {
+        console.error('Login failed:', error);
+        this.errorMessageLogin = 'Неверный логин или пароль';
+      }
+    );
   }
 
 }

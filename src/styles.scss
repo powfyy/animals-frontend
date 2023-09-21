@@ -1,4 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+   height: 100%;}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color:rgb(223, 242, 225);
+   }
+
+.mat-form-field-underline{
+  background-color:rgb(72, 163, 92) !important;
+}
+
+.mat-form-field-ripple {
+  background-color: rgb(72, 163, 92) !important;;
+ }
+
+ .mat-focused .mat-form-field-label {
+  color: rgb(72, 163, 92) !important;
+ }
+
