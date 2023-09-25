@@ -9,6 +9,8 @@ import { SignupComponent } from './components/signup/signup.component';
 import { AboutComponent } from './components/about/about.component';
 import { SignupFirmComponent } from './components/signup-firm/signup-firm.component';
 import { NavigationMenuComponent } from './components/navigation-menu/navigation-menu.component';
+import { ProfileUserComponent } from './components/profile-user/profile-user.component';
+import { ProfileOrgComponent } from './components/profile-org/profile-org.component';
 
 import {HttpClientModule} from '@angular/common/http';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -17,6 +19,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
+import { DialogEditWrapperComponent } from './components/profile-user/dialog-edit-wrapper/dialog-edit-wrapper.component';
+import {MatDialogModule} from '@angular/material/dialog';
+
 
 
 
@@ -32,6 +37,9 @@ import {MatMenuModule} from '@angular/material/menu';
     AboutComponent,
     SignupFirmComponent,
     NavigationMenuComponent,
+    ProfileUserComponent,
+    ProfileOrgComponent,
+    DialogEditWrapperComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +52,7 @@ import {MatMenuModule} from '@angular/material/menu';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

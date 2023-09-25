@@ -1,0 +1,18 @@
+<h1 mat-dialog-title class="title">Редактирование</h1>
+<div mat-dialog-content class='content'>
+  <mat-form-field class="input">
+    <input matInput type="text" placeholder="Имя" [(ngModel)]="data.name" required>
+  </mat-form-field>
+  <mat-form-field class="input">
+    <input matInput type="text" placeholder="Фамилия" [(ngModel)]="data.lastname" required>
+  </mat-form-field>
+  <mat-form-field class="input">
+    <input matInput type="number" placeholder="Номер телефона"
+      [(ngModel)]="data.phoneNumber" required>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button class='btn cancel' (click)="onNoClick()">Отмена</button>
+  <button class="btn save" >Сохранить</button>
+</div>
+

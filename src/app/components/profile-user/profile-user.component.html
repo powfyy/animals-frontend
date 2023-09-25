@@ -1,0 +1,24 @@
+<app-navigation-menu></app-navigation-menu>
+<div class="content" *ngIf="isAuthenticatedUser(); else profile_org">
+  <mat-icon class="icon-account">account_circle</mat-icon>
+  <h2>Ваш профиль</h2>
+  <div class="info">
+    <span class="subtitle">Имя</span><br/>
+    <span class="text-info">{{name}}</span><br/>
+    <span class="subtitle">Фамилия</span><br/>
+    <span class="text-info">{{lastname}}</span><br/>
+    <span class="subtitle">Логин</span><br/>
+    <span class="text-info">{{login}}</span><br/>
+    <span class="subtitle">Номер телефона</span><br/>
+    <span class="text-info">{{phoneNumber}}</span>
+  </div>
+  <div class="btn">
+    <button (click)="editInfo()" class="btn-edit">Изменить</button>
+    <button class="btn-del" (click)="deleteAccount()">Удалить аккаунт</button>
+  </div>
+</div>
+
+<ng-template #profile_org>
+  <app-profile-org></app-profile-org>
+</ng-template>
+
