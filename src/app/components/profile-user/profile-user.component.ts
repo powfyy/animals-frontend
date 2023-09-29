@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DialogEditWrapperComponent } from './dialog-edit-wrapper/dialog-edit-wrapper.component';
+import { DialogEditWrapperComponent } from '../dialog-edit-wrapper/dialog-edit-wrapper.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmDialogComponent } from '../delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({
   selector: 'app-profile-user',
@@ -12,17 +13,14 @@ export class ProfileUserComponent implements OnInit {
   form: any = {};
   errorMessage = '';
   errorMessageLogin='';
-  role: string = 'USER';
-  name:string='Имя';
-  lastname:string='Фамилия';
-  phoneNumber:string = '79999999999';
-  login:string='username';
   constructor(private router: Router, public dialog: MatDialog) { }
 
   userInfo:any={
-    name:'Имя',
+  name:'Имя',
   lastname:'Фамилия',
-  phoneNumber: '79999999999'
+  phoneNumber: '79999999999',
+  role: 'USERs',
+  login:'username',
   }
 
   ngOnInit() {
@@ -33,7 +31,7 @@ export class ProfileUserComponent implements OnInit {
     }
 
   editInfo(){
-    const dialogAddingNewStudent = this.dialog.open(DialogEditWrapperComponent, {
+    const dialogEdit = this.dialog.open(DialogEditWrapperComponent, {
       width: '400px',
       data: this.userInfo
     });
@@ -46,10 +44,22 @@ export class ProfileUserComponent implements OnInit {
     // });
   }
   deleteAccount(){
+    const dialogDelete = this.dialog.open(DeleteConfirmDialogComponent, {
+      width: '400px',
+      data: "Вы действительно хотите удалить этот аккаунт?",
+      autoFocus: false,
+    });
+    dialogDelete.afterClosed().subscribe(result=>{
+      if(result===true){
+        console.log("delete account");
+      }
+      else{
 
+      }
+    })
   }
   isAuthenticatedUser(){
-    if(this.role==='USER'){
+    if(this.userInfo.role==='USER'){
       return true;
     }
     return false;

@@ -1,8 +1,8 @@
 <nav>
   <ul>
-    <li><mat-icon class="logo">pets</mat-icon></li>
-    <li><a href="home">Питомцы</a></li>
-    <li><a href="about">О нас</a></li>
+    <li><a href='home'><mat-icon class="logo">pets</mat-icon></a></li>
+    <li><button class="btn" (click)="goHome()">Питомцы</button></li>
+    <li><button class="btn" (click)="goAbout()">О нас</button></li>
     <li *ngIf="isAuthenticated(); else loginLink">
       <mat-icon [matMenuTriggerFor]="menu" class="icon_account" >account_circle</mat-icon>
     </li>
@@ -22,7 +22,7 @@
     <mat-icon class="icon_menu">perm_identity</mat-icon>
     <span>Мой профиль</span>
   </button>
-  <button mat-menu-item class="btn_menu">
+  <button mat-menu-item class="btn_menu" (click)="openChats()">
     <mat-icon class="icon_menu">message</mat-icon>
     <span>Сообщения</span>
   </button>

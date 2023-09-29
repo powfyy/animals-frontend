@@ -1,1 +1,71 @@
-<p>profile-org works!</p>
+<div class="content">
+  <mat-icon class="icon-account">account_circle</mat-icon>
+  <h2>Ваш профиль</h2>
+ <div class="info-pets">
+    <div class="info">
+      <div class="fields">
+        <div class="firstcollumn">
+          <span class="subtitle">Название<br/> организации</span><br/>
+          <span class="text-info">{{userInfo.nameOrg}}</span><br/>
+          <span class="subtitle">Имя</span><br/>
+          <span class="text-info">{{userInfo.name}}</span><br/>
+          <span class="subtitle">Фамилия</span><br/>
+          <span class="text-info">{{userInfo.lastname}}</span><br/>
+          <span class="subtitle">Логин</span><br/>
+          <span class="text-info">{{userInfo.login}}</span><br/>
+        </div>
+        <div>
+          <span class="subtitle">Номер телефона</span><br/>
+          <span class="text-info">{{userInfo.phoneNumber}}</span><br/>
+          <span class="subtitle">Серия паспорта</span><br/>
+          <span class="text-info">{{userInfo.passportSeries}}</span><br/>
+          <span class="subtitle">Номер паспорта</span><br/>
+          <span class="text-info">{{userInfo.passportNumber}}</span>
+        </div>
+    </div>
+      <div class="btn">
+      <button class="btn-del-acc" (click)="deleteAccount()">Удалить аккаунт</button>
+      <button (click)="editInfo()" class="btn-edit">Изменить</button>
+      </div>
+    </div>
+
+    <div class="pets">
+      <div class="par-pets">
+        <p>Ваши питомцы:</p>
+      <input type="text" placeholder="Поиск по кличке" #filter (input)="searchFilterPets(filter.value)">
+      <button mat-icon-button class="btni" [matMenuTriggerFor]="filterMenu"><mat-icon>filter_list</mat-icon></button>
+      <button mat-icon-button class="btni"><mat-icon>add_circle_outline</mat-icon></button>
+      <mat-menu #filterMenu="matMenu">
+        <label mat-menu-item (click)="$event.stopPropagation()">
+          <mat-checkbox [(ngModel)]="activePets" value="true" class="activeCheckbox"></mat-checkbox>
+          Активные питомцы
+        </label>
+        <label mat-menu-item (click)="$event.stopPropagation()">
+          <mat-checkbox [(ngModel)]="frozenPets" value="true" class="frozenCheckbox"></mat-checkbox>
+          Замороженные питомцы
+        </label>
+        <label mat-menu-item (click)="$event.stopPropagation()">
+          <mat-checkbox [(ngModel)]="adoptedPets" value="true" class="adoptedCheckbox"></mat-checkbox>
+          Усыновленные питомцы
+        </label>
+      </mat-menu>
+      </div>
+
+      <div class="list-pets">
+        <ul *ngFor="let pet of filterPets">
+          <li *ngIf="isDog(pet.typeAnimal); else cat"><img src="../../../assets/profile-svg/dog-face-svgrepo-com.svg" alt="Собака"></li>
+          <ng-template #cat><li><img src="../../../assets/profile-svg/cat-face-svgrepo-com.svg" alt="Кот"></li></ng-template>
+          <li>{{pet.name}}</li>
+          <li *ngIf="isGenderMan(pet.gender); else woman"><mat-icon class="gender-icon">male</mat-icon></li>
+          <ng-template #woman><li><mat-icon class="gender-icon">female</mat-icon></li></ng-template>
+          <li>/&nbsp;{{findAgeAnimal.getAge(pet.birthdate)}}&nbsp;</li>
+          <li>/&nbsp;{{getPetBreed(pet.breed)}}</li>
+          <li class="li-list"><button class="btnActionsPet list" mat-icon-button><mat-icon>list_alt</mat-icon></button></li>
+          <li><button class="btnActionsPet unit" mat-icon-button><mat-icon>ac_unit</mat-icon></button></li>
+          <li><button class="btnActionsPet del" mat-icon-button (click)="deletePet()"><mat-icon>delete</mat-icon></button></li>
+        </ul>
+      </div>
+    </div>
+ </div>
+
+</div>

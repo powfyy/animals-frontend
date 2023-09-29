@@ -11,6 +11,9 @@ import { SignupFirmComponent } from './components/signup-firm/signup-firm.compon
 import { NavigationMenuComponent } from './components/navigation-menu/navigation-menu.component';
 import { ProfileUserComponent } from './components/profile-user/profile-user.component';
 import { ProfileOrgComponent } from './components/profile-org/profile-org.component';
+import { DialogEditWrapperComponent } from './components/dialog-edit-wrapper/dialog-edit-wrapper.component';
+import { ChatComponent } from './components/chat/chat.component';
+import { DeleteConfirmDialogComponent } from './components/delete-confirm-dialog/delete-confirm-dialog.component';
 
 import {HttpClientModule} from '@angular/common/http';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -19,13 +22,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
-import { DialogEditWrapperComponent } from './components/profile-user/dialog-edit-wrapper/dialog-edit-wrapper.component';
 import {MatDialogModule} from '@angular/material/dialog';
-
-
-
-
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 @NgModule({
@@ -40,6 +39,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     ProfileUserComponent,
     ProfileOrgComponent,
     DialogEditWrapperComponent,
+    ChatComponent,
+    DeleteConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +53,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

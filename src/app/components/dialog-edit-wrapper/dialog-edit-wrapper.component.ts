@@ -19,4 +19,10 @@ export class DialogEditWrapperComponent implements OnInit {
   onNoClick(): void{
     this.dialogRef.close();
   }
+  isOrg(){
+    if(this.data.role==="ORG"){
+      return true;
+    }
+    return false;
+  }
 }

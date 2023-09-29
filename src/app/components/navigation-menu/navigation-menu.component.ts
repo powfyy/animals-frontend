@@ -1,5 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ChatComponent } from '../chat/chat.component';
 
 @Component({
   selector: 'app-navigation-menu',
@@ -8,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationMenuComponent implements OnInit {
   IsAuthenticated:boolean = true;
-  constructor(private router:Router) { }
+  constructor(private router:Router, public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -21,5 +23,17 @@ export class NavigationMenuComponent implements OnInit {
   }
   goProfile(){
     this.router.navigate(['profile']);
+  }
+  goHome(){
+    this.router.navigate(['home']);
+  }
+  goAbout(){
+    this.router.navigate(['about']);
+  }
+  openChats(){
+    const dialogAddingNewStudent = this.dialog.open(ChatComponent, {
+      width: '1000px',
+      data: null
+    });
   }
 }

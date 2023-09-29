@@ -4,13 +4,13 @@
   <h2>Ваш профиль</h2>
   <div class="info">
     <span class="subtitle">Имя</span><br/>
-    <span class="text-info">{{name}}</span><br/>
+    <span class="text-info">{{userInfo.name}}</span><br/>
     <span class="subtitle">Фамилия</span><br/>
-    <span class="text-info">{{lastname}}</span><br/>
+    <span class="text-info">{{userInfo.lastname}}</span><br/>
     <span class="subtitle">Логин</span><br/>
-    <span class="text-info">{{login}}</span><br/>
+    <span class="text-info">{{userInfo.login}}</span><br/>
     <span class="subtitle">Номер телефона</span><br/>
-    <span class="text-info">{{phoneNumber}}</span>
+    <span class="text-info">{{userInfo.phoneNumber}}</span>
   </div>
   <div class="btn">
     <button (click)="editInfo()" class="btn-edit">Изменить</button>
