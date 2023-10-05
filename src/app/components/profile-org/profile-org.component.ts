@@ -4,6 +4,7 @@ import { DeleteConfirmDialogComponent } from '../delete-confirm-dialog/delete-co
 import { MatDialog } from '@angular/material/dialog';
 import { Pet } from 'src/app/models/pet';
 import { DialogEditWrapperComponent } from '../dialog-edit-wrapper/dialog-edit-wrapper.component';
+import {AddPetDialogWrapperComponent} from '../add-pet-dialog-wrapper/add-pet-dialog-wrapper.component';
 
 @Component({
   selector: 'app-profile-org',
@@ -27,7 +28,7 @@ export class ProfileOrgComponent implements OnInit {
   frozenPets:boolean = false;
   activePets:boolean = true;
   adoptedPets:boolean = false;
-
+  users:any[];
 
   constructor(public dialog: MatDialog, public findAgeAnimal:FindAgeAnimalService) {
     this.pets=[
@@ -42,6 +43,12 @@ export class ProfileOrgComponent implements OnInit {
       {id:8,name:'Мымра',typeAnimal:'CAT',birthdate:'2020-12-11',gender:'W',breed:'Сфинкс',status:'active'},
      ]
     this.filterPets=this.pets;
+    this.users = [
+      {id:1, name:"Alex"},
+      {id:2, name:"Bob"},
+      {id:3, name:'Sansa'},
+      {id:4, name:'Lera'},
+    ]
   }
 
   ngOnInit(): void {
@@ -115,5 +122,26 @@ export class ProfileOrgComponent implements OnInit {
 
       }
     })
+  }
+  addPet(){
+    const dialogAddPet = this.dialog.open (AddPetDialogWrapperComponent, {
+      width: '400px',
+      data: null,
+      autoFocus: false,
+    });
+    dialogAddPet.afterClosed().subscribe(result=>{
+      if(result===true){
+        console.log("delete account");
+      }
+      else{
+
+      }
+    })
+  }
+  goToDialog(){
+
+  }
+  givePet(){
+
   }
 }

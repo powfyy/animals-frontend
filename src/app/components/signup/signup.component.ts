@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SignupInfo } from 'src/app/models/signup-info';
+import { SignupUserInfo } from 'src/app/models/signupUser-info';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -11,16 +11,12 @@ import { AuthService } from 'src/app/services/auth.service';
 export class SignupComponent implements OnInit {
 
   form: any = {};
-  signupInfo: SignupInfo = {
-    login:"",
+  signupUserInfo: SignupUserInfo = {
+    username:"",
     password:'',
     name:'',
     lastname:'',
     phoneNumber:'',
-    nameOrganization: '',
-    passportSeries:'',
-    passportNumber:'',
-    role:''
   };
   isSignedUp = false;
   isSignUpFailed = false;
@@ -33,8 +29,8 @@ export class SignupComponent implements OnInit {
   goRegisterUser() {
     console.log(this.form);
 
-    this.signupInfo = new SignupInfo(
-      this.form.login,
+    this.signupUserInfo = new SignupUserInfo(
+      this.form.username,
       this.form.password,
       this.form.name,
       this.form.lastname,
@@ -42,10 +38,9 @@ export class SignupComponent implements OnInit {
       this.form.nameOrganization,
       this.form.passportSeries,
       this.form.passportNumber,
-      this.form.role = "USER",
       );
 
-    this.authService.signUp(this.signupInfo).subscribe(
+    this.authService.signUpUser(this.signupUserInfo).subscribe(
       data => {
         console.log(data);
         this.isSignedUp = true;

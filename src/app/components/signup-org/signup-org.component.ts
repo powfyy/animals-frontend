@@ -1,26 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SignupInfo } from 'src/app/models/signup-info';
+import { SignupOrgInfo } from 'src/app/models/signupOrg-info';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-signup-firm',
-  templateUrl: './signup-firm.component.html',
-  styleUrls: ['./signup-firm.component.scss']
+  selector: 'app-signup-org',
+  templateUrl: './signup-org.component.html',
+  styleUrls: ['./signup-org.component.scss']
 })
-export class SignupFirmComponent implements OnInit {
+export class SignupOrgComponent implements OnInit {
 
   form: any = {};
-  signupInfo: SignupInfo = {
-    login:"",
+  signupOrgInfo: SignupOrgInfo = {
+    username:"",
     password:'',
-    name:'',
-    lastname:'',
     phoneNumber:'',
     nameOrganization: '',
     passportSeries:'',
-    passportNumber:'',
-    role:''
+    passportNumber:''
   };
   isSignedUp = false;
   isSignUpFailed = false;
@@ -33,19 +30,16 @@ export class SignupFirmComponent implements OnInit {
   goRegisterOrganization() {
     console.log(this.form);
 
-    this.signupInfo = new SignupInfo(
-      this.form.login,
+    this.signupOrgInfo = new SignupOrgInfo(
+      this.form.username,
       this.form.password,
-      this.form.name,
-      this.form.lastname,
       this.form.phoneNumber,
       this.form.nameOrganization,
       this.form.passportSeries,
-      this.form.passportNumber,
-      this.form.role = "ORGANIZATION",
+      this.form.passportNumber
       );
 
-    this.authService.signUp(this.signupInfo).subscribe(
+    this.authService.signUpOrg(this.signupOrgInfo).subscribe(
       data => {
         console.log(data);
         this.isSignedUp = true;

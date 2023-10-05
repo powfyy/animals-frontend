@@ -1,3 +1,4 @@
+import { TokenStorageService } from './../../services/token-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogEditWrapperComponent } from '../dialog-edit-wrapper/dialog-edit-wrapper.component';
@@ -13,7 +14,7 @@ export class ProfileUserComponent implements OnInit {
   form: any = {};
   errorMessage = '';
   errorMessageLogin='';
-  constructor(private router: Router, public dialog: MatDialog) { }
+  constructor(private router: Router, public dialog: MatDialog, private tokenStorageService:TokenStorageService) { }
 
   userInfo:any={
   name:'Имя',
@@ -59,7 +60,8 @@ export class ProfileUserComponent implements OnInit {
     })
   }
   isAuthenticatedUser(){
-    if(this.userInfo.role==='USER'){
+
+    if(this.tokenStorageService.getAuthorities()==="USER"){
       return true;
     }
     return false;

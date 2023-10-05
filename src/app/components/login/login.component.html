@@ -3,7 +3,7 @@
   <h1 mat-title class="title">Авторизация</h1>
   <div mat-content class="content">
     <mat-form-field class="input">
-      <input matInput type="text" placeholder="Логин" [(ngModel)]="form.login" required>
+      <input matInput type="text" placeholder="Логин" [(ngModel)]="form.username" required>
       <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
     </mat-form-field>
     <mat-form-field class="input password">
@@ -13,7 +13,7 @@
     <mat-error class="errorMessageLogin" *ngIf="errorMessageLogin">{{ errorMessageLogin }}</mat-error>
     <div mat-actions class="actions">
     <button mat-raised-button class="btn signin" (click)="onSubmit()">Войти</button>
-    <a href="signup" style="text-decoration: none;"><p class="btn signup">Зарегистрироваться</p></a>
+    <a href="signup/user" style="text-decoration: none;"><p class="btn signup">Зарегистрироваться</p></a>
     </div>
   </div>
 </div>

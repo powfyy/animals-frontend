@@ -1,3 +1,4 @@
+import { TokenStorageService } from './../../services/token-storage.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,16 +10,18 @@ import { ChatComponent } from '../chat/chat.component';
   styleUrls: ['./navigation-menu.component.scss']
 })
 export class NavigationMenuComponent implements OnInit {
-  IsAuthenticated:boolean = true;
-  constructor(private router:Router, public dialog: MatDialog) { }
+  constructor(private router:Router, public dialog: MatDialog, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
   }
   isAuthenticated(){
-    return this.IsAuthenticated;
+    if(this.tokenStorageService.getToken()){
+      return true
+    }
+    return false;
   }
   logout(){
-    this.IsAuthenticated=false;
+    this.tokenStorageService.signOut();
     this.router.navigate(['home']);
   }
   goProfile(){

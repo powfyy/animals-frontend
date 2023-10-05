@@ -34,7 +34,7 @@
         <p>Ваши питомцы:</p>
       <input type="text" placeholder="Поиск по кличке" #filter (input)="searchFilterPets(filter.value)">
       <button mat-icon-button class="btni" [matMenuTriggerFor]="filterMenu"><mat-icon>filter_list</mat-icon></button>
-      <button mat-icon-button class="btni"><mat-icon>add_circle_outline</mat-icon></button>
+      <button mat-icon-button class="btni" (click)="addPet()"><mat-icon>add_circle_outline</mat-icon></button>
       <mat-menu #filterMenu="matMenu">
         <label mat-menu-item (click)="$event.stopPropagation()">
           <mat-checkbox [(ngModel)]="activePets" value="true" class="activeCheckbox"></mat-checkbox>
@@ -56,11 +56,18 @@
           <li *ngIf="isDog(pet.typeAnimal); else cat"><img src="../../../assets/profile-svg/dog-face-svgrepo-com.svg" alt="Собака"></li>
           <ng-template #cat><li><img src="../../../assets/profile-svg/cat-face-svgrepo-com.svg" alt="Кот"></li></ng-template>
           <li>{{pet.name}}</li>
-          <li *ngIf="isGenderMan(pet.gender); else woman"><mat-icon class="gender-icon">male</mat-icon></li>
-          <ng-template #woman><li><mat-icon class="gender-icon">female</mat-icon></li></ng-template>
+          <li *ngIf="isGenderMan(pet.gender); else female"><mat-icon class="gender-icon">male</mat-icon></li>
+          <ng-template #female><li><mat-icon class="gender-icon">female</mat-icon></li></ng-template>
           <li>/&nbsp;{{findAgeAnimal.getAge(pet.birthdate)}}&nbsp;</li>
           <li>/&nbsp;{{getPetBreed(pet.breed)}}</li>
-          <li class="li-list"><button class="btnActionsPet list" mat-icon-button><mat-icon>list_alt</mat-icon></button></li>
+          <li class="li-list"><button class="btnActionsPet list" mat-icon-button [matMenuTriggerFor]="petMenu"><mat-icon>list_alt</mat-icon></button></li>
+          <mat-menu #petMenu="matMenu">
+          <button mat-menu-item *ngFor="let user of users" (click)="$event.stopPropagation()" [matMenuTriggerFor]="actionMenu">{{ user.name }}</button>
+          </mat-menu>
+          <mat-menu #actionMenu="matMenu">
+            <button mat-menu-item (click)="goToDialog()">Перейти в диалог</button>
+            <button mat-menu-item (click)="givePet()">Отдать питомца</button>
+            </mat-menu>
           <li><button class="btnActionsPet unit" mat-icon-button><mat-icon>ac_unit</mat-icon></button></li>
           <li><button class="btnActionsPet del" mat-icon-button (click)="deletePet()"><mat-icon>delete</mat-icon></button></li>
         </ul>

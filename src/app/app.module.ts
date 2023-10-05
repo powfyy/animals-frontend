@@ -7,13 +7,14 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { AboutComponent } from './components/about/about.component';
-import { SignupFirmComponent } from './components/signup-firm/signup-firm.component';
+import { SignupOrgComponent } from './components/signup-org/signup-org.component';
 import { NavigationMenuComponent } from './components/navigation-menu/navigation-menu.component';
 import { ProfileUserComponent } from './components/profile-user/profile-user.component';
 import { ProfileOrgComponent } from './components/profile-org/profile-org.component';
 import { DialogEditWrapperComponent } from './components/dialog-edit-wrapper/dialog-edit-wrapper.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { DeleteConfirmDialogComponent } from './components/delete-confirm-dialog/delete-confirm-dialog.component';
+import { AddPetDialogWrapperComponent } from './components/add-pet-dialog-wrapper/add-pet-dialog-wrapper.component';
 
 import {HttpClientModule} from '@angular/common/http';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -25,6 +26,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatRadioModule} from '@angular/material/radio';
+
 
 
 @NgModule({
@@ -34,13 +37,14 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     LoginComponent,
     SignupComponent,
     AboutComponent,
-    SignupFirmComponent,
+    SignupOrgComponent,
     NavigationMenuComponent,
     ProfileUserComponent,
     ProfileOrgComponent,
     DialogEditWrapperComponent,
     ChatComponent,
     DeleteConfirmDialogComponent,
+    AddPetDialogWrapperComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +60,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatDialogModule,
     MatCheckboxModule,
     MatPaginatorModule,
+    MatRadioModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

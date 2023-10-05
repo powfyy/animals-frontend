@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   errorMessageLogin='';
   role: string = '';
   public loginInfo: LoginInfo = {
-    login: '',
+    username: '',
     password: ''
   };
 
@@ -30,13 +30,13 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.form.login || !this.form.password) {
+    if (!this.form.username || !this.form.password) {
       this.errorMessage = "Пожалуйста, заполните поле";
       return;
     }
 
     this.loginInfo = new LoginInfo(
-      this.form.login,
+      this.form.username,
       this.form.password);
 
     this.authService.attemptAuth(this.loginInfo).subscribe(
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
         this.tokenStorage.saveAuthorities(data.role);
 
         this.role = this.tokenStorage.getAuthorities();
-        this.router.navigate(['table']);
+        this.router.navigate(['home']);
       },
       (error) => {
         console.error('Login failed:', error);
