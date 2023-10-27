@@ -1,29 +1,73 @@
 <div class="content">
-  <mat-form-field>
-    <input matInput type="text" placeholder="Кличка">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput type="text" placeholder="Порода">
-  </mat-form-field>
- <div class="radio-btn">
-    <mat-radio-group class="gender-btn">
-      <mat-radio-button value="1" class="male">М</mat-radio-button>
-      <mat-radio-button value="2">Ж</mat-radio-button>
-    </mat-radio-group>
-    <mat-radio-group class="type-btn">
-      <mat-radio-button value="1" class="dog"><img src="../../../assets/profile-svg/dog-face-svgrepo-com.svg" alt="Собака"></mat-radio-button>
-      <mat-radio-button value="2"><img src="../../../assets/profile-svg/cat-face-svgrepo-com.svg" alt="Кот"></mat-radio-button>
-    </mat-radio-group>
- </div>
-  <mat-form-field>
-    <input matInput type="date" placeholder="Дата рождения">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Описание</mat-label>
-    <textarea class="description" matInput placeholder="
-    Местоположение
-    Состояние здоровья/прививки
-    Какие-то сведения о характере питомца
-    Контактный номер телефона"></textarea>
-  </mat-form-field>
+  <div class="image-fields">
+      <div class="fields">
+        <mat-form-field class="name-breed">
+          <input matInput type="text" placeholder="Кличка" [(ngModel)]="form.name"/>
+        </mat-form-field>
+        <mat-form-field class="name-breed breed">
+          <input matInput type="text" placeholder="Порода" value="Например: метис сиамской" [(ngModel)]="form.breed"/>
+        </mat-form-field>
+        <div class="radio-btn">
+          <mat-radio-group class="gender-btn" [(ngModel)] = "form.gender">
+            <mat-radio-button value="A" class="male">М</mat-radio-button>
+            <mat-radio-button value="F">Ж</mat-radio-button>
+          </mat-radio-group>
+          <div class="type-btn">
+            <mat-radio-button value="DOG" class="dog"
+              ><img
+                src="../../../assets/profile-svg/dog-face-svgrepo-com.svg"
+                alt="Собака"
+            /></mat-radio-button>
+            <mat-radio-button value="CAT"
+              ><img
+                src="../../../assets/profile-svg/cat-face-svgrepo-com.svg"
+                alt="Кот"
+            /></mat-radio-button>
+          </div>
+        </div>
+        <div class="date-description">
+          <mat-form-field class="date">
+            <input matInput type="date" placeholder="Дата рождения" [(ngModel)]="form.birthDay" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div >
+        <div class="container-images">
+          <img *ngIf="imagePaths.length !== 0" [src]="imagePaths[0]" alt="Uploaded Image" class="image-main"
+          (click)="deleteImage(0)">
+          <div class="no-image-main-size" *ngIf="imagePaths.length < 1"><mat-icon >insert_photo</mat-icon></div>
+          <div class="mini-images-container">
+            <div *ngFor="let imagePath of imagePaths; let i=index">
+              <div *ngIf="i > 0">
+                <img [src]="imagePath" alt="Uploaded Image" class="image" (click)="deleteImage(i)">
+              </div>
+            </div>
+            <div class="no-image-size" *ngIf="imagePaths.length < 2"><mat-icon >insert_photo</mat-icon></div>
+            <div class="no-image-size" *ngIf="imagePaths.length < 3"><mat-icon >insert_photo</mat-icon></div>
+            <div class="no-image-size" *ngIf="imagePaths.length < 4"><mat-icon >insert_photo</mat-icon></div>
+            <div class="no-image-size" *ngIf="imagePaths.length < 5"><mat-icon >insert_photo</mat-icon></div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+  <div class="text-btn">
+      <mat-form-field class="description">
+        <mat-label>Описание</mat-label>
+        <textarea matInput style="min-height: 10vh; max-height: 20vh;"
+        placeholder="
+        Местоположение
+        Состояние здоровья/прививки
+        Какие-то сведения о характере питомца
+        Контактный номер телефона"
+        ></textarea>
+      </mat-form-field>
+      <div class="file-upload">
+        <input type="file" class="file-input" accept=".jpg, .jpeg, .png, .jfif" (change)="onFileSelected($event)" #fileUpload/>
+        <button mat-button  class="upload-btn" (click)="fileUpload.click()">
+          Добавить фото
+        </button>
+        <button mat-raised-button class="add" (click)="savePet()">Сохранить питомца</button>
+      </div>
+  </div>
 </div>

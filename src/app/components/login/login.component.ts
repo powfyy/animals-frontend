@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   form: any = {};
   errorMessage = '';
   errorMessageLogin='';
-  role: string = '';
+  role: string;
   public loginInfo: LoginInfo = {
     username: '',
     password: ''
@@ -39,13 +39,13 @@ export class LoginComponent implements OnInit {
       this.form.username,
       this.form.password);
 
-    this.authService.attemptAuth(this.loginInfo).subscribe(
+    this.authService.signin(this.loginInfo).subscribe(
       data => {
         this.tokenStorage.saveToken(data.token);
-        this.tokenStorage.saveUsername(data.login);
+        this.tokenStorage.saveUsername(data.username);
         this.tokenStorage.saveAuthorities(data.role);
 
-        this.role = this.tokenStorage.getAuthorities();
+        this.role = data.role;
         this.router.navigate(['home']);
       },
       (error) => {

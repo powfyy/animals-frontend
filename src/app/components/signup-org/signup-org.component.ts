@@ -39,7 +39,7 @@ export class SignupOrgComponent implements OnInit {
       this.form.passportNumber
       );
 
-    this.authService.signUpOrg(this.signupOrgInfo).subscribe(
+    this.authService.signupOrg(this.signupOrgInfo).subscribe(
       data => {
         console.log(data);
         this.isSignedUp = true;

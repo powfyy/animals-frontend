@@ -35,15 +35,16 @@ export class TokenStorageService {
 
   public saveAuthorities(authorities: string) {
     window.sessionStorage.removeItem(AUTHORITIES_KEY);
-    window.sessionStorage.setItem(AUTHORITIES_KEY, JSON.stringify(authorities));
+    window.sessionStorage.setItem(AUTHORITIES_KEY, authorities);
   }
 
   public getAuthorities(): string {
-    let role = '';
+    let role;
     if (sessionStorage.getItem(TOKEN_KEY)) {
       role = sessionStorage.getItem(AUTHORITIES_KEY) || '';
+      return role;
     }
 
-    return role;
+    return '';
   }
 }

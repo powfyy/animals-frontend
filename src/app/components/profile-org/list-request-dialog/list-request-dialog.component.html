@@ -1,0 +1,19 @@
+<div  *ngIf="isThereRequest();else text">
+  <ul *ngFor="let user of users">
+    <li class="string">
+          <div class="info">
+            <p><mat-icon class="icon">account_circle</mat-icon>{{user.name}}&nbsp;&nbsp;{{user.lastname}}&nbsp;&nbsp;{{user.phoneNumber}}</p>
+          </div>
+          <div>
+            <button class="button dialog" mat-raised-button (click)="goDialog(user.username)">Перейти в диалог</button>
+            <button class="button" mat-raised-button color="primary" (click)="adoptPet(user.username)">Отдать питомца</button>
+            <button class="button delete" mat-raised-button (click)="deleteUser(user.username)">Удалить заявку</button>
+          </div>
+  </li>
+  <mat-divider class="divider"></mat-divider>
+  </ul>
+</div>
+
+<ng-template #text>
+  <p style="text-align: center;">Заявок на данного питомца нет</p>
+</ng-template>

@@ -16,20 +16,16 @@ const httpOptions = {
 
 export class AuthService {
 
-  private loginUrl = 'http://localhost:8080/login';
-  private signupUserUrl = 'http://localhost:8080/signup/user';
-  private signupOrgUrl = 'http://localhost:8080/signup/organization'
-
-  attemptAuth(credentials: LoginInfo): Observable<JwtResponse> {
-    return this.http.post<JwtResponse>(this.loginUrl, credentials, httpOptions);
+  signin(credentials: LoginInfo): Observable<JwtResponse> {
+    return this.http.post<JwtResponse>("/api/login", credentials, httpOptions);
   }
 
-  signUpUser(info: SignupUserInfo): Observable<string> {
-    return this.http.post<string>(this.signupUserUrl, info, httpOptions);
+  signupUser(info: SignupUserInfo): Observable<string> {
+    return this.http.post<string>("/api/signup/user", info, httpOptions);
   }
 
-  signUpOrg(info: SignupOrgInfo): Observable<string> {
-    return this.http.post<string>(this.signupOrgUrl, info, httpOptions);
+  signupOrg(info: SignupOrgInfo): Observable<string> {
+    return this.http.post<string>("/api/signup/organization", info, httpOptions);
   }
 
   constructor(private http: HttpClient) { }

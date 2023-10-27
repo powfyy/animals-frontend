@@ -1,7 +1,7 @@
 export class JwtResponse{
   token: string;
   type: string;
-  login: string;
+  username: string;
   role: string;
-  enable: boolean;
+  id:number;
 }

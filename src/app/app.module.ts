@@ -15,7 +15,10 @@ import { DialogEditWrapperComponent } from './components/dialog-edit-wrapper/dia
 import { ChatComponent } from './components/chat/chat.component';
 import { DeleteConfirmDialogComponent } from './components/delete-confirm-dialog/delete-confirm-dialog.component';
 import { AddPetDialogWrapperComponent } from './components/add-pet-dialog-wrapper/add-pet-dialog-wrapper.component';
+import { ListRequestDialogComponent } from './components/profile-org/list-request-dialog/list-request-dialog.component';
+import { DialogInformationWrapperComponent } from './components/dialog-information-wrapper/dialog-information-wrapper.component';
 
+import { httpInterceptorProviders } from './services/auth-interceptor';
 import {HttpClientModule} from '@angular/common/http';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -27,6 +30,11 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
+
 
 
 
@@ -45,6 +53,8 @@ import {MatRadioModule} from '@angular/material/radio';
     ChatComponent,
     DeleteConfirmDialogComponent,
     AddPetDialogWrapperComponent,
+    ListRequestDialogComponent,
+    DialogInformationWrapperComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,8 +71,12 @@ import {MatRadioModule} from '@angular/material/radio';
     MatCheckboxModule,
     MatPaginatorModule,
     MatRadioModule,
+    MatDividerModule,
+    MatListModule,
+    MatProgressBarModule,
+
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

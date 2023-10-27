@@ -1,0 +1,33 @@
+ul {
+  list-style-type: none;
+  padding: 0;
+ }
+li{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+
+}
+p{
+  font-size: 16px;
+  margin: 0;
+}
+.icon {
+  vertical-align: middle;
+  margin-right: 5px;
+  height:auto;
+}
+.button{
+  margin: 0 5px;
+}
+
+.dialog{
+  border: 1px solid rgb(177, 177, 177);
+}
+.delete{
+  color: rgb(207, 17, 17);
+  border: 1px solid rgb(207, 17, 17);
+}
+.divider{
+  margin:1vh 0;
+}

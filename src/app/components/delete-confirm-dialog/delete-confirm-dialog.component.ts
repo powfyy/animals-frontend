@@ -10,7 +10,6 @@ export class DeleteConfirmDialogComponent implements OnInit {
   text:string;
   constructor(public dialogRef: MatDialogRef<DeleteConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-     //this.editingStudent=new Student();
       this.text=data;
      }
 

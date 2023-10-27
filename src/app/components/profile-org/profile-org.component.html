@@ -6,21 +6,17 @@
       <div class="fields">
         <div class="firstcollumn">
           <span class="subtitle">Название<br/> организации</span><br/>
-          <span class="text-info">{{userInfo.nameOrg}}</span><br/>
-          <span class="subtitle">Имя</span><br/>
-          <span class="text-info">{{userInfo.name}}</span><br/>
-          <span class="subtitle">Фамилия</span><br/>
-          <span class="text-info">{{userInfo.lastname}}</span><br/>
-          <span class="subtitle">Логин</span><br/>
-          <span class="text-info">{{userInfo.login}}</span><br/>
+          <span class="text-info">{{org.nameOrganization}}</span><br/>
+           <span class="subtitle">Логин</span><br/>
+          <span class="text-info">{{org.username}}</span><br/>
         </div>
         <div>
           <span class="subtitle">Номер телефона</span><br/>
-          <span class="text-info">{{userInfo.phoneNumber}}</span><br/>
+          <span class="text-info">{{org.phoneNumber}}</span><br/>
           <span class="subtitle">Серия паспорта</span><br/>
-          <span class="text-info">{{userInfo.passportSeries}}</span><br/>
+          <span class="text-info">{{org.passportSeries}}</span><br/>
           <span class="subtitle">Номер паспорта</span><br/>
-          <span class="text-info">{{userInfo.passportNumber}}</span>
+          <span class="text-info">{{org.passportNumber}}</span>
         </div>
     </div>
       <div class="btn">
@@ -32,20 +28,20 @@
     <div class="pets">
       <div class="par-pets">
         <p>Ваши питомцы:</p>
-      <input type="text" placeholder="Поиск по кличке" #filter (input)="searchFilterPets(filter.value)">
+      <input type="text" placeholder="Поиск по кличке" #filter (input)="filterPet(filter.value)">
       <button mat-icon-button class="btni" [matMenuTriggerFor]="filterMenu"><mat-icon>filter_list</mat-icon></button>
       <button mat-icon-button class="btni" (click)="addPet()"><mat-icon>add_circle_outline</mat-icon></button>
       <mat-menu #filterMenu="matMenu">
         <label mat-menu-item (click)="$event.stopPropagation()">
-          <mat-checkbox [(ngModel)]="activePets" value="true" class="activeCheckbox"></mat-checkbox>
+          <mat-checkbox [(ngModel)]="showActivePet" (ngModelChange)="filterPet(filter.value)" value="true" class="activeCheckbox"></mat-checkbox>
           Активные питомцы
         </label>
         <label mat-menu-item (click)="$event.stopPropagation()">
-          <mat-checkbox [(ngModel)]="frozenPets" value="true" class="frozenCheckbox"></mat-checkbox>
+          <mat-checkbox [(ngModel)]="showFrozenPet" (ngModelChange)="filterPet(filter.value)" value="true" class="frozenCheckbox"></mat-checkbox>
           Замороженные питомцы
         </label>
         <label mat-menu-item (click)="$event.stopPropagation()">
-          <mat-checkbox [(ngModel)]="adoptedPets" value="true" class="adoptedCheckbox"></mat-checkbox>
+          <mat-checkbox [(ngModel)]="showAdoptedPet" (ngModelChange)="filterPet(filter.value)" value="true" class="adoptedCheckbox"></mat-checkbox>
           Усыновленные питомцы
         </label>
       </mat-menu>
@@ -53,23 +49,30 @@
 
       <div class="list-pets">
         <ul *ngFor="let pet of filterPets">
-          <li *ngIf="isDog(pet.typeAnimal); else cat"><img src="../../../assets/profile-svg/dog-face-svgrepo-com.svg" alt="Собака"></li>
+          <li><mat-icon class="statusDot" [style.color]="setStatusDotColor(pet.status)">fiber_manual_record</mat-icon>
+          <li *ngIf="isDog(pet.typePet); else cat"><img src="../../../assets/profile-svg/dog-face-svgrepo-com.svg" alt="Собака"></li>
           <ng-template #cat><li><img src="../../../assets/profile-svg/cat-face-svgrepo-com.svg" alt="Кот"></li></ng-template>
           <li>{{pet.name}}</li>
           <li *ngIf="isGenderMan(pet.gender); else female"><mat-icon class="gender-icon">male</mat-icon></li>
           <ng-template #female><li><mat-icon class="gender-icon">female</mat-icon></li></ng-template>
-          <li>/&nbsp;{{findAgeAnimal.getAge(pet.birthdate)}}&nbsp;</li>
-          <li>/&nbsp;{{getPetBreed(pet.breed)}}</li>
-          <li class="li-list"><button class="btnActionsPet list" mat-icon-button [matMenuTriggerFor]="petMenu"><mat-icon>list_alt</mat-icon></button></li>
-          <mat-menu #petMenu="matMenu">
-          <button mat-menu-item *ngFor="let user of users" (click)="$event.stopPropagation()" [matMenuTriggerFor]="actionMenu">{{ user.name }}</button>
-          </mat-menu>
-          <mat-menu #actionMenu="matMenu">
-            <button mat-menu-item (click)="goToDialog()">Перейти в диалог</button>
-            <button mat-menu-item (click)="givePet()">Отдать питомца</button>
-            </mat-menu>
-          <li><button class="btnActionsPet unit" mat-icon-button><mat-icon>ac_unit</mat-icon></button></li>
-          <li><button class="btnActionsPet del" mat-icon-button (click)="deletePet()"><mat-icon>delete</mat-icon></button></li>
+          <li>/&nbsp;{{getAgePet(pet.birthDay)}}&nbsp;</li>
+          <li class="rightField">/&nbsp;{{getPetBreed(pet.breed)}}</li>
+          <li *ngIf="!isAdoptedPet(pet.status)" class="li-list"><button class="btnActionsPet list"
+             mat-icon-button title="Заявки на питомца" (click)="listRequest(pet)">
+            <mat-icon>list_alt</mat-icon>
+          </button></li>
+          <li *ngIf="isActivePet(pet.status);else frozen"><button class="btnActionsPet unit"
+             mat-icon-button title="Заморозить пимтоца" (click)="freezePet(pet.id)">
+            <mat-icon>ac_unit</mat-icon>
+          </button></li>
+          <ng-template
+           #frozen><li *ngIf="!isAdoptedPet(pet.status)"><button class="btnActionsPet active"
+             mat-icon-button title="Сделать активным" (click)="activePet(pet.id)">
+            <mat-icon>settings_backup_restore</mat-icon>
+          </button></li>
+          </ng-template>
+          <li><button class="btnActionsPet del" mat-icon-button title="Удалить питомца"
+             (click)="deletePet(pet.id)"><mat-icon>delete</mat-icon></button></li>
         </ul>
       </div>
     </div>

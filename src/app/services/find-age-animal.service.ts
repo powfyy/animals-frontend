@@ -18,7 +18,7 @@ export class FindAgeAnimalService {
     const todayDay = today.getDate();
 
     let ageYear = todayYear - birthYear;
-    let ageMonth = todayMonth - birthMonth;
+    let ageMonth = todayMonth - birthMonth + 1;
     let ageDay = todayDay - birthDay;
 
     if (ageDay < 0) {
@@ -38,7 +38,7 @@ export class FindAgeAnimalService {
       if (ageYear > 1 && ageYear < 5) {
         ageString += 'а';
       } else if (ageYear >= 5) {
-        ageString = 'лет';
+        ageString =ageYear+ ' лет';
       }
     }
 

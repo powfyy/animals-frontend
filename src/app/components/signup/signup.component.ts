@@ -40,7 +40,7 @@ export class SignupComponent implements OnInit {
       this.form.passportNumber,
       );
 
-    this.authService.signUpUser(this.signupUserInfo).subscribe(
+    this.authService.signupUser(this.signupUserInfo).subscribe(
       data => {
         console.log(data);
         this.isSignedUp = true;

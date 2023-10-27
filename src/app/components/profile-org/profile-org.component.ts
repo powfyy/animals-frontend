@@ -1,3 +1,6 @@
+import { PetService } from './../../services/pet.service';
+import { OrganizationService } from './../../services/organization.service';
+import { Organization } from './../../models/organization';
 import { FindAgeAnimalService } from './../../services/find-age-animal.service';
 import { Component, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { DeleteConfirmDialogComponent } from '../delete-confirm-dialog/delete-confirm-dialog.component';
@@ -5,6 +8,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Pet } from 'src/app/models/pet';
 import { DialogEditWrapperComponent } from '../dialog-edit-wrapper/dialog-edit-wrapper.component';
 import {AddPetDialogWrapperComponent} from '../add-pet-dialog-wrapper/add-pet-dialog-wrapper.component';
+import { ListRequestDialogComponent } from './list-request-dialog/list-request-dialog.component';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-org',
@@ -12,63 +18,72 @@ import {AddPetDialogWrapperComponent} from '../add-pet-dialog-wrapper/add-pet-di
   styleUrls: ['./profile-org.component.scss']
 })
 export class ProfileOrgComponent implements OnInit {
-  userInfo:any={
-    name:'Имя',
-    lastname:'Фамилия',
-    phoneNumber: '79999999999',
-    role: 'ORG',
-    login:'username',
-    nameOrg:'Priюt',
-    passportSeries:"2014",
-    passportNumber:"012321"
-  }
 
   pets:Pet[];
   filterPets:Pet[];
-  frozenPets:boolean = false;
-  activePets:boolean = true;
-  adoptedPets:boolean = false;
-  users:any[];
-
-  constructor(public dialog: MatDialog, public findAgeAnimal:FindAgeAnimalService) {
-    this.pets=[
-      {id:0, name:"Буся",typeAnimal:"DOG",birthdate:'2019-06-01',gender:"W",breed:'Шпиц',status:'active'},
-      {id:1,name:'Шарик',typeAnimal:'DOG',birthdate:'2023-07-04',gender:'M',breed:'Лайка',status:'active'},
-      {id:2,name:'Маня',typeAnimal:'CAT',birthdate:'2021-08-01',gender:'W',breed:'Британский',status:'active'},
-      {id:3,name:'Киса',typeAnimal:'CAT',birthdate:'2020-10-08',gender:'W',breed:'Сиамский',status:'active'},
-      {id:4,name:'Леша',typeAnimal:'DOG',birthdate:'2019-01-16',gender:'M',breed:'Шпиц',status:'active'},
-      {id:5,name:'Борис',typeAnimal:'CAT',birthdate:'2022-02-11',gender:'M',breed:null,status:'active'},
-      {id:6,name:'Бакс',typeAnimal:'DOG',birthdate:'2022-04-14',gender:'M',breed:'Лайка',status:'active'},
-      {id:7,name:'Феликс',typeAnimal:'CAT',birthdate:'2021-06-23',gender:'M',breed:null,status:'active'},
-      {id:8,name:'Мымра',typeAnimal:'CAT',birthdate:'2020-12-11',gender:'W',breed:'Сфинкс',status:'active'},
-     ]
-    this.filterPets=this.pets;
-    this.users = [
-      {id:1, name:"Alex"},
-      {id:2, name:"Bob"},
-      {id:3, name:'Sansa'},
-      {id:4, name:'Lera'},
-    ]
-  }
+  showFrozenPet:boolean = false;
+  showActivePet: boolean = true;
+  showAdoptedPet: boolean = false;
+  org:Organization;
+  constructor(public dialog: MatDialog, public findAgeAnimal:FindAgeAnimalService, private organizationService:OrganizationService,
+              private petService:PetService, private tokenStorageService: TokenStorageService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadData();
+
   }
 
   loadData(){
-
+    this.org = new Organization;
+    this.organizationService.getOrganization().subscribe(data => {
+      this.org = data;
+    });
+    this.petService.getAllPets().subscribe(data=>{
+      this.pets= data;
+      this.filterPets = data;
+      this.filterPet("");
+    })
   }
 
-  searchFilterPets(text:string) {
+  filterPet(text:string) {
     if (!text) {
       this.filterPets=this.pets;
+      this.statusFilterPets();
       return;
     }
-    this.filterPets = this.pets.filter(pet =>
-      pet?.name.toLowerCase().includes(text.toLowerCase())
-    );
+    this.filterPets = this.pets.filter(pet =>{
+
+      return pet?.name.toLowerCase().includes(text.toLowerCase())
+    });
+    this.statusFilterPets();
   }
 
+  statusFilterPets(){
+    this.filterPets = this.filterPets.filter(pet=>{
+      if(this.showActivePet && pet.status==="ACTIVE"){
+        return pet;
+      }
+      if(this.showFrozenPet && pet.status==="FREEZE"){
+        return pet;
+      }
+      if(this.showAdoptedPet && pet.status==="ADOPTED"){
+        return pet;
+      }
+      return null;
+    })
+  }
+  setStatusDotColor(status:string):string{
+    if(status==="ACTIVE"){
+      return "rgb(65, 175, 65)";
+    }
+    if(status==="FREEZE"){
+      return "rgb(24, 214, 228)";
+    }
+    if(status==="ADOPTED"){
+      return "orange";
+    }
+    return "black";
+  }
   isGenderMan(gender:string){
     if(gender==="M"){
       return true;
@@ -81,17 +96,58 @@ export class ProfileOrgComponent implements OnInit {
     }
     return false;
   }
+  isActivePet(status:string){
+    if(status==="ACTIVE"){
+      return true;
+    }
+    return false;
+  }
+  isAdoptedPet(status:string):boolean{
+    if(status==="ADOPTED"){
+      return true;
+    }
+    return false
+  }
+  activePet(petId:number){
+    this.petService.updateStatusPet("ACTIVE",petId).subscribe(()=>{
+      this.petService.getAllPets().subscribe(data=>{
+        this.pets=data;
+        this.filterPets=data;
+        this.filterPet("");
+      })
+    });
+  }
+  freezePet(petId:number){
+    this.petService.updateStatusPet("FREEZE",petId).subscribe(()=>{
+      this.petService.getAllPets().subscribe(data=>{
+        this.pets=data;
+        this.filterPets=data;
+        this.filterPet("");
+      })
+    });
+  }
+  getAgePet(date:string):string{
+    return this.findAgeAnimal.getAge(date);
+  }
   getPetBreed(breed:string|null):string{
     if(breed===null){
       return "Нет породы";
     }
-    return breed;
+    return "Метис "+ breed;
   }
   editInfo(){
     const dialogEdit = this.dialog.open(DialogEditWrapperComponent, {
       width: '400px',
-      data: this.userInfo
+      data: this.org,
+      autoFocus:false,
     });
+    dialogEdit.afterClosed().subscribe((result:Organization)=>{
+      if(result!=null){
+      this.organizationService.updateOrganization(result).subscribe(()=>
+      this.organizationService.getOrganization().subscribe(data=>this.org = data));
+      }
+    })
+
   }
   deleteAccount(){
     const dialogDelete = this.dialog.open(DeleteConfirmDialogComponent, {
@@ -101,31 +157,17 @@ export class ProfileOrgComponent implements OnInit {
     });
     dialogDelete.afterClosed().subscribe(result=>{
       if(result===true){
-        console.log("delete account");
-      }
-      else{
-
-      }
-    })
-  }
-  deletePet(){
-    const dialogDelete = this.dialog.open(DeleteConfirmDialogComponent, {
-      width: '400px',
-      data: "Вы действительно хотите удалить этого питомца?",
-      autoFocus: false,
-    });
-    dialogDelete.afterClosed().subscribe(result=>{
-      if(result===true){
-        console.log("delete account");
-      }
-      else{
-
+        this.organizationService.deleteOrganization().subscribe(()=>{
+        this.tokenStorageService.signOut();
+        this.router.navigate(['home']);
+        });
       }
     })
   }
+
   addPet(){
     const dialogAddPet = this.dialog.open (AddPetDialogWrapperComponent, {
-      width: '400px',
+      width: '800px',
       data: null,
       autoFocus: false,
     });
@@ -138,11 +180,32 @@ export class ProfileOrgComponent implements OnInit {
       }
     })
   }
-  goToDialog(){
+  listRequest(pet:Pet){
+    const dialogListRequest = this.dialog.open (ListRequestDialogComponent, {
+      width: '800px',
+      data:pet,
+      autoFocus: false,
+    });
+    dialogListRequest.afterClosed().subscribe(result=>{
 
-
+    })
   }
-  givePet(){
+  deletePet(id: number){
+    const dialogDelete = this.dialog.open(DeleteConfirmDialogComponent, {
+      width: '400px',
+      data: "Вы действительно хотите удалить этого питомца?",
+      autoFocus: false,
+    });
+    dialogDelete.afterClosed().subscribe(result=>{
+      if(result===true){
+        this.petService.deletePet(id).subscribe(()=>{
+          this.petService.getAllPets().subscribe(data=>{
+            this.pets= data;
+            this.filterPets = data;
+          })
+          });
+      }
 
+    })
   }
 }

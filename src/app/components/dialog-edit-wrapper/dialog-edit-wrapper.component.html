@@ -1,10 +1,10 @@
 <h1 mat-dialog-title class="title">Редактирование</h1>
 <div mat-dialog-content class='firstContent' *ngIf="!isOrg();else org">
   <mat-form-field class="input">
-    <input matInput type="text" placeholder="Имя" [(ngModel)]="data.name" required>
+    <input matInput type="text" placeholder="Имя" [(ngModel)]="data.nameOrganization" required>
   </mat-form-field>
   <mat-form-field class="input">
-    <input matInput type="text" placeholder="Фамилия" [(ngModel)]="data.lastname" required>
+    <input matInput type="text" placeholder="Фамилия" [(ngModel)]="data.passportNumber" required>
   </mat-form-field>
   <mat-form-field class="input">
     <input matInput type="number" placeholder="Номер телефона"
@@ -15,30 +15,24 @@
 <div mat-dialog-content class='secondContent'>
     <div class="fields">
       <mat-form-field class="input">
-        <input matInput type="text" placeholder="Имя" [(ngModel)]="data.name" required>
+        <input matInput type="text" placeholder="Название организации" [(ngModel)]="organization.nameOrganization" required>
       </mat-form-field>
       <mat-form-field class="input">
-        <input matInput type="text" placeholder="Фамилия" [(ngModel)]="data.lastname" required>
-      </mat-form-field>
-      <mat-form-field class="input">
-        <input matInput type="number" placeholder="Номер телефона" [(ngModel)]="data.phoneNumber" required>
+        <input matInput type="number" placeholder="Номер телефона" [(ngModel)]="organization.phoneNumber" required>
       </mat-form-field>
     </div>
     <div class="fields">
       <mat-form-field class="input">
-        <input matInput type="text" placeholder="Название организации" [(ngModel)]="data.nameOrg" required>
+        <input matInput type="number" placeholder="Серия паспорта" [(ngModel)]="organization.passportSeries" required>
       </mat-form-field>
       <mat-form-field class="input">
-        <input matInput type="number" placeholder="Серия паспорта" [(ngModel)]="data.passportSeries" required>
-      </mat-form-field>
-      <mat-form-field class="input">
-        <input matInput type="number" placeholder="Номер паспорта" [(ngModel)]="data.passportNumber" required>
+        <input matInput type="number" placeholder="Номер паспорта" [(ngModel)]="organization.passportNumber" required>
       </mat-form-field>
     </div>
 </div>
 </ng-template>
 <div mat-dialog-actions>
   <button class='btn cancel' (click)="onNoClick()">Отмена</button>
-  <button class="btn save">Сохранить</button>
+  <button class="btn save" [mat-dialog-close]="organization">Сохранить</button>
 </div>
 
