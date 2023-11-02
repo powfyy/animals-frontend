@@ -11,6 +11,7 @@ import {AddPetDialogWrapperComponent} from '../add-pet-dialog-wrapper/add-pet-di
 import { ListRequestDialogComponent } from './list-request-dialog/list-request-dialog.component';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { Router } from '@angular/router';
+import { EditPetDialogWrapperComponent } from '../edit-pet-dialog-wrapper/edit-pet-dialog-wrapper.component';
 
 @Component({
   selector: 'app-profile-org',
@@ -167,17 +168,30 @@ export class ProfileOrgComponent implements OnInit {
 
   addPet(){
     const dialogAddPet = this.dialog.open (AddPetDialogWrapperComponent, {
-      width: '800px',
+      width: '900px',
       data: null,
       autoFocus: false,
     });
-    dialogAddPet.afterClosed().subscribe(result=>{
-      if(result===true){
-        console.log("delete account");
-      }
-      else{
-
-      }
+    dialogAddPet.afterClosed().subscribe(()=>{
+      this.petService.getAllPets().subscribe(data=>{
+        this.pets= data;
+        this.filterPets = data;
+        this.filterPet('');
+      });
+    });
+  };
+  updatePet(pet:Pet){
+    const dialogEditPet = this.dialog.open(EditPetDialogWrapperComponent,{
+      width: '900px',
+      data: pet,
+      autoFocus: false,
+    })
+    dialogEditPet.afterClosed().subscribe(()=>{
+      this.petService.getAllPets().subscribe(data=>{
+        this.pets= data;
+        this.filterPets = data;
+        this.filterPet('');
+      })
     })
   }
   listRequest(pet:Pet){
@@ -186,8 +200,12 @@ export class ProfileOrgComponent implements OnInit {
       data:pet,
       autoFocus: false,
     });
-    dialogListRequest.afterClosed().subscribe(result=>{
-
+    dialogListRequest.afterClosed().subscribe(()=>{
+      this.petService.getAllPets().subscribe(data=>{
+        this.pets= data;
+        this.filterPets = data;
+        this.filterPet('');
+      })
     })
   }
   deletePet(id: number){
@@ -202,6 +220,7 @@ export class ProfileOrgComponent implements OnInit {
           this.petService.getAllPets().subscribe(data=>{
             this.pets= data;
             this.filterPets = data;
+            this.filterPet('');
           })
           });
       }

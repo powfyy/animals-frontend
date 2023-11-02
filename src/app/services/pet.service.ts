@@ -4,13 +4,13 @@ import { Observable, raceWith } from 'rxjs';
 import { Pet } from '../models/pet';
 import { User } from '../models/user';
 import { MessageResponse } from '../models/message-response';
-import { NewPetInfo } from '../models/newPet-info';
-
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
-
+const httpOptionsForFormData = {
+  headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data'})
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -21,8 +21,8 @@ export class PetService {
   getAllPets():Observable<Pet[]>{
     return this.http.get<Pet[]>("/api/profile/organization/pets", httpOptions );
   }
-  addPet(newPet:NewPetInfo):Observable<Pet>{
-    return this.http.post<Pet>("/api/profile/organization/pets", newPet, httpOptions);
+  addPet(form:FormData):Observable<any>{
+    return this.http.post("/api/profile/organization/pets", form);
   }
   deletePet(id:number):Observable<any>{
     return this.http.delete(`/api/profile/organization/pets/${id}`, httpOptions);
@@ -30,8 +30,8 @@ export class PetService {
   updateStatusPet(newStatus:string, petId:number):Observable<any>{
     return this.http.patch(`/api/profile/organization/pets/${petId}/status?newStatus=${newStatus}`, httpOptions)
   }
-  updatePet(pet:Pet):Observable<Pet>{
-    return this.http.put<Pet>(`/api/profile/organization/pets/${pet.id}`, pet, httpOptions);
+  updatePet(form:FormData, petId:number):Observable<any>{
+    return this.http.put<any>(`/api/profile/organization/pets/${petId}`, form);
   }
   getUserRequsts(petId:number):Observable<User[]>{
     return this.http.get<User[]>(`/api/profile/organization/pets/${petId}/userRequest`,httpOptions);

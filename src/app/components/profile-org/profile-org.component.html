@@ -9,6 +9,8 @@
           <span class="text-info">{{org.nameOrganization}}</span><br/>
            <span class="subtitle">Логин</span><br/>
           <span class="text-info">{{org.username}}</span><br/>
+          <span class="subtitle">Город</span><br/>
+          <span class="text-info">{{org.city}}</span><br/>
         </div>
         <div>
           <span class="subtitle">Номер телефона</span><br/>
@@ -62,11 +64,15 @@
             <mat-icon>list_alt</mat-icon>
           </button></li>
           <li *ngIf="isActivePet(pet.status);else frozen"><button class="btnActionsPet unit"
-             mat-icon-button title="Заморозить пимтоца" (click)="freezePet(pet.id)">
+             mat-icon-button title="Заморозить питомца" (click)="freezePet(pet.id)">
             <mat-icon>ac_unit</mat-icon>
           </button></li>
           <ng-template
-           #frozen><li *ngIf="!isAdoptedPet(pet.status)"><button class="btnActionsPet active"
+           #frozen>
+           <li *ngIf="!isAdoptedPet(pet.status)"><button class="btnActionsPet edit"
+            mat-icon-button title="Редактировать информацию о питомце" (click)="updatePet(pet)">
+            <mat-icon>edit</mat-icon></button></li>
+           <li *ngIf="!isAdoptedPet(pet.status)"><button class="btnActionsPet active"
              mat-icon-button title="Сделать активным" (click)="activePet(pet.id)">
             <mat-icon>settings_backup_restore</mat-icon>
           </button></li>

@@ -1,10 +1,5 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { FindAgeAnimalService } from './../../services/find-age-animal.service';
-import { MinioService } from './../../services/minio.service';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
-import { NewPetInfo } from 'src/app/models/newPet-info';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PetService } from 'src/app/services/pet.service';
 
 @Component({
@@ -14,47 +9,51 @@ import { PetService } from 'src/app/services/pet.service';
 })
 export class AddPetDialogWrapperComponent implements OnInit {
   imagePaths: string[] = [];
-  files: FileList;
-  form: any = {};
-  newPet: NewPetInfo;
+  files: File[];
+  form: any ={description:null};
+  formData= new FormData();
   constructor(
-    private minioService:MinioService,  private petService:PetService,
+    private petService:PetService,
     public dialogRef: MatDialogRef<AddPetDialogWrapperComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
-  ngOnInit(): void {}
-  onFileSelected(event: any) {
-    this.files= event.target.files;
-    for (let i = 0; i < this.files.length; i++) {
-      const file: File = this.files[i];
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imagePaths.push(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
+  ngOnInit(): void {
+    this.form.breed = "метис сиамской"
   }
+  onFileSelected(event: any) {
+    const file:File = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.imagePaths.push(e.target.result);
+    };
+    reader.readAsDataURL(file);
+    this.formData.append('files',file);
+  }
+
   deleteImage(index:number):void{
     this.imagePaths.splice(index,1);
   }
   savePet(){
-    this.form.breed.toLowerCase();
-    this.form.breed.replace("метис ","")
-    this.newPet = new NewPetInfo(
-    this.form.name,
-    this.form.typePet,
-    this.form.birthDay,
-    this.form.gender,
-    this.form.breed,
-    null,
-    )
-    debugger
-    this.petService.addPet(this.newPet).subscribe((pet)=>{
-      // this.minioService.minioClient.makeBucket(`${pet.id}_${pet.typePet}_${pet.name}`, 'us-east-1', function (err) {
-      //   if (err) return console.log('Error creating bucket.', err)
-      //   console.log('Bucket created successfully in "us-east-1".')
-      // })
+    if (!this.form.name || !this.form.gender || !this.form.typePet || !this.form.birthDay) {
+      return;
+      };
+    if(this.form.breed!==null){
+      this.form.breed.toLowerCase();
+      this.form.breed=this.form.breed.replace("метис ","");
+    };
+    this.formData.append('name',this.form.name);
+    this.formData.append('typePet',this.form.typePet);
+    this.formData.append('birthDay',this.form.birthDay);
+    this.formData.append('gender',this.form.gender);
+    if(this.form.breed!=='' && this.form.breed!==null){
+    this.formData.append('breed',this.form.breed);
+    }
+    if(this.form.description!=='' && this.form.description!==null){
+      this.formData.append('description',this.form.description);
+    }
+    this.petService.addPet(this.formData).subscribe(()=>{
+      this.dialogRef.close();
     })
   }
 }

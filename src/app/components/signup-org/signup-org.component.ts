@@ -16,6 +16,7 @@ export class SignupOrgComponent implements OnInit {
     password:'',
     phoneNumber:'',
     nameOrganization: '',
+    city:'',
     passportSeries:'',
     passportNumber:''
   };
@@ -35,6 +36,7 @@ export class SignupOrgComponent implements OnInit {
       this.form.password,
       this.form.phoneNumber,
       this.form.nameOrganization,
+      this.form.city,
       this.form.passportSeries,
       this.form.passportNumber
       );

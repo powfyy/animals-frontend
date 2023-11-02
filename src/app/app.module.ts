@@ -33,6 +33,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { EditPetDialogWrapperComponent } from './components/edit-pet-dialog-wrapper/edit-pet-dialog-wrapper.component';
 
 
 
@@ -55,6 +56,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     AddPetDialogWrapperComponent,
     ListRequestDialogComponent,
     DialogInformationWrapperComponent,
+    EditPetDialogWrapperComponent,
   ],
   imports: [
     BrowserModule,

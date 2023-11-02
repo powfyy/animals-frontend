@@ -5,7 +5,8 @@ export class Pet{
   birthDay:string;
   gender:string;
   breed:string|null;
+  description:string|null;
   status:string;
-  petPhotos:string[];
+  photoRefs:string[];
   constructor(){}
 }
