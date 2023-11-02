@@ -65,8 +65,8 @@ export class EditPetDialogWrapperComponent implements OnInit {
     if(this.pet.breed!=='' && this.pet.breed!==null){
       this.formData.append('breed',this.pet.breed);
       }
-    if(this.pet.description!=='' && this.pet.description!==null){
-      this.formData.append('description',this.pet.description);
+    if(this.pet.description!=='' && this.pet.description!==null && this.pet.description!==undefined){
+        this.formData.append('description',this.pet.description);
     }
     this.petService.updatePet(this.formData, this.pet.id).subscribe(()=>{
       this.dialogRef.close();

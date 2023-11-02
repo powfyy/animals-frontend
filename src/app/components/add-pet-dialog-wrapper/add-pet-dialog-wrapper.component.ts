@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { raceWith } from 'rxjs';
 import { PetService } from 'src/app/services/pet.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { PetService } from 'src/app/services/pet.service';
 export class AddPetDialogWrapperComponent implements OnInit {
   imagePaths: string[] = [];
   files: File[];
-  form: any ={description:null};
+  form: any ={};
   formData= new FormData();
   constructor(
     private petService:PetService,
@@ -49,7 +50,7 @@ export class AddPetDialogWrapperComponent implements OnInit {
     if(this.form.breed!=='' && this.form.breed!==null){
     this.formData.append('breed',this.form.breed);
     }
-    if(this.form.description!=='' && this.form.description!==null){
+    if(this.form.description!=='' && this.form.description!==null && this.form.description!==undefined){
       this.formData.append('description',this.form.description);
     }
     this.petService.addPet(this.formData).subscribe(()=>{
