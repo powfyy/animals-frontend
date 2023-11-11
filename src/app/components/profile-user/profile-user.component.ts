@@ -1,9 +1,11 @@
+import { User } from './../../models/user';
 import { TokenStorageService } from './../../services/token-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogEditWrapperComponent } from '../dialog-edit-wrapper/dialog-edit-wrapper.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmDialogComponent } from '../delete-confirm-dialog/delete-confirm-dialog.component';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile-user',
@@ -11,38 +13,36 @@ import { DeleteConfirmDialogComponent } from '../delete-confirm-dialog/delete-co
   styleUrls: ['./profile-user.component.scss']
 })
 export class ProfileUserComponent implements OnInit {
-  form: any = {};
   errorMessage = '';
   errorMessageLogin='';
-  constructor(private router: Router, public dialog: MatDialog, private tokenStorageService:TokenStorageService) { }
-
-  userInfo:any={
-  name:'Имя',
-  lastname:'Фамилия',
-  phoneNumber: '79999999999',
-  role: 'USERs',
-  login:'username',
-  }
+  user:User;
+  constructor(private router: Router, public dialog: MatDialog, private tokenStorageService:TokenStorageService,
+    private userService:UserService) { }
 
   ngOnInit() {
-
+    if(this.tokenStorageService.getAuthorities()==='USER'){
+      this.user = new User;
+    this.loadData();
+    }
   }
-
+  loadData(){
+    this.userService.getUser().subscribe((data)=>{
+      this.user = data;
+    })
+  }
   onSubmit() {
     }
 
   editInfo(){
     const dialogEdit = this.dialog.open(DialogEditWrapperComponent, {
       width: '400px',
-      data: this.userInfo
+      data: this.user
     });
-    // dialogAddingNewStudent.afterClosed().subscribe((result: Student) => {
-    //   if(result != null) {
-    //     console.log("adding new student: " + result.fio);
-    //     this.baseService.addNewStudent(result).subscribe(k=>
-    //       this.baseService.getAllStudents().subscribe(data => this.dataSource.data = data));
-    //   }
-    // });
+    dialogEdit.afterClosed().subscribe((result:User) => {
+      this.userService.updateUser(result).subscribe(()=>{
+      this.loadData();
+      })
+    });
   }
   deleteAccount(){
     const dialogDelete = this.dialog.open(DeleteConfirmDialogComponent, {
@@ -52,15 +52,14 @@ export class ProfileUserComponent implements OnInit {
     });
     dialogDelete.afterClosed().subscribe(result=>{
       if(result===true){
-        console.log("delete account");
-      }
-      else{
-
+        this.userService.deleteUser().subscribe(()=>{
+          this.tokenStorageService.signOut();
+          this.router.navigate(['home']);
+        })
       }
     })
   }
   isAuthenticatedUser(){
-
     if(this.tokenStorageService.getAuthorities()==="USER"){
       return true;
     }

@@ -27,10 +27,10 @@
         <input matInput type="text" placeholder="Ваш город" [(ngModel)]="form.city" required>
       </mat-form-field>
       <mat-form-field  >
-        <input matInput type="text" placeholder="Серия паспорта" [(ngModel)]="form.name" required>
+        <input matInput type="number" placeholder="Серия паспорта" [(ngModel)]="form.passportSeries" required>
       </mat-form-field>
       <mat-form-field  >
-        <input matInput type="text" placeholder="Номер паспорта" [(ngModel)]="form.name" required>
+        <input matInput type="number" placeholder="Номер паспорта" [(ngModel)]="form.passportNumber" required>
       </mat-form-field>
       </div>
       </div>
@@ -41,9 +41,9 @@
       У вас уже есть учетная запись?
       <a href="login" style="text-decoration: none;"><p class="hyperlink">&nbsp;Войти</p></a>
     </div>
-      <a href = "signup" style="text-decoration: none;"><p class="hyperlink back"> Назад </p></a>
+      <a href = "signup/user" style="text-decoration: none;"><p class="hyperlink back"> Назад </p></a>
       </div>
     </div>
   </div>
 </ng-template>
-
+<app-footer></app-footer>

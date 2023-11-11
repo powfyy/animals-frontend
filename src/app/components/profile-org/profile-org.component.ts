@@ -36,7 +36,7 @@ export class ProfileOrgComponent implements OnInit {
 
   loadData(){
     this.org = new Organization;
-    this.organizationService.getOrganization().subscribe(data => {
+    this.organizationService.getCurrentOrganization().subscribe(data => {
       this.org = data;
     });
     this.petService.getAllPets().subscribe(data=>{
@@ -145,7 +145,7 @@ export class ProfileOrgComponent implements OnInit {
     dialogEdit.afterClosed().subscribe((result:Organization)=>{
       if(result!=null){
       this.organizationService.updateOrganization(result).subscribe(()=>
-      this.organizationService.getOrganization().subscribe(data=>this.org = data));
+      this.organizationService.getCurrentOrganization().subscribe(data=>this.org = data));
       }
     })
 

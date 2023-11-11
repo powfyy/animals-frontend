@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, raceWith } from 'rxjs';
+import { Observable, filter, raceWith } from 'rxjs';
 import { Pet } from '../models/pet';
 import { User } from '../models/user';
 import { MessageResponse } from '../models/message-response';
+import { FilterFields } from '../models/filter-fields';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -20,6 +21,27 @@ export class PetService {
 
   getAllPets():Observable<Pet[]>{
     return this.http.get<Pet[]>("/api/profile/organization/pets", httpOptions );
+  }
+  getFilteredPets(filterFields:FilterFields, page:number, size:number):Observable<any>{
+    if(filterFields.city==''||filterFields.city==undefined){
+      filterFields.city=null;
+    }
+    if(filterFields.gender=='all'){
+      filterFields.gender=null;
+    }
+    if(filterFields.name==''){
+      filterFields.name=null;
+    }
+    if(filterFields.nameOrganization==''||filterFields.nameOrganization==undefined){
+      filterFields.nameOrganization= null;
+    }
+    if(filterFields.petType=='all'){
+      filterFields.petType=null;
+    }
+    return this.http.post<any>(`/api/home/pets?page=${page}&size=${size}`,filterFields,httpOptions);
+  }
+  getPet(petId:string|null):Observable<Pet>{
+    return this.http.get<Pet>(`/api/home/pets/${petId}`, httpOptions);
   }
   addPet(form:FormData):Observable<any>{
     return this.http.post("/api/profile/organization/pets", form);

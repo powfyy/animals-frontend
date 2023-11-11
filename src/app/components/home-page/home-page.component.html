@@ -1,1 +1,67 @@
 <app-navigation-menu></app-navigation-menu>
+<h1>PetHaven</h1>
+<h3>Они заслуживают любви</h3>
+<div class="content">
+  <div class="search-menu">
+    <div class="input-container">
+      <input class="search" placeholder="Поиск по кличке" [(ngModel)] = "filterFields.name">
+      <button mat-raised-button class="search-btn" (click)="loadData()">Поиск</button>
+    </div>
+    <mat-radio-group class="gender-btn" [(ngModel)]="filterFields.gender" (change)="loadData()">
+      <mat-radio-button value="all" checked>Все</mat-radio-button>
+      <mat-radio-button value="M">Мальчики</mat-radio-button>
+      <mat-radio-button value="F">Девочки</mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field class="city">
+      <mat-label>Города</mat-label>
+      <mat-select [(value)]="filterFields.city" (selectionChange)="loadData()">
+        <mat-option>Все города</mat-option>
+        <mat-option *ngFor="let city of cities" [value]="city">
+          {{city}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-radio-group class="type-btn" [(ngModel)]="filterFields.petType" (change)="loadData()">
+      <mat-radio-button value="all" checked>Все</mat-radio-button>
+      <mat-radio-button value="DOG">Собаки</mat-radio-button>
+      <mat-radio-button value="CAT">Кошки</mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field class="org" >
+      <mat-label>Приюты</mat-label>
+      <mat-select [(value)]="filterFields.nameOrganization" (selectionChange)="loadData()">
+        <mat-option>Все приюты</mat-option>
+        <mat-option *ngFor="let org of orgs" [value]="org.nameOrganization">
+          {{org.nameOrganization}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div *ngIf="isOrg()"><button mat-raised-button (click)="addPet()">Добавить питомца</button></div>
+  <div class="pet-list" *ngIf="pets.length>0;else text">
+    <mat-card *ngFor="let pet of pets" class="card">
+      <div *ngIf="getImageUrl(pet.name)!==null; else noImage">
+        <img mat-card-lg-image [src]="getImageUrl(pet.name)" alt="Photo" class="image" loading="lazy" (click)="goPetPage(pet.id)">
+      </div>
+      <ng-template #noImage>
+        <div class="empty-image" (click)="goPetPage(pet.id)"></div>
+      </ng-template>
+      <mat-card-content>
+        <h2><a (click)="goPetPage(pet.id)">{{ pet.name }}</a></h2>
+        <p>Пол: {{getGender(pet.gender)}}</p>
+        <p>Возраст: {{ getPetAge(pet.birthDay) }}</p>
+        <p>Порода: {{ getPetBreed(pet.breed) }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <mat-paginator [length]="pageLength"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="[12, 24, 36, 50]"
+              [pageIndex]="pageIndex"
+              (page)="changePage($event)">
+</mat-paginator>
+</div>
+<ng-template #text>
+  <p style="text-align: center;font-size: 26px;margin: 5vh 0;">Питомцы не найдены</p>
+</ng-template>
+
+<app-footer></app-footer>

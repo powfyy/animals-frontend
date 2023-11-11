@@ -27,7 +27,6 @@ export class SignupComponent implements OnInit {
   ngOnInit() { }
 
   goRegisterUser() {
-    console.log(this.form);
 
     this.signupUserInfo = new SignupUserInfo(
       this.form.username,
@@ -42,7 +41,6 @@ export class SignupComponent implements OnInit {
 
     this.authService.signupUser(this.signupUserInfo).subscribe(
       data => {
-        console.log(data);
         this.isSignedUp = true;
         this.isSignUpFailed = false;
       },

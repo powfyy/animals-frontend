@@ -29,7 +29,6 @@ export class SignupOrgComponent implements OnInit {
   ngOnInit() { }
 
   goRegisterOrganization() {
-    console.log(this.form);
 
     this.signupOrgInfo = new SignupOrgInfo(
       this.form.username,
@@ -43,7 +42,6 @@ export class SignupOrgComponent implements OnInit {
 
     this.authService.signupOrg(this.signupOrgInfo).subscribe(
       data => {
-        console.log(data);
         this.isSignedUp = true;
         this.isSignUpFailed = false;
       },

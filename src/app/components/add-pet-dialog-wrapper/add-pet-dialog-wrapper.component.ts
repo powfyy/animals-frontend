@@ -22,38 +22,47 @@ export class AddPetDialogWrapperComponent implements OnInit {
   ngOnInit(): void {
     this.form.breed = "метис сиамской"
   }
+
   onFileSelected(event: any) {
     const file:File = event.target.files[0];
     const reader = new FileReader();
     reader.onload = (e: any) => {
       this.imagePaths.push(e.target.result);
+      this.formData.append(`${e.target.result}`,file);
     };
     reader.readAsDataURL(file);
-    this.formData.append('files',file);
   }
 
   deleteImage(index:number):void{
+    this.formData.delete(this.imagePaths[index]);
     this.imagePaths.splice(index,1);
   }
+
   savePet(){
+    debugger
+    const resultForm= new FormData();
+    this.imagePaths.forEach((el) => {
+      resultForm.append("files", this.formData.get(`${el}`) as File)
+    })
     if (!this.form.name || !this.form.gender || !this.form.typePet || !this.form.birthDay) {
       return;
       };
+
     if(this.form.breed!==null){
       this.form.breed.toLowerCase();
       this.form.breed=this.form.breed.replace("метис ","");
     };
-    this.formData.append('name',this.form.name);
-    this.formData.append('typePet',this.form.typePet);
-    this.formData.append('birthDay',this.form.birthDay);
-    this.formData.append('gender',this.form.gender);
+    resultForm.append('name',this.form.name);
+    resultForm.append('typePet',this.form.typePet);
+    resultForm.append('birthDay',this.form.birthDay);
+    resultForm.append('gender',this.form.gender);
     if(this.form.breed!=='' && this.form.breed!==null){
-    this.formData.append('breed',this.form.breed);
+      resultForm.append('breed',this.form.breed);
     }
     if(this.form.description!=='' && this.form.description!==null && this.form.description!==undefined){
-      this.formData.append('description',this.form.description);
+      resultForm.append('description',this.form.description);
     }
-    this.petService.addPet(this.formData).subscribe(()=>{
+    this.petService.addPet(resultForm).subscribe(()=>{
       this.dialogRef.close();
     })
   }

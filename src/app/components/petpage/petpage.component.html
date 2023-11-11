@@ -1,0 +1,27 @@
+<app-navigation-menu></app-navigation-menu>
+<div class="content">
+  <div class="container-images">
+    <img [src]="currentImage" class="main-image">
+    <div class="list-image">
+      <div *ngFor="let image of images; let i = index">
+        <img [src]="image" class="image" (click)="setCurrentImage(image)">
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="info">
+        <h2>{{pet.name}}</h2>
+        <p class="org-city">{{pet.nameOrganization}}&nbsp;/&nbsp;{{pet.city}}</p>
+        <p>Пол: {{getGender(pet.gender)}}</p>
+        <p>Возраст: {{getPetAge(pet.birthDay)}}</p>
+        <p>Порода: {{getPetBreed(pet.breed)}}</p>
+        <h3>Описание</h3>
+        <p class="description">{{pet.description}}</p>
+    </div>
+    <div class="buttons">
+      <button mat-raised-button class="sendRequest" (click)="sendRequest()" [disabled]="IsThereRequest">Отправить заявку</button>
+      <button mat-raised-button *ngIf="isOrg()" class="update" (click)="updatePet()">Изменить</button>
+    </div>
+  </div>
+</div>
+

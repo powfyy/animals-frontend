@@ -1,14 +1,14 @@
 <h1 mat-dialog-title class="title">Редактирование</h1>
 <div mat-dialog-content class='firstContent' *ngIf="!isOrg();else org">
   <mat-form-field class="input">
-    <input matInput type="text" placeholder="Имя" [(ngModel)]="data.nameOrganization" required>
+    <input matInput type="text" placeholder="Имя" [(ngModel)]="user.name" required>
   </mat-form-field>
   <mat-form-field class="input">
-    <input matInput type="text" placeholder="Фамилия" [(ngModel)]="data.passportNumber" required>
+    <input matInput type="text" placeholder="Фамилия" [(ngModel)]="user.lastname" required>
   </mat-form-field>
   <mat-form-field class="input">
     <input matInput type="number" placeholder="Номер телефона"
-      [(ngModel)]="data.phoneNumber" required>
+      [(ngModel)]="user.phoneNumber" required>
   </mat-form-field>
 </div>
 <ng-template #org>
@@ -36,6 +36,7 @@
 </ng-template>
 <div mat-dialog-actions>
   <button class='btn cancel' (click)="onNoClick()">Отмена</button>
-  <button class="btn save" [mat-dialog-close]="organization">Сохранить</button>
+  <button class="btn save" [mat-dialog-close]="user" *ngIf="!isOrg();else org">Сохранить</button>
+  <ng-template #org><button class="btn save" [mat-dialog-close]="organization">Сохранить</button></ng-template>
 </div>
 

@@ -8,5 +8,7 @@ export class Pet{
   description:string|null;
   status:string;
   photoRefs:string[];
+  city:string;
+  nameOrganization:string;
   constructor(){}
 }

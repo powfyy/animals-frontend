@@ -14,8 +14,11 @@ export class OrganizationService {
 
   constructor(private http: HttpClient) { }
 
-  getOrganization(): Observable<Organization> {
+  getCurrentOrganization(): Observable<Organization> {
     return this.http.get<Organization>("/api/profile/organization", httpOptions);
+  }
+  getAllOrganization():Observable<Organization[]>{
+    return this.http.get<Organization[]>("api/home/organizations", httpOptions);
   }
   updateOrganization(org:Organization):Observable<Organization>{
     return this.http.put<Organization>("/api/profile/organization", org, httpOptions);

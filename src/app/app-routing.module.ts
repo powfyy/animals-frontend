@@ -6,6 +6,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { AboutComponent } from './components/about/about.component';
 import { SignupOrgComponent } from './components/signup-org/signup-org.component';
 import { ProfileUserComponent } from './components/profile-user/profile-user.component';
+import { PetPageComponent } from './components/petpage/petpage.component';
 
 
 
@@ -18,7 +19,7 @@ const routes: Routes = [
   {path: 'signup/organization',component: SignupOrgComponent},
   {path: 'about',component: AboutComponent},
   {path: 'profile',component: ProfileUserComponent},
-
+  {path: 'home/:petId',component: PetPageComponent},
 ];
 
 @NgModule({
