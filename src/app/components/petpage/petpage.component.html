@@ -1,7 +1,10 @@
 <app-navigation-menu></app-navigation-menu>
 <div class="content">
   <div class="container-images">
-    <img [src]="currentImage" class="main-image">
+    <div *ngIf="currentImage !== undefined; else emptyImage"><img [src]="currentImage" class="main-image"></div>
+    <ng-template #emptyImage>
+      <div class="emptyImage"></div>
+    </ng-template>
     <div class="list-image">
       <div *ngFor="let image of images; let i = index">
         <img [src]="image" class="image" (click)="setCurrentImage(image)">

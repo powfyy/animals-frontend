@@ -10,5 +10,6 @@ export class Pet{
   photoRefs:string[];
   city:string;
   nameOrganization:string;
+  usernameOrganization:string;
   constructor(){}
 }

@@ -1,8 +1,34 @@
 <div class="content">
-<div  class="chats">
-
-</div>
-<div class="chat_body">
-
-</div>
+  <div  class="chats">
+  <ul>
+     <li *ngFor="let chat of chats" class="list-item" (click)="selectChat(chat)" [ngClass]="{ 'selected-chat': chat === selectedChat }">
+       <mat-icon *ngIf="!isOrg()">pets</mat-icon>
+       <h4 *ngIf="!isOrg();else nameUser">&nbsp; &nbsp;{{chat.organizationName}}</h4>
+       <ng-template #nameUser><h4>{{chat.userName}}</h4></ng-template>
+        <mat-divider></mat-divider>
+      </li>
+    </ul>
+  </div>
+  <mat-divider [vertical]="true"></mat-divider>
+  <div class="chat-body">
+    <div>
+      <div *ngFor="let message of messages">
+        <div *ngIf="isMyMessage(message);else interlocutor" class="message my-message">
+          <p>{{message.message}}</p>
+          <p class="mydate">{{toLocaleDate(message.date)}}</p>
+        </div>
+        <ng-template #interlocutor>
+          <div class="message interlocutor">
+            <p>{{message.message}}</p>
+            <p class="date">{{toLocaleDate(message.date)}}</p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <div class="input-btn">
+      <button mat-mini-fab class="reload" (click)="loadMessages(selectedChat.id)"><mat-icon>replay</mat-icon></button>
+      <input class="input" [(ngModel)] = "form.text">
+      <button mat-mini-fab class="btn" (click)="sendMessage()"><mat-icon>send</mat-icon></button>
+    </div>
+  </div>
 </div>

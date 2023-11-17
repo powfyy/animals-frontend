@@ -2,7 +2,7 @@ import { PetService } from './../../services/pet.service';
 import { OrganizationService } from './../../services/organization.service';
 import { Organization } from './../../models/organization';
 import { FindAgeAnimalService } from './../../services/find-age-animal.service';
-import { Component, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DeleteConfirmDialogComponent } from '../delete-confirm-dialog/delete-confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Pet } from 'src/app/models/pet';
@@ -26,8 +26,13 @@ export class ProfileOrgComponent implements OnInit {
   showActivePet: boolean = true;
   showAdoptedPet: boolean = false;
   org:Organization;
-  constructor(public dialog: MatDialog, public findAgeAnimal:FindAgeAnimalService, private organizationService:OrganizationService,
-              private petService:PetService, private tokenStorageService: TokenStorageService, private router: Router) {}
+
+  constructor(public dialog: MatDialog,
+    public findAgeAnimal:FindAgeAnimalService,
+    private organizationService:OrganizationService,
+    private petService:PetService,
+    private tokenStorageService: TokenStorageService,
+    private router: Router) {}
 
   ngOnInit(): void {
     this.loadData();
@@ -73,6 +78,7 @@ export class ProfileOrgComponent implements OnInit {
       return null;
     })
   }
+
   setStatusDotColor(status:string):string{
     if(status==="ACTIVE"){
       return "rgb(65, 175, 65)";
@@ -85,30 +91,35 @@ export class ProfileOrgComponent implements OnInit {
     }
     return "black";
   }
+
   isGenderMan(gender:string){
     if(gender==="M"){
       return true;
     }
     return false;
   }
+
   isDog(type:string){
     if(type==="DOG"){
     return true;
     }
     return false;
   }
+
   isActivePet(status:string){
     if(status==="ACTIVE"){
       return true;
     }
     return false;
   }
+
   isAdoptedPet(status:string):boolean{
     if(status==="ADOPTED"){
       return true;
     }
     return false
   }
+
   activePet(petId:number){
     this.petService.updateStatusPet("ACTIVE",petId).subscribe(()=>{
       this.petService.getAllPets().subscribe(data=>{
@@ -118,6 +129,7 @@ export class ProfileOrgComponent implements OnInit {
       })
     });
   }
+
   freezePet(petId:number){
     this.petService.updateStatusPet("FREEZE",petId).subscribe(()=>{
       this.petService.getAllPets().subscribe(data=>{
@@ -127,15 +139,18 @@ export class ProfileOrgComponent implements OnInit {
       })
     });
   }
+
   getAgePet(date:string):string{
     return this.findAgeAnimal.getAge(date);
   }
+
   getPetBreed(breed:string|null):string{
     if(breed===null){
       return "Нет породы";
     }
     return "Метис "+ breed;
   }
+
   editInfo(){
     const dialogEdit = this.dialog.open(DialogEditWrapperComponent, {
       width: '400px',
@@ -150,6 +165,7 @@ export class ProfileOrgComponent implements OnInit {
     })
 
   }
+
   deleteAccount(){
     const dialogDelete = this.dialog.open(DeleteConfirmDialogComponent, {
       width: '400px',
@@ -180,6 +196,7 @@ export class ProfileOrgComponent implements OnInit {
       });
     });
   };
+
   updatePet(pet:Pet){
     const dialogEditPet = this.dialog.open(EditPetDialogWrapperComponent,{
       width: '900px',
@@ -194,6 +211,7 @@ export class ProfileOrgComponent implements OnInit {
       })
     })
   }
+
   listRequest(pet:Pet){
     const dialogListRequest = this.dialog.open (ListRequestDialogComponent, {
       width: '800px',
@@ -208,6 +226,7 @@ export class ProfileOrgComponent implements OnInit {
       })
     })
   }
+
   deletePet(id: number){
     const dialogDelete = this.dialog.open(DeleteConfirmDialogComponent, {
       width: '400px',

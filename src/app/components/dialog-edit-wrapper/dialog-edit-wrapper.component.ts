@@ -31,7 +31,6 @@ export class DialogEditWrapperComponent implements OnInit {
 
   isOrg(){
     if(this.tokenStorageService.getAuthorities() ==="ORG"){
-
       return true;
     }
     return false;

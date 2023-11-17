@@ -36,7 +36,8 @@ export class NavigationMenuComponent implements OnInit {
   openChats(){
     const dialogAddingNewStudent = this.dialog.open(ChatComponent, {
       width: '1000px',
-      data: null
+      data: null,
+      autoFocus: false
     });
   }
 }

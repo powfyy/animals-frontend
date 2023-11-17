@@ -12,7 +12,7 @@
   </mat-form-field>
 </div>
 <ng-template #org>
-<div mat-dialog-content class='secondContent'>
+  <div mat-dialog-content class='secondContent'>
     <div class="fields">
       <mat-form-field class="input">
         <input matInput type="text" placeholder="Название организации" [(ngModel)]="organization.nameOrganization" required>
@@ -32,11 +32,11 @@
         <input matInput type="number" placeholder="Номер паспорта" [(ngModel)]="organization.passportNumber" required>
       </mat-form-field>
     </div>
-</div>
+  </div>
 </ng-template>
 <div mat-dialog-actions>
   <button class='btn cancel' (click)="onNoClick()">Отмена</button>
-  <button class="btn save" [mat-dialog-close]="user" *ngIf="!isOrg();else org">Сохранить</button>
-  <ng-template #org><button class="btn save" [mat-dialog-close]="organization">Сохранить</button></ng-template>
+  <button class="btn save" [mat-dialog-close]="user" *ngIf="!isOrg();else orgBtn">Сохранить</button>
+  <ng-template #orgBtn><button class="btn save" [mat-dialog-close]="organization">Сохранить</button></ng-template>
 </div>
 

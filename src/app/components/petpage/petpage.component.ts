@@ -1,4 +1,3 @@
-import { OrganizationService } from './../../services/organization.service';
 import { MinioService } from './../../services/minio.service';
 import { Component, DefaultIterableDiffer, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -12,6 +11,8 @@ import { EditPetDialogWrapperComponent } from '../edit-pet-dialog-wrapper/edit-p
 import { MatDialog } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user.service';
 import { RequestDialogWrapperComponent } from '../request-dialog-wrapper/request-dialog-wrapper.component';
+import { ChatService } from 'src/app/services/chat.service';
+import { ChatComponent } from '../chat/chat.component';
 
 @Component({
   selector: 'app-petpage',
@@ -33,6 +34,7 @@ export class PetPageComponent implements OnInit {
     private tokenStorageService:TokenStorageService,
     private dialog:MatDialog,
     private userService:UserService,
+    private chatService:ChatService,
     private router:Router) { }
 
   ngOnInit(): void {
@@ -45,7 +47,6 @@ export class PetPageComponent implements OnInit {
       const petId = this.route.snapshot.paramMap.get('petId');
       this.petService.getPet(petId).subscribe((data) => {
         this.pet = data;
-        debugger
         this.checkRequest();
 
         if (this.pet.photoRefs.length > 0) {
@@ -73,6 +74,9 @@ export class PetPageComponent implements OnInit {
 
   isOrg():boolean{
     if(this.tokenStorageService.getAuthorities()==='ORG'){
+      if(this.tokenStorageService.getUsername() !== this.pet.usernameOrganization){
+        return false;
+      }
       return true;
     }
     return false;
@@ -94,8 +98,12 @@ export class PetPageComponent implements OnInit {
     return this.findAgeAnimal.getAge(date);
   }
 
-  setCurrentImage(image:SafeUrl):void{
-    this.currentImage = image;
+  setCurrentImage(image:SafeUrl):boolean{
+    if(image!==null){
+      this.currentImage = image;
+      return true;
+    }
+    return false;
   }
 
   updatePet(){
@@ -122,9 +130,22 @@ export class PetPageComponent implements OnInit {
           this.IsThereRequest=true;
         })
       })
+    const userUsername = this.tokenStorageService.getUsername();
+    if(userUsername!==null)
+      this.chatService.addRequestMessage(this.pet.id, userUsername, this.pet.usernameOrganization).subscribe(() => {
+
+    })
     }
     else{
       this.router.navigate(['login']);
     }
+  }
+
+  openChats(){
+    const dialogAddingNewStudent = this.dialog.open(ChatComponent, {
+      width: '1000px',
+      data: null,
+      autoFocus: false
+    });
   }
 }

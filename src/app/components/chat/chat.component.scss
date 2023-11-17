@@ -1,0 +1,95 @@
+.content{
+display: flex;
+}
+
+.chats{
+  width: 250px;;
+  height: 50vh;
+  border-radius: 5vh;
+
+  h4{
+    font-size: 18px;
+    margin: 0;
+    font-weight: 450;
+  }
+}
+.selected-chat{
+  background-color: #dadada;
+}
+ul{
+  list-style-type:none;
+  padding: 0;
+}
+
+.list-item{
+  display: flex;
+  align-items: center;
+  height: 7vh;
+  border-bottom: 2px solid #dadada;
+  &:hover{
+    background-color: #dadada;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+}
+
+.chat-body{
+  max-width: 700px;
+  height: 500px;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.message{
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 7px;
+  p {
+  margin: 1vh;
+  }
+}
+
+.my-message{
+  color: white;
+  background-color: rgb(73, 180, 96);
+  margin-left: auto;
+}
+
+.interlocutor{
+  color: black;
+  background-color: rgb(230, 230, 230);
+  margin-left: 30px;
+  margin-right: 100%;
+}
+
+.date{
+  text-align: end;
+  color:rgb(146, 146, 146);
+}
+.mydate{
+  text-align: end;
+  color:rgb(255, 255, 255);
+}
+.input-btn{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.input{
+  height: 35px;
+  background-color: #e9e9e9;
+  width: 700px;
+  font-size: 16px;
+}
+
+.btn{
+  background-color: rgb(73, 180, 96);
+}
+
+.reload{
+  background-color: rgb(73, 180, 96);
+}
