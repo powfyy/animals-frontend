@@ -87,5 +87,6 @@ export class ChatComponent implements OnInit {
     this.chatService.addMessage(newMessage).subscribe(() => {
       this.loadMessages(this.selectedChat.id);
     });
+    this.form.text = null;
   }
 }

@@ -20,7 +20,7 @@
         <input matInput type="text" placeholder="Фамилия" [(ngModel)]="form.lastname" required>
       </mat-form-field>
       <mat-form-field class="input">
-        <input matInput type="text" placeholder="Номер телефона" [(ngModel)]="form.phoneNumber" required>
+        <input matInput type="number" placeholder="Номер телефона" [(ngModel)]="form.phoneNumber" required>
       </mat-form-field>
       <mat-error class="errorMessageLogin" *ngIf="errorMessage">{{ errorMessage }}</mat-error>
       <div mat-actions class="actions">

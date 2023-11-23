@@ -32,14 +32,19 @@ ul{
     cursor: pointer;
   }
 }
-
+.chat-container{
+  display: flex;
+  flex-direction: column;
+}
 .chat-body{
+  position: relative;
   max-width: 700px;
   height: 500px;
   margin-bottom: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow-y: scroll;
 }
 
 .message{
@@ -77,6 +82,7 @@ ul{
   display: flex;
   align-items: center;
   gap: 15px;
+
 }
 
 .input{

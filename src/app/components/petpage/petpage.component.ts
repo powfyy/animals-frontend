@@ -130,22 +130,13 @@ export class PetPageComponent implements OnInit {
           this.IsThereRequest=true;
         })
       })
-    const userUsername = this.tokenStorageService.getUsername();
-    if(userUsername!==null)
-      this.chatService.addRequestMessage(this.pet.id, userUsername, this.pet.usernameOrganization).subscribe(() => {
-
-    })
+      const userUsername = this.tokenStorageService.getUsername();
+      if(userUsername!==null){
+        this.chatService.addRequestMessage(this.pet.id, userUsername, this.pet.usernameOrganization).subscribe(() => {})
+      }
     }
     else{
       this.router.navigate(['login']);
     }
-  }
-
-  openChats(){
-    const dialogAddingNewStudent = this.dialog.open(ChatComponent, {
-      width: '1000px',
-      data: null,
-      autoFocus: false
-    });
   }
 }

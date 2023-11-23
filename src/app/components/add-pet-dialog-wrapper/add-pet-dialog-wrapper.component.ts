@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { raceWith } from 'rxjs';
 import { PetService } from 'src/app/services/pet.service';
+import { DialogInformationWrapperComponent } from '../dialog-information-wrapper/dialog-information-wrapper.component';
+import { MessageResponse } from 'src/app/models/message-response';
 
 @Component({
   selector: 'app-add-pet-dialog-wrapper',
@@ -15,6 +17,7 @@ export class AddPetDialogWrapperComponent implements OnInit {
   formData= new FormData();
   constructor(
     private petService:PetService,
+    private dialog: MatDialog,
     public dialogRef: MatDialogRef<AddPetDialogWrapperComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
@@ -45,6 +48,11 @@ export class AddPetDialogWrapperComponent implements OnInit {
       resultForm.append("files", this.formData.get(`${el}`) as File)
     })
     if (!this.form.name || !this.form.gender || !this.form.typePet || !this.form.birthDay) {
+      const infoDialog = this.dialog.open(DialogInformationWrapperComponent,{
+        width: '400px',
+        data: new MessageResponse ("Заполните все обязательные поля!"),
+        autoFocus: false
+      })
       return;
       };
 

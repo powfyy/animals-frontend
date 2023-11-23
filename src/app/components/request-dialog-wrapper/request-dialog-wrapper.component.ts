@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ChatComponent } from '../chat/chat.component';
 
 @Component({
   selector: 'app-request-dialog-wrapper',
@@ -9,12 +10,18 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class RequestDialogWrapperComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<RequestDialogWrapperComponent>,
+    private dialog:MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
   ngOnInit(): void {
   }
-  close(){
+  goChat(){
     this.dialogRef.close();
+    const dialogAddingNewStudent = this.dialog.open(ChatComponent, {
+      width: '1000px',
+      data: null,
+      autoFocus: false
+    });
   }
 }

@@ -25,7 +25,7 @@ export class HomePageComponent implements OnInit {
   pets:Pet[] = [];
   images:{petName:string, url:SafeUrl|null}[]=[];
   filterFields:FilterFields = new FilterFields(null,null,null,null,null);
-  pageSize:number=12;
+  pageSize:number=15;
   pageIndex:number=0;
   pageLength:number=0;
 

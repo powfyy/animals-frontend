@@ -1,3 +1,9 @@
+.container{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .content {
   border-radius: 15px;
   border: 2px solid rgb(250, 164, 73);
@@ -5,8 +11,9 @@
   padding: 0 0 20px 0;
   flex-direction: column;
   display: flex;
-
+  flex-grow: 1;
   width: 55vh;
+  max-height: a0;
   background-color: white;
   h2{
     text-align: center;
@@ -42,7 +49,7 @@ margin: 0;
 .btn{
   display: flex;
   justify-content: space-between;
-  margin: 15px 30px;
+  margin: 7vh 30px 15px 30px;
 }
 
 .btn-del{
@@ -70,4 +77,8 @@ margin: 0;
 
 .icon-edit{
   font-size: 20px;
+}
+
+.footer{
+  margin-top: auto;
 }

@@ -10,25 +10,25 @@
     </ul>
   </div>
   <mat-divider [vertical]="true"></mat-divider>
-  <div class="chat-body">
-    <div>
-      <div *ngFor="let message of messages">
-        <div *ngIf="isMyMessage(message);else interlocutor" class="message my-message">
-          <p>{{message.message}}</p>
-          <p class="mydate">{{toLocaleDate(message.date)}}</p>
-        </div>
-        <ng-template #interlocutor>
-          <div class="message interlocutor">
+<div class="chat-container">
+    <div class="chat-body">
+        <div *ngFor="let message of messages">
+          <div *ngIf="isMyMessage(message);else interlocutor" class="message my-message">
             <p>{{message.message}}</p>
-            <p class="date">{{toLocaleDate(message.date)}}</p>
+            <p class="mydate">{{toLocaleDate(message.date)}}</p>
           </div>
-        </ng-template>
-      </div>
+          <ng-template #interlocutor>
+            <div class="message interlocutor">
+              <p>{{message.message}}</p>
+              <p class="date">{{toLocaleDate(message.date)}}</p>
+            </div>
+          </ng-template>
+        </div>
     </div>
-    <div class="input-btn">
+    <div *ngIf="selectedChat!==undefined" class="input-btn">
       <button mat-mini-fab class="reload" (click)="loadMessages(selectedChat.id)"><mat-icon>replay</mat-icon></button>
       <input class="input" [(ngModel)] = "form.text">
       <button mat-mini-fab class="btn" (click)="sendMessage()"><mat-icon>send</mat-icon></button>
-    </div>
+</div>
   </div>
 </div>

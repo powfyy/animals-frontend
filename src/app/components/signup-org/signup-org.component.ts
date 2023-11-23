@@ -41,7 +41,7 @@ export class SignupOrgComponent implements OnInit {
       );
 
     this.authService.signupOrg(this.signupOrgInfo).subscribe(
-      data => {
+      () => {
         this.isSignedUp = true;
         this.isSignUpFailed = false;
       },
