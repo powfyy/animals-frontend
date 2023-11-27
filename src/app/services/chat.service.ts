@@ -17,11 +17,11 @@ export class ChatService {
   constructor(private http:HttpClient) { }
 
   getAllChats(): Observable<Chat[]> {
-    return this.http.get<Chat[]> ("/api/chats", httpOptions);
+    return this.http.get<Chat[]>("/api/chats", httpOptions);
   }
 
-  getMessages(chatId:number): Observable<Message[]>{
-    return this.http.get<Message[]>(`/api/chats/messages/${chatId}`, httpOptions);
+  getMessages(chatId:number, page:number, size:number): Observable<any>{
+    return this.http.get<any>(`/api/chats/messages/${chatId}/?page=${page}&size=${size}`, httpOptions);
   }
 
   addMessage(message:Message): Observable<any>{

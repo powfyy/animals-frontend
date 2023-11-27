@@ -1,6 +1,6 @@
 import { Chat } from './../../models/chat';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ChatService } from 'src/app/services/chat.service';
 import { Message } from 'src/app/models/message';
@@ -13,17 +13,27 @@ import { Message } from 'src/app/models/message';
 export class ChatComponent implements OnInit {
   chats:Chat[]=[];
   messages: Message[]=[];
+  totalMessages:number = 0
   selectedChat:Chat;
   form:any = {};
+  page:number = 0;
+  size:number = 35;
+
+  @ViewChild('chatBody') chatBody: ElementRef;
+
   constructor(public dialogRef: MatDialogRef<ChatComponent>,
     private chatService:ChatService,
     private tokenStorageService:TokenStorageService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
-     }
+    }
 
   ngOnInit(): void {
     this.loadData();
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
   }
 
   onNoClick(): void{
@@ -35,11 +45,38 @@ export class ChatComponent implements OnInit {
       this.chats = data;
     })
   }
+
   loadMessages(chatId:number): void{
-    this.chatService.getMessages(chatId).subscribe((data) => {
-      this.messages = data;
+    this.chatService.getMessages(chatId,this.page,this.size).subscribe((data) => {
+      this.messages = data.content;
+      this.totalMessages = data.totalElements;
     })
   }
+
+  uploadMsg(){
+    this.page++;
+    this.chatService.getMessages(this.selectedChat.id,this.page,this.size).subscribe((data) => {
+      data.content.forEach((element:Message) => {
+        this.messages.push(element)
+      });
+      this.totalMessages = data.totalElements;
+    });
+  }
+
+
+  handleScroll(): void {
+    if (this.chatBody.nativeElement.scrollTop === 0) {
+      this.page++;
+      this.loadMessages(this.selectedChat.id);
+    }
+  }
+
+  scrollToBottom(): void {
+    if(this.chatBody) {
+      this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight;
+    }
+  }
+
   isOrg(): boolean{
     if(this.tokenStorageService.getAuthorities()==="ORG"){
       return true;
@@ -85,6 +122,7 @@ export class ChatComponent implements OnInit {
       newMessage.userUsername = username;
     }
     this.chatService.addMessage(newMessage).subscribe(() => {
+      this.page = 0;
       this.loadMessages(this.selectedChat.id);
     });
     this.form.text = null;

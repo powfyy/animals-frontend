@@ -42,9 +42,22 @@ ul{
   height: 500px;
   margin-bottom: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   justify-content: space-between;
   overflow-y: scroll;
+}
+
+.upload-msg{
+  height: 30px;
+  top: 20px;
+  right: 40%;
+  z-index: 1;
+  background-color: transparent;
+  border-radius: 5px;
+  &:hover{
+    cursor: pointer;
+  }
+
 }
 
 .message{
