@@ -62,6 +62,12 @@ export class HomePageComponent implements OnInit {
     });
   };
 
+  SearchInputKeyPress(event: any) {
+    if (event.key === 'Enter') {
+      this.loadData();
+    }
+  }
+
   getImageUrl(petName:string):SafeUrl|null{
     const image = this.images.find(image => image.petName === petName);
     return image ? image.url : null;

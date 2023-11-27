@@ -4,7 +4,7 @@
 <div class="content">
   <div class="search-menu">
     <div class="input-container">
-      <input class="search" placeholder="Поиск по кличке" [(ngModel)] = "filterFields.name">
+      <input class="search" placeholder="Поиск по кличке" [(ngModel)] = "filterFields.name" (keyup)="SearchInputKeyPress($event)">
       <button mat-raised-button class="search-btn" (click)="loadData()">Поиск</button>
     </div>
     <mat-radio-group class="gender-btn" [(ngModel)]="filterFields.gender" (change)="loadData()">

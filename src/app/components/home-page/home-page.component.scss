@@ -40,6 +40,9 @@ h3{
   background-color: rgb(47, 160, 72);
   color: white;
   border-radius: 10px;
+  &:hover{
+    background-color: rgb(34, 116, 52);;
+  }
 }
 .gender-btn{
   display:flex;
