@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { Pet } from 'src/app/models/pet';
 import { User } from 'src/app/models/user';
 import { DialogInformationWrapperComponent } from '../../dialog-information-wrapper/dialog-information-wrapper.component';
+import { ChatComponent } from '../../chat/chat.component';
 
 @Component({
   selector: 'app-list-request-dialog',
@@ -23,6 +24,7 @@ users:User[];
       this.users=data;
     })
   }
+
   isThereRequest():boolean{
     if(this.users[0]){
       return true
@@ -30,6 +32,7 @@ users:User[];
     this.dialogRef.updateSize("400px")
     return false;
   }
+
   adoptPet(username:string):void{
     this.petService.adoptPet(username, this.pet.id).subscribe(text=>{
       const dialogInfo = this.dialog.open(DialogInformationWrapperComponent,{
@@ -42,9 +45,7 @@ users:User[];
       })
     });
   }
-  goDialog(username:string):void{
 
-  }
   deleteUser(username:string):void{
     this.petService.deleteUserRequest(username, this.pet.id).subscribe(text=>{
       const dialogInfo = this.dialog.open(DialogInformationWrapperComponent, {
@@ -58,5 +59,14 @@ users:User[];
         })
       })
     })
+  }
+
+  goChat(){
+    this.dialogRef.close();
+    const dialogAddingNewStudent = this.dialog.open(ChatComponent, {
+      width: '1000px',
+      data: null,
+      autoFocus: false
+    });
   }
 }

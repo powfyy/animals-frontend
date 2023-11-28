@@ -5,7 +5,7 @@
             <p><mat-icon class="icon">account_circle</mat-icon>{{user.name}}&nbsp;&nbsp;{{user.lastname}}&nbsp;&nbsp;{{user.phoneNumber}}</p>
           </div>
           <div>
-            <button class="button dialog" mat-raised-button (click)="goDialog(user.username)">Перейти в диалог</button>
+            <button class="button dialog" mat-raised-button (click)="goChat()">Перейти в диалог</button>
             <button class="button" mat-raised-button color="primary" (click)="adoptPet(user.username)">Отдать питомца</button>
             <button class="button delete" mat-raised-button (click)="deleteUser(user.username)">Удалить заявку</button>
           </div>
