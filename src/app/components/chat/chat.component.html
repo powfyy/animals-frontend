@@ -1,6 +1,6 @@
 <div class="content">
   <div  class="chats">
-  <ul>
+    <ul>
      <li *ngFor="let chat of chats" class="list-item" (click)="selectChat(chat)" [ngClass]="{ 'selected-chat': chat === selectedChat }">
        <mat-icon *ngIf="!isOrg()">pets</mat-icon>
        <h4 *ngIf="!isOrg();else nameUser">&nbsp; &nbsp;{{chat.organizationName}}</h4>
@@ -8,6 +8,9 @@
         <mat-divider></mat-divider>
       </li>
     </ul>
+    <div class="upload-chats-container">
+      <button class="upload-chats" *ngIf="chats.length!==totalChats" (click)="uploadChats()">Посмотреть еще</button>
+    </div>
   </div>
   <mat-divider [vertical]="true"></mat-divider>
 <div class="chat-container">

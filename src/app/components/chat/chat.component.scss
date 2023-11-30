@@ -6,13 +6,32 @@ display: flex;
   width: 250px;;
   height: 50vh;
   border-radius: 5vh;
-
+  display: flex;
+  flex-direction: column;
   h4{
     font-size: 18px;
     margin: 0;
     font-weight: 450;
   }
 }
+
+.upload-chats-container{
+  display: flex;
+  justify-content: center;
+}
+
+.upload-chats{
+  height: 30px;
+  width: 50%;
+  z-index: 1;
+  background-color: transparent;
+  border-radius: 5px;
+  &:hover{
+    cursor: pointer;
+  }
+}
+
+
 .selected-chat{
   background-color: #dadada;
 }
@@ -57,7 +76,6 @@ ul{
   &:hover{
     cursor: pointer;
   }
-
 }
 
 .message{

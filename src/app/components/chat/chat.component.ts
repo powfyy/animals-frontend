@@ -13,11 +13,14 @@ import { Message } from 'src/app/models/message';
 export class ChatComponent implements OnInit {
   chats:Chat[]=[];
   messages: Message[]=[];
-  totalMessages:number = 0
   selectedChat:Chat;
   form:any = {};
-  page:number = 0;
-  size:number = 35;
+  pageMessages:number = 0;
+  sizeMessages:number = 35;
+  totalMessages:number = 0;
+  pageChats:number = 0;
+  sizeChats:number = 35;
+  totalChats:number = 0;
 
   @ViewChild('chatBody') chatBody: ElementRef;
 
@@ -41,21 +44,33 @@ export class ChatComponent implements OnInit {
   }
 
   loadData(): void{
-    this.chatService.getAllChats().subscribe((data) => {
-      this.chats = data;
+    this.chatService.getChats(this.pageChats, this.sizeChats).subscribe((data) => {
+      this.chats = data.content;
+      this.totalChats = data.totalElements;
     })
   }
 
   loadMessages(chatId:number): void{
-    this.chatService.getMessages(chatId,this.page,this.size).subscribe((data) => {
+    this.chatService.getMessages(chatId,this.pageMessages,this.sizeMessages).subscribe((data) => {
       this.messages = data.content;
       this.totalMessages = data.totalElements;
     })
   }
 
-  uploadMsg(){
-    this.page++;
-    this.chatService.getMessages(this.selectedChat.id,this.page,this.size).subscribe((data) => {
+  uploadChats():void {
+    this.pageChats++;
+    this.chatService.getChats(this.pageChats, this.sizeChats).subscribe((data) => {
+      data.content.forEach((element:Chat) => {
+        this.chats.push(element)
+      });
+      this.totalChats = data.totalElements;
+    });
+  }
+
+
+  uploadMsg():void {
+    this.pageMessages++;
+    this.chatService.getMessages(this.selectedChat.id,this.pageMessages,this.sizeMessages).subscribe((data) => {
       data.content.forEach((element:Message) => {
         this.messages.push(element)
       });
@@ -66,7 +81,7 @@ export class ChatComponent implements OnInit {
 
   handleScroll(): void {
     if (this.chatBody.nativeElement.scrollTop === 0) {
-      this.page++;
+      this.pageMessages++;
       this.loadMessages(this.selectedChat.id);
     }
   }
@@ -122,7 +137,7 @@ export class ChatComponent implements OnInit {
       newMessage.userUsername = username;
     }
     this.chatService.addMessage(newMessage).subscribe(() => {
-      this.page = 0;
+      this.pageMessages = 0;
       this.loadMessages(this.selectedChat.id);
     });
     this.form.text = null;

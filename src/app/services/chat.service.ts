@@ -16,8 +16,8 @@ export class ChatService {
 
   constructor(private http:HttpClient) { }
 
-  getAllChats(): Observable<Chat[]> {
-    return this.http.get<Chat[]>("/api/chats", httpOptions);
+  getChats(page:number, size:number): Observable<any> {
+    return this.http.get<any>(`/api/chats?page=${page}&size=${size}`, httpOptions);
   }
 
   getMessages(chatId:number, page:number, size:number): Observable<any>{
