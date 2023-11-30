@@ -112,8 +112,7 @@ export class PetPageComponent implements OnInit {
       data: this.pet,
       autoFocus: false,
     })
-    dialogEditPet.afterClosed().subscribe((result:Pet)=>{
-      this.pet = result;
+    dialogEditPet.afterClosed().subscribe(()=>{
       this.images = [];
       this.loadData();
     })
