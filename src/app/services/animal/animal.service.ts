@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Page } from '../models/Page';
-import { AnimalDto } from '../models/animal/AnimalDto';
-import { AnimalSaveDto } from '../models/animal/AnimalSaveDto';
-import { AnimalFilterDto } from '../models/animal/AnimalFilterDto';
+import { Page } from '../../models/Page';
+import { AnimalDto } from '../../models/animal/AnimalDto';
+import { AnimalSaveDto } from '../../models/animal/AnimalSaveDto';
+import { AnimalFilterDto } from '../../models/animal/AnimalFilterDto';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
