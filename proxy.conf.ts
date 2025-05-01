@@ -1,5 +1,5 @@
 const config = {
-  target: "http://localhost:8080",
+  target: "http://localhost:8080/api",
   changeOrigin: false,
   secure:false,
   logLevel: 'debug',
