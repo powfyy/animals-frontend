@@ -1,5 +1,5 @@
-import { AnimalStatusType } from "../type/AnimalStatusType";
-import { GenderType } from "../type/GenderType";
+import { AnimalStatusType } from "../type/animal/AnimalStatusType";
+import { GenderType } from "../type/animal/GenderType";
 
 export class AnimalSaveDto {
   id?: number;

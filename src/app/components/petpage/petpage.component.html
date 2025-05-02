@@ -1,30 +1,62 @@
 <app-navigation-menu></app-navigation-menu>
+
 <div class="content">
+  <!-- Фотографии животного -->
   <div class="container-images">
-    <div *ngIf="currentImage !== undefined; else emptyImage"><img [src]="currentImage" class="main-image"></div>
+    <div *ngIf="currentImage !== undefined; else emptyImage">
+      <img [src]="currentImage" class="main-image" />
+    </div>
     <ng-template #emptyImage>
       <div class="emptyImage"></div>
     </ng-template>
+
     <div class="list-image">
-      <div *ngFor="let image of images; let i = index">
-        <img [src]="image" class="image" (click)="setCurrentImage(image)">
+      <div *ngFor="let image of images">
+        <img
+          [src]="image"
+          class="image"
+          [ngClass]="{ active: image === currentImage }"
+          (click)="setCurrentImage(image)" />
       </div>
     </div>
   </div>
-  <div>
-    <div class="info">
-        <h2>{{pet.name}}</h2>
-        <p class="org-city">{{pet.nameOrganization}}&nbsp;/&nbsp;{{pet.city}}</p>
-        <p>Пол: {{getGender(pet.gender)}}</p>
-        <p>Возраст: {{getPetAge(pet.birthDay)}}</p>
-        <p>Порода: {{getPetBreed(pet.breed)}}</p>
-        <h3>Описание</h3>
-        <p class="description">{{pet.description}}</p>
+
+  <!-- Данные о животном -->
+  <div class="info">
+    <div class="basic-info">
+      <h2>{{ animal.name }}</h2>
+      <p class="org-city">{{ animal.organizationName }} / {{ animal.city }}</p>
+      <p><strong>Пол:</strong> {{ getGender(animal.gender) }}</p>
+      <p><strong>Возраст:</strong> {{ getPetAge(animal.birthDay) }}</p>
+      <p><strong>Вид:</strong> {{ animal.type }}</p>
+      <p><strong>Порода:</strong> {{ getPetBreed(animal.breed) }}</p>
+
+      <!-- Характеристики -->
+      <div class="attributes-block" *ngIf="animal.attributes && (animal.attributes | keyvalue).length > 0">
+        <h3>Характеристики</h3>
+        <div class="attribute-grid">
+          <div class="attribute-item" *ngFor="let attr of animal.attributes | keyvalue">
+            <span class="attr-name">{{ attr.key }}:</span>
+            <span class="attr-value">{{ attr.value }}</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="buttons">
-      <button mat-raised-button class="sendRequest" (click)="sendRequest()" [disabled]="IsThereRequest">Отправить заявку</button>
-      <button mat-raised-button *ngIf="isOrg()" class="update" (click)="updatePet()">Изменить</button>
+
+    <div class="description-block">
+      <h3>Описание</h3>
+      <p class="description">{{ animal.description }}</p>
     </div>
   </div>
-</div>
 
+  <!-- Кнопки -->
+  <div class="buttons">
+    <button mat-raised-button class="sendRequest" (click)="sendRequest()" [disabled]="IsThereRequest">
+      Отправить заявку
+    </button>
+
+    <button mat-raised-button *ngIf="isOrg()" class="update" (click)="updatePet()">
+      Изменить
+    </button>
+  </div>
+</div>

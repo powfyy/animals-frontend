@@ -2,7 +2,7 @@ import { MinioService } from './../../services/minio.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Pet } from 'src/app/models/pet';
+import { AnimalDto } from 'src/app/models/animal/AnimalDto';
 import { PetService } from 'src/app/services/pet.service';
 
 @Component({
@@ -15,17 +15,17 @@ export class EditPetDialogWrapperComponent implements OnInit {
   deletedPhotoRefs: string[] = [];
   files: File[];
   formData= new FormData();
-  pet=new Pet();
+  animal=new AnimalDto();
   constructor(private petService:PetService, private sanitizer: DomSanitizer,
               private minioService:MinioService,
     public dialogRef: MatDialogRef<EditPetDialogWrapperComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Pet) {
-      this.pet = {...data}
+    @Inject(MAT_DIALOG_DATA) public data: AnimalDto) {
+      this.animal = {...data}
     }
   ngOnInit(): void {
-  if(this.pet.photoRefs){
-    this.pet.photoRefs.forEach((el)=>{
-      this.minioService.getImage(this.pet.id, this.pet.typePet, el).subscribe((blob)=>{
+  if(this.animal.photoRefs){
+    this.animal.photoRefs.forEach((el)=>{
+      this.minioService.getImage(this.animal.id, el).subscribe((blob)=>{
         const safeUrl: SafeUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
          const fileName: string = el;
         this.imagePaths.push({ name: fileName, url: safeUrl });
@@ -48,27 +48,27 @@ export class EditPetDialogWrapperComponent implements OnInit {
     this.imagePaths.splice(index,1);
   }
   updatePet(){
-    if (!this.pet.name || !this.pet.gender || !this.pet.typePet || !this.pet.birthDay) {
+    if (!this.animal.name || !this.animal.gender || !this.animal.type || !this.animal.birthDay) {
       return;
       };
-    if(this.pet.breed!==null){
-      this.pet.breed.toLowerCase();
-        this.pet.breed=this.pet.breed.replace("метис ","");
+    if(this.animal.breed!==null){
+      this.animal.breed.toLowerCase();
+        this.animal.breed=this.animal.breed.replace("метис ","");
       }
-    this.formData.append('name',this.pet.name);
-    this.formData.append('typePet',this.pet.typePet);
-    this.formData.append('birthDay',this.pet.birthDay);
-    this.formData.append('gender',this.pet.gender);
+    this.formData.append('name',this.animal.name);
+    this.formData.append('type',this.animal.type);
+    this.formData.append('birthDay',this.animal.birthDay);
+    this.formData.append('gender',this.animal.gender);
     this.deletedPhotoRefs.forEach((el)=>{
       this.formData.append('deletedPhotoRefs', el);
       })
-    if(this.pet.breed!=='' && this.pet.breed!==null){
-      this.formData.append('breed',this.pet.breed);
+    if(this.animal.breed!=='' && this.animal.breed!==null){
+      this.formData.append('breed',this.animal.breed);
       }
-    if(this.pet.description!=='' && this.pet.description!==null && this.pet.description!==undefined){
-        this.formData.append('description',this.pet.description);
+    if(this.animal.description!=='' && this.animal.description!==null && this.animal.description!==undefined){
+        this.formData.append('description',this.animal.description);
     }
-    this.petService.updatePet(this.formData, this.pet.id).subscribe(()=>{
+    this.petService.updatePet(this.formData, this.animal.id).subscribe(()=>{
       this.dialogRef.close();
     })
   }

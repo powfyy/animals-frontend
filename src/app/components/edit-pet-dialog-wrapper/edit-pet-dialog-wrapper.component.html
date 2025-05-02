@@ -2,19 +2,19 @@
   <div class="image-fields">
       <div class="fields">
         <mat-form-field class="name-breed name">
-          <input matInput type="text" placeholder="Кличка" [(ngModel)]="pet.name" required/>
+          <input matInput type="text" placeholder="Кличка" [(ngModel)]="animal.name" required/>
         </mat-form-field>
         <mat-form-field class="name-breed breed">
-          <input matInput type="text" placeholder="Порода" [(ngModel)]="pet.breed"/>
+          <input matInput type="text" placeholder="Порода" [(ngModel)]="animal.breed"/>
         </mat-form-field>
         <span class="notice">Если у питомца нет породы, оставьте поле пустым</span>
         <div class="radio-btn">
-          <mat-radio-group class="gender-btn" [(ngModel)] = "pet.gender">
+          <mat-radio-group class="gender-btn" [(ngModel)] = "animal.gender">
             <mat-radio-button value="M" class="male">М</mat-radio-button>
             <mat-radio-button value="F">Ж</mat-radio-button>
           </mat-radio-group>
           <div class="type-btn">
-            <mat-radio-group [(ngModel)] = "pet.typePet">
+            <mat-radio-group [(ngModel)] = "animal.type">
               <mat-radio-button value="DOG" class="dog"
                 ><img
                   src="../../../assets/profile-svg/dog-face-svgrepo-com.svg"
@@ -30,7 +30,7 @@
         </div>
         <div class="date-description">
           <mat-form-field class="date">
-            <input matInput type="date" placeholder="Дата рождения" [(ngModel)]="pet.birthDay" required/>
+            <input matInput type="date" placeholder="Дата рождения" [(ngModel)]="animal.birthDay" required/>
           </mat-form-field>
         </div>
       </div>
@@ -63,7 +63,7 @@
         Состояние здоровья/прививки
         Какие-то сведения о характере питомца
         Контактный номер телефона"
-        [(ngModel)]="pet.description"></textarea>
+        [(ngModel)]="animal.description"></textarea>
       </mat-form-field>
       <div class="file-upload">
         <input type="file" class="file-input" accept=".jpg, .jpeg, .png, .jfif" (change)="onFileSelected($event)" #fileUpload/>

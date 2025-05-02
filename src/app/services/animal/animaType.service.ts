@@ -3,15 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Page } from '../../models/Page';
 import { AnimalDto } from '../../models/animal/AnimalDto';
-import { AnimalSaveDto } from '../../models/animal/AnimalSaveDto';
-import { AnimalFilterDto } from '../../models/animal/AnimalFilterDto';
 import { AnimalTypeDto } from 'src/app/models/animal/AnimalType';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-const url = "/animal/type"
+const url = "/api/animal/type"
 
 @Injectable({
   providedIn: 'root'

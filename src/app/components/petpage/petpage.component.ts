@@ -1,3 +1,4 @@
+import { AnimalDto } from './../../models/animal/AnimalDto';
 import { MinioService } from './../../services/minio.service';
 import { Component, DefaultIterableDiffer, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -12,7 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user.service';
 import { RequestDialogWrapperComponent } from '../request-dialog-wrapper/request-dialog-wrapper.component';
 import { ChatService } from 'src/app/services/chat.service';
-import { ChatComponent } from '../chat/chat.component';
+import { AnimalService } from 'src/app/services/animal/animal.service';
 
 @Component({
   selector: 'app-petpage',
@@ -22,11 +23,11 @@ import { ChatComponent } from '../chat/chat.component';
 export class PetPageComponent implements OnInit {
   images:SafeUrl[] = [];
   currentImage:SafeUrl;
-  pet:Pet;
+  animal:AnimalDto;
   org:Organization;
   IsThereRequest: boolean = true;
 
-  constructor(private petService:PetService,
+  constructor(private animalService:AnimalService,
     private minioService:MinioService,
     private route: ActivatedRoute,
     private sanitizer:DomSanitizer,
@@ -38,20 +39,20 @@ export class PetPageComponent implements OnInit {
     private router:Router) { }
 
   ngOnInit(): void {
-    this.pet = new Pet;
+    this.animal = new AnimalDto;
     this.loadData();
   }
 
   loadData(){
-    if (this.route.snapshot.paramMap.get('petId') !== null) {
-      const petId = this.route.snapshot.paramMap.get('petId');
-      this.petService.getPet(petId).subscribe((data) => {
-        this.pet = data;
+    if (this.route.snapshot.paramMap.get('animalId') !== null) {
+      const animalId = this.route.snapshot.paramMap.get('animalId');
+      this.animalService.getById(Number(animalId)).subscribe((data) => {
+        this.animal = data;
         this.checkRequest();
 
-        if (this.pet.photoRefs.length > 0) {
-          this.pet.photoRefs.forEach((el) => {
-            this.minioService.getImage(this.pet.id, this.pet.typePet, el).subscribe((blob) => {
+        if (this.animal.photoRefs.length > 0) {
+          this.animal.photoRefs.forEach((reference) => {
+            this.minioService.getImage(this.animal.id, reference).subscribe((blob) => {
               this.images.push(this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob)));
               this.currentImage = this.images[0];
             });
@@ -63,7 +64,7 @@ export class PetPageComponent implements OnInit {
 
   checkRequest(): void {
     if(this.tokenStorageService.getAuthorities()==='USER'){
-      this.userService.checkRequest(this.pet.id).subscribe((data) => {
+      this.userService.checkRequest(this.animal.id).subscribe((data) => {
         this.IsThereRequest= data.isThereRequest;
       });
     }
@@ -74,7 +75,7 @@ export class PetPageComponent implements OnInit {
 
   isOrg():boolean{
     if(this.tokenStorageService.getAuthorities()==='ORG'){
-      if(this.tokenStorageService.getUsername() !== this.pet.usernameOrganization){
+      if(this.tokenStorageService.getUsername() !== this.animal.organizationUsername){
         return false;
       }
       return true;
@@ -109,7 +110,7 @@ export class PetPageComponent implements OnInit {
   updatePet(){
     const dialogEditPet = this.dialog.open(EditPetDialogWrapperComponent,{
       width: '900px',
-      data: this.pet,
+      data: this.animal,
       autoFocus: false,
     })
     dialogEditPet.afterClosed().subscribe(()=>{
@@ -120,7 +121,7 @@ export class PetPageComponent implements OnInit {
 
   sendRequest(){
     if(this.tokenStorageService.getAuthorities()==="USER"){
-      this.userService.sendRequest(this.pet.id).subscribe(()=>{
+      this.userService.sendRequest(this.animal.id).subscribe(()=>{
         const dialogInfo = this.dialog.open(RequestDialogWrapperComponent,{
           width: "400px",
           autoFocus:false,
@@ -131,7 +132,7 @@ export class PetPageComponent implements OnInit {
       })
       const userUsername = this.tokenStorageService.getUsername();
       if(userUsername!==null){
-        this.chatService.addRequestMessage(this.pet.id, userUsername, this.pet.usernameOrganization).subscribe(() => {})
+        this.chatService.addRequestMessage(this.animal.id, userUsername, this.animal.organizationUsername).subscribe(() => {})
       }
     }
     else{

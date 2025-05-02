@@ -53,7 +53,7 @@ export class HomePageComponent implements OnInit {
       this.pageLength = data.totalElements;
       this.pets.forEach((pet)=>{
         if(pet.photoRefs.length>0){
-          this.minioService.getImage(pet.id, pet.typePet, pet.photoRefs[0]).subscribe((blob)=>{
+          this.minioService.getImage(pet.id, pet.photoRefs[0]).subscribe((blob)=>{
           const safeUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
            this.images.push({petName:pet.name, url:safeUrl});
           });

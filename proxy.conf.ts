@@ -1,5 +1,5 @@
 const config = {
-  target: "http://localhost:8080/api",
+  target: "http://localhost:8080",
   changeOrigin: false,
   secure:false,
   logLevel: 'debug',
@@ -8,13 +8,13 @@ const config = {
 const minio = {
   target: "http://localhost:9000",
   changeOrigin:false,
-  secuer:false,
+  secure:false,
   logLevel:'debug',
 };
 
 const PROXY_CONFIG = {
   "/api/*":config,
-  "/${petId}-${petType}/${photoRef}":minio,
+  "/animal-${animalId}/${photoRef}":minio,
 }
 
 module.exports= PROXY_CONFIG

@@ -10,7 +10,7 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-const url = "/animal"
+const url = "/api/animal"
 
 @Injectable({
   providedIn: 'root'

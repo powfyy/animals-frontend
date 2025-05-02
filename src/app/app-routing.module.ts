@@ -19,7 +19,7 @@ const routes: Routes = [
   {path: 'signup/organization',component: SignupOrgComponent},
   {path: 'about',component: AboutComponent},
   {path: 'profile',component: ProfileUserComponent},
-  {path: 'home/:petId',component: PetPageComponent},
+  {path: 'home/:animalId',component: PetPageComponent},
 ];
 
 @NgModule({

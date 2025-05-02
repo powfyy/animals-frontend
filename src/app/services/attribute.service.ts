@@ -8,7 +8,7 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-const url = "/attribute"
+const url = "/api/attribute"
 
 @Injectable({
   providedIn: 'root'

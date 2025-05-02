@@ -6,9 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MinioService {
-  getImage(petId:number, petType:string, photoRef:string):Observable<Blob>{
-    petType = petType.toLowerCase();
-    return this.http.get(`http://localhost:9000/${petId}-${petType}/${photoRef}`, { responseType: 'blob' });
+
+  private readonly BUCKET_PREFIX: string = 'animal-';
+
+  getImage(animalId:number, photoRef:string):Observable<Blob>{
+    return this.http.get(`http://localhost:9000/${this.BUCKET_PREFIX}${animalId}/${photoRef}`, { responseType: 'blob' });
   }
   constructor(private http: HttpClient){};
 }

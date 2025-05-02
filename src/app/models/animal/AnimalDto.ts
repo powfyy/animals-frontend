@@ -1,4 +1,4 @@
-export interface AnimalDto {
+export class AnimalDto {
   id: number;
   name: string;
   gender: string;
@@ -11,4 +11,5 @@ export interface AnimalDto {
   city: string;
   organizationName: string;
   organizationUsername: string;
+  attributes: Map<string, string>;
 }

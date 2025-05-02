@@ -1,4 +1,4 @@
-import { GenderType } from "../type/GenderType";
+import { GenderType } from "../type/animal/GenderType";
 
 export class AnimalFilterDto {
 
