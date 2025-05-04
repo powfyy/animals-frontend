@@ -28,8 +28,8 @@ export class AnimalService {
     return this.http.get<AnimalDto>(`${url}/${id}`, httpOptions)
   }
 
-  search(filter: AnimalFilterDto): Observable<Page<AnimalDto>> {
-    return this.http.post<Page<AnimalDto>>(`${url}/filter`, filter, httpOptions)
+  search(filter: AnimalFilterDto, page:number, size:number): Observable<Page<AnimalDto>> {
+    return this.http.post<Page<AnimalDto>>(`${url}/filter?page=${page}&size=${size}`, filter, httpOptions)
   }
 
   create(animal:AnimalSaveDto): Observable<AnimalDto> {

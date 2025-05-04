@@ -1,6 +1,6 @@
+import { OrganizationDto } from './../../models/organization/OrganizationDto';
 import { PetService } from './../../services/pet.service';
 import { OrganizationService } from './../../services/organization.service';
-import { Organization } from './../../models/organization';
 import { FindAgeAnimalService } from './../../services/find-age-animal.service';
 import { Component, OnInit } from '@angular/core';
 import { DeleteConfirmDialogComponent } from '../delete-confirm-dialog/delete-confirm-dialog.component';
@@ -25,7 +25,7 @@ export class ProfileOrgComponent implements OnInit {
   showFrozenPet:boolean = false;
   showActivePet: boolean = true;
   showAdoptedPet: boolean = false;
-  org:Organization;
+  org:OrganizationDto;
 
   constructor(public dialog: MatDialog,
     public findAgeAnimal:FindAgeAnimalService,
@@ -40,8 +40,8 @@ export class ProfileOrgComponent implements OnInit {
   }
 
   loadData(){
-    this.org = new Organization;
-    this.organizationService.getCurrentOrganization().subscribe(data => {
+    this.org = new OrganizationDto;
+    this.organizationService.getByUsername(this.tokenStorageService.getUsername()).subscribe(data => {
       this.org = data;
     });
     this.petService.getAllPets().subscribe(data=>{
@@ -157,10 +157,10 @@ export class ProfileOrgComponent implements OnInit {
       data: this.org,
       autoFocus:false,
     });
-    dialogEdit.afterClosed().subscribe((result:Organization)=>{
+    dialogEdit.afterClosed().subscribe((result:OrganizationDto)=>{
       if(result!=null){
-      this.organizationService.updateOrganization(result).subscribe(()=>
-      this.organizationService.getCurrentOrganization().subscribe(data=>this.org = data));
+      this.organizationService.update(result).subscribe(()=>
+      this.organizationService.getByUsername(this.tokenStorageService.getUsername()).subscribe(data=>this.org = data));
       }
     })
 
@@ -174,7 +174,7 @@ export class ProfileOrgComponent implements OnInit {
     });
     dialogDelete.afterClosed().subscribe(result=>{
       if(result===true){
-        this.organizationService.deleteOrganization().subscribe(()=>{
+        this.organizationService.delete().subscribe(()=>{
         this.tokenStorageService.signOut();
         this.router.navigate(['home']);
         });

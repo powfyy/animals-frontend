@@ -1,18 +1,19 @@
-import { FilterFields } from './../../models/filter-fields';
-import { Organization } from './../../models/organization';
 import { TokenStorageService } from './../../services/token-storage.service';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Pet } from 'src/app/models/pet';
 import { FindAgeAnimalService } from 'src/app/services/find-age-animal.service';
 import { MinioService } from 'src/app/services/minio.service';
 import { OrganizationService } from 'src/app/services/organization.service';
-import { PetService } from 'src/app/services/pet.service';
 import { AddPetDialogWrapperComponent } from '../add-pet-dialog-wrapper/add-pet-dialog-wrapper.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import { AnimalDto } from 'src/app/models/animal/AnimalDto';
+import { AnimalService } from 'src/app/services/animal/animal.service';
+import { OrganizationShortDto } from 'src/app/models/organization/OrganizationShortDto';
+import { AnimalTypeService } from 'src/app/services/animal/animaType.service';
+import { AnimalTypeDto } from 'src/app/models/animal/AnimalType';
+import { AnimalFilterDto } from 'src/app/models/animal/AnimalFilterDto';
 
 @Component({
   selector: 'app-home-page',
@@ -21,10 +22,11 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class HomePageComponent implements OnInit {
   cities:Set<String>= new Set<string>();
-  orgs:Organization[] = [];
-  pets:Pet[] = [];
-  images:{petName:string, url:SafeUrl|null}[]=[];
-  filterFields:FilterFields = new FilterFields(null,null,null,null,null);
+  orgs:OrganizationShortDto[] = [];
+  animals:AnimalDto[] = [];
+  animalTypes: AnimalTypeDto[] = [];
+  images:{animalName:string, url:SafeUrl|null}[]=[];
+  filterFields: AnimalFilterDto = new AnimalFilterDto();
   pageSize:number=15;
   pageIndex:number=0;
   pageLength:number=0;
@@ -32,30 +34,35 @@ export class HomePageComponent implements OnInit {
   constructor(private findAgeAnimal:FindAgeAnimalService,
   private minioService:MinioService,
   private sanitizer:DomSanitizer,
-  private petService:PetService,
+  private animalService:AnimalService,
   private organizationService:OrganizationService,
   private router:Router, private dialog:MatDialog,
-  private tokenStorageService:TokenStorageService) { }
+  private tokenStorageService:TokenStorageService,
+  private animalTypeService: AnimalTypeService
+) { }
 
   ngOnInit(): void {
-    this.loadData();
-    this.organizationService.getAllOrganization().subscribe((data)=>{
+    this.search();
+    this.organizationService.getAll().subscribe((data)=>{
       this.orgs = data;
       this.orgs.forEach((org)=>{
         this.cities.add(org.city);
       })
     })
+    this.animalTypeService.getAll(0, 1000).subscribe((types) => {
+      this.animalTypes = types.content;
+    })
   }
 
-  loadData(){
-    this.petService.getFilteredPets(this.filterFields, this.pageIndex, this.pageSize).subscribe((data)=>{
-      this.pets = data.content;
+  search(){
+    this.animalService.search(this.filterFields, this.pageIndex, this.pageSize).subscribe((data)=>{
+      this.animals = data.content;
       this.pageLength = data.totalElements;
-      this.pets.forEach((pet)=>{
-        if(pet.photoRefs.length>0){
-          this.minioService.getImage(pet.id, pet.photoRefs[0]).subscribe((blob)=>{
+      this.animals.forEach((animal)=>{
+        if(animal.photoRefs.length>0){
+          this.minioService.getImage(animal.id, animal.photoRefs[0]).subscribe((blob)=>{
           const safeUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
-           this.images.push({petName:pet.name, url:safeUrl});
+           this.images.push({animalName:animal.name, url:safeUrl});
           });
         }
       })
@@ -64,12 +71,12 @@ export class HomePageComponent implements OnInit {
 
   SearchInputKeyPress(event: any) {
     if (event.key === 'Enter') {
-      this.loadData();
+      this.search();
     }
   }
 
-  getImageUrl(petName:string):SafeUrl|null{
-    const image = this.images.find(image => image.petName === petName);
+  getImageUrl(animalName:string):SafeUrl|null{
+    const image = this.images.find(image => image.animalName === animalName);
     return image ? image.url : null;
   }
 
@@ -107,13 +114,13 @@ export class HomePageComponent implements OnInit {
       autoFocus: false,
     });
     dialogAddPet.afterClosed().subscribe(()=>{
-      this.loadData();
+      this.search();
     });
   }
 
   changePage(event: PageEvent):void{
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.loadData();
+    this.search();
   }
 }

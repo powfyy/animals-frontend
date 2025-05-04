@@ -1,11 +1,8 @@
 import { AnimalDto } from './../../models/animal/AnimalDto';
 import { MinioService } from './../../services/minio.service';
-import { Component, DefaultIterableDiffer, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Organization } from 'src/app/models/organization';
-import { Pet } from 'src/app/models/pet';
-import { PetService } from 'src/app/services/pet.service';
 import { FindAgeAnimalService } from 'src/app/services/find-age-animal.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { EditPetDialogWrapperComponent } from '../edit-pet-dialog-wrapper/edit-pet-dialog-wrapper.component';
@@ -14,6 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 import { RequestDialogWrapperComponent } from '../request-dialog-wrapper/request-dialog-wrapper.component';
 import { ChatService } from 'src/app/services/chat.service';
 import { AnimalService } from 'src/app/services/animal/animal.service';
+import { OrganizationDto } from 'src/app/models/organization/OrganizationDto';
 
 @Component({
   selector: 'app-petpage',
@@ -24,7 +22,7 @@ export class PetPageComponent implements OnInit {
   images:SafeUrl[] = [];
   currentImage:SafeUrl;
   animal:AnimalDto;
-  org:Organization;
+  org:OrganizationDto;
   IsThereRequest: boolean = true;
 
   constructor(private animalService:AnimalService,

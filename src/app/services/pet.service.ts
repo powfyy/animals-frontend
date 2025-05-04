@@ -32,11 +32,11 @@ export class PetService {
     if(filterFields.name==''){
       filterFields.name=null;
     }
-    if(filterFields.nameOrganization==''||filterFields.nameOrganization==undefined){
-      filterFields.nameOrganization= null;
+    if(filterFields.organizationName==''||filterFields.organizationName==undefined){
+      filterFields.organizationName= null;
     }
-    if(filterFields.petType=='all'){
-      filterFields.petType=null;
+    if(filterFields.type=='all'){
+      filterFields.type=null;
     }
     return this.http.post<any>(`/api/home/pets?page=${page}&size=${size}`,filterFields,httpOptions);
   }

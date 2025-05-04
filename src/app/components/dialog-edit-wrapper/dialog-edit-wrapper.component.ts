@@ -1,7 +1,7 @@
+import { OrganizationDto } from './../../models/organization/OrganizationDto';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Organization } from 'src/app/models/organization';
 import { User } from 'src/app/models/user';
 
 @Component({
@@ -11,7 +11,7 @@ import { User } from 'src/app/models/user';
 })
 export class DialogEditWrapperComponent implements OnInit {
   user:User;
-  organization: Organization;
+  organization: OrganizationDto;
   constructor(public dialogRef: MatDialogRef<DialogEditWrapperComponent>,private tokenStorageService:TokenStorageService,
     @Inject(MAT_DIALOG_DATA) public data:any) {
         if(this.isOrg()){
