@@ -1,0 +1,41 @@
+<app-navigation-menu></app-navigation-menu>
+
+<div class="container">
+  <h1 mat-title class="title">Чаты</h1>
+  <div mat-content class="content">
+
+    <mat-list role="list" class="chat-list">
+      <ng-container *ngFor="let chat of chats; let i = index">
+        <mat-divider class="divider" *ngIf="i === 0"></mat-divider>
+
+        <mat-list-item
+          role="listitem"
+          class="chat-item"
+          (click)="openChat(chat.id)"
+          style="cursor: pointer;"
+        >
+          <div class="chat-info">
+            <h3 class="chat-name" *ngIf="!isOrg(); else nameUser">{{ chat.organizationName }}</h3>
+            <ng-template #nameUser><h3 class="chat-name">{{ chat.userName }}</h3></ng-template>
+
+            <div class="chat-meta">
+              <p class="chat-last-message">&emsp;{{ chat.lastMessage }}</p>
+              <span class="chat-time">{{ chat.lastMessageDate | date:'shortTime' }}</span>
+            </div>
+          </div>
+        </mat-list-item>
+
+        <mat-divider class="divider"></mat-divider>
+      </ng-container>
+    </mat-list>
+
+
+
+    <mat-error class="errorMessage" *ngIf="!isAuthenticated()">{{ loginErrorMessage }}</mat-error>
+    <mat-label class="infoMessage" *ngIf="chats.length == 0 && isAuthenticated()">
+      У вас нет чатов. Оставьте заявку на животное, чтобы начать переписку с приютом.
+    </mat-label>
+  </div>
+</div>
+
+<app-footer></app-footer>

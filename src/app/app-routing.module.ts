@@ -7,7 +7,8 @@ import { AboutComponent } from './components/about/about.component';
 import { SignupOrgComponent } from './components/signup-org/signup-org.component';
 import { ProfileUserComponent } from './components/profile-user/profile-user.component';
 import { PetPageComponent } from './components/petpage/petpage.component';
-
+import { ChatPageComponent } from './components/chat-page/chat-page.component';
+import { MessagePageComponent } from './components/message-page/message-page.component';
 
 
 
@@ -20,6 +21,8 @@ const routes: Routes = [
   {path: 'about',component: AboutComponent},
   {path: 'profile',component: ProfileUserComponent},
   {path: 'home/:animalId',component: PetPageComponent},
+  {path: 'chat',component: ChatPageComponent},
+  {path: 'chat/:chatId',component: MessagePageComponent},
 ];
 
 @NgModule({

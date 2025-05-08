@@ -4,5 +4,8 @@ export class Chat{
   organizationName:string;
   userUsername:string;
   userName:string;
+  lastMessage:string;
+  lastMessageDate:Date
+
   constructor(){}
 }

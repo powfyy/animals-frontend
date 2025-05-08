@@ -95,7 +95,7 @@ export class HomePageComponent implements OnInit {
     if(breed===null){
       return "Нет породы";
     }
-    return "Метис "+ breed;
+    return breed;
   }
 
   getGender(gender:string):string{

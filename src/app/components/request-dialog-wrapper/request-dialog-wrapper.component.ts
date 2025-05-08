@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ChatComponent } from '../chat/chat.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-request-dialog-wrapper',
@@ -9,19 +9,18 @@ import { ChatComponent } from '../chat/chat.component';
 })
 export class RequestDialogWrapperComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<RequestDialogWrapperComponent>,
+  constructor(
+    public dialogRef: MatDialogRef<RequestDialogWrapperComponent>,
     private dialog:MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-    }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
   }
-  goChat(){
+
+  goChat(): void {
     this.dialogRef.close();
-    const dialogAddingNewStudent = this.dialog.open(ChatComponent, {
-      width: '1000px',
-      data: null,
-      autoFocus: false
-    });
+    this.router.navigate(["chat"]);
   }
 }

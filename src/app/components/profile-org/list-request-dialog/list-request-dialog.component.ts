@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { Pet } from 'src/app/models/pet';
 import { User } from 'src/app/models/user';
 import { DialogInformationWrapperComponent } from '../../dialog-information-wrapper/dialog-information-wrapper.component';
-import { ChatComponent } from '../../chat/chat.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-request-dialog',
@@ -14,10 +14,15 @@ import { ChatComponent } from '../../chat/chat.component';
 export class ListRequestDialogComponent implements OnInit {
 pet:Pet;
 users:User[];
-  constructor(public dialogRef: MatDialogRef<ListRequestDialogComponent>, private petService:PetService,public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(
+    public dialogRef: MatDialogRef<ListRequestDialogComponent>,
+    private petService:PetService,
+    public dialog: MatDialog,
+    private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
       this.pet = data;
-     }
+  }
 
   ngOnInit(): void {
     this.petService.getUserRequsts(this.pet.id).subscribe(data=>{
@@ -63,10 +68,6 @@ users:User[];
 
   goChat(){
     this.dialogRef.close();
-    const dialogAddingNewStudent = this.dialog.open(ChatComponent, {
-      width: '1000px',
-      data: null,
-      autoFocus: false
-    });
+    this.router.navigate(["chat"])
   }
 }

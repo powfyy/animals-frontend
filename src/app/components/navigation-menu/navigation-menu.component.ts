@@ -2,7 +2,6 @@ import { TokenStorageService } from './../../services/token-storage.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ChatComponent } from '../chat/chat.component';
 
 @Component({
   selector: 'app-navigation-menu',
@@ -24,20 +23,16 @@ export class NavigationMenuComponent implements OnInit {
     this.tokenStorageService.signOut();
     this.router.navigate(['home']);
   }
-  goProfile(){
-    this.router.navigate(['profile']);
-  }
   goHome(){
     this.router.navigate(['home']);
   }
+  goChatPage() {
+    this.router.navigate(['chat']);
+  }
+  goProfilePage() {
+    this.router.navigate(['profile']);
+  }
   goAbout(){
     this.router.navigate(['about']);
-  }
-  openChats(){
-    const dialogAddingNewStudent = this.dialog.open(ChatComponent, {
-      width: '1000px',
-      data: null,
-      autoFocus: false
-    });
   }
 }

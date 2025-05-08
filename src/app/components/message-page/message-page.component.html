@@ -1,0 +1,63 @@
+<app-navigation-menu></app-navigation-menu>
+
+<div class="container">
+
+  <div class="back-arrow-container">
+    <mat-icon class="back-arrow" (click)="goChatPage()">keyboard_backspace</mat-icon>
+  </div>
+
+    <h1 mat-title class="title">
+      {{ isOrg() ? chat?.userName : chat?.organizationName }}
+    </h1>
+
+  <div mat-content class="content">
+    <div class="messages">
+      <mat-list role="list" class="message-list">
+        <ng-container *ngFor="let group of groupedMessages">
+          <div class="date-header">
+            {{ group.date | date : "d MMMM" : undefined : "ru" }}
+          </div>
+
+          <mat-list-item
+            *ngFor="let message of group.messages.reverse()"
+            class="message-item"
+          >
+            <div class="message-info">
+              <div class="message-header">
+                <span class="sender-name">{{ message.senderName }}</span>
+                <span class="message-time">{{
+                  message.date | date : "HH:mm"
+                }}</span>
+              </div>
+              <p class="message-text">&emsp;{{ message.message }}</p>
+            </div>
+          </mat-list-item>
+        </ng-container>
+      </mat-list>
+    </div>
+    <mat-label class="infoMessage" *ngIf="groupedMessages.length === 0">
+      Здесь пока нет сообщений.
+    </mat-label>
+
+    <div class="message-input-container">
+      <mat-form-field class="message-input" appearance="fill">
+        <input
+          matInput
+          placeholder="Введите сообщение"
+          [(ngModel)]="newMessageText"
+          (keydown.enter)="sendMessage()"
+        />
+      </mat-form-field>
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="sendMessage()"
+        [disabled]="!newMessageText?.trim()"
+      >
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

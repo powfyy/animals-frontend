@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,7 +12,6 @@ import { NavigationMenuComponent } from './components/navigation-menu/navigation
 import { ProfileUserComponent } from './components/profile-user/profile-user.component';
 import { ProfileOrgComponent } from './components/profile-org/profile-org.component';
 import { DialogEditWrapperComponent } from './components/dialog-edit-wrapper/dialog-edit-wrapper.component';
-import { ChatComponent } from './components/chat/chat.component';
 import { DeleteConfirmDialogComponent } from './components/delete-confirm-dialog/delete-confirm-dialog.component';
 import { AddPetDialogWrapperComponent } from './components/add-pet-dialog-wrapper/add-pet-dialog-wrapper.component';
 import { ListRequestDialogComponent } from './components/profile-org/list-request-dialog/list-request-dialog.component';
@@ -40,8 +39,13 @@ import {MatCardModule} from '@angular/material/card';
 import { PetPageComponent } from './components/petpage/petpage.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { RequestDialogWrapperComponent } from './components/request-dialog-wrapper/request-dialog-wrapper.component';
+import { ChatPageComponent } from './components/chat-page/chat-page.component';
+import { MessagePageComponent } from './components/message-page/message-page.component';
 
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
 
+registerLocaleData(localeRu);
 
 @NgModule({
   declarations: [
@@ -55,7 +59,6 @@ import { RequestDialogWrapperComponent } from './components/request-dialog-wrapp
     ProfileUserComponent,
     ProfileOrgComponent,
     DialogEditWrapperComponent,
-    ChatComponent,
     DeleteConfirmDialogComponent,
     AddPetDialogWrapperComponent,
     ListRequestDialogComponent,
@@ -64,6 +67,8 @@ import { RequestDialogWrapperComponent } from './components/request-dialog-wrapp
     PetPageComponent,
     FooterComponent,
     RequestDialogWrapperComponent,
+    ChatPageComponent,
+    MessagePageComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,7 +93,10 @@ import { RequestDialogWrapperComponent } from './components/request-dialog-wrapp
     MatGridListModule,
     MatCardModule,
   ],
-  providers: [httpInterceptorProviders],
+  providers: [
+    httpInterceptorProviders,
+    { provide: LOCALE_ID, useValue: 'ru' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
