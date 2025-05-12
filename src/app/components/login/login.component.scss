@@ -1,12 +1,24 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 10vh auto;
   padding: 0 0 20px 0;
   border: 2px solid rgb(250, 164, 73);
   border-radius: 15px;
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  width: 55vh;
+  width: 50vh;
   background-color: white;
 }
 
@@ -20,7 +32,6 @@
 }
 
 .content {
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,32 +41,33 @@
   width: 34vh;
 }
 
-.password{
+.password {
   margin-top: 4vh;
 }
 
-.actions{
+.actions {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
+
 .signin {
   color: white;
   background-color: rgb(73, 180, 96);
-  margin: 4vh 0 3vh ;
+  margin: 4vh 0 3vh;
   width: 15vh;
 }
 
 .signup {
   background-color: white;
-  color:rgb(76, 171, 97);
+  color: rgb(76, 171, 97);
   text-decoration: none;
-  &:hover{
-    text-decoration: underline;
-  }
+}
+
+.signup:hover {
+  text-decoration: underline;
 }
 
 .btn:hover {
   opacity: 0.8;
 }
-

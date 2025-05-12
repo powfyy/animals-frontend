@@ -1,17 +1,17 @@
 <app-navigation-menu></app-navigation-menu>
 <div class="container">
-  <div class="content" *ngIf="isAuthenticatedUser(); else profile_org">
+  <!-- <div class="content" *ngIf="isAuthenticatedUser(); else profile_org">
     <mat-icon class="icon-account">account_circle</mat-icon>
     <h2>Ваш профиль</h2>
     <div class="info">
-      <span class="subtitle">Имя</span><br/>
-      <span class="text-info">{{user.name}}</span><br/>
-      <span class="subtitle">Фамилия</span><br/>
-      <span class="text-info">{{user.lastname}}</span><br/>
-      <span class="subtitle">Логин</span><br/>
-      <span class="text-info">{{user.username}}</span><br/>
-      <span class="subtitle">Номер телефона</span><br/>
-      <span class="text-info">{{user.phoneNumber}}</span>
+      <span class="subtitle">Имя</span><br />
+      <span class="text-info">{{ user.name }}</span> <br />
+      <span class="subtitle">Фамилия</span><br />
+      <span class="text-info">{{ user.lastname }}</span> <br />
+      <span class="subtitle">Логин</span><br />
+      <span class="text-info">{{ user.username }}</span> <br />
+      <span class="subtitle">Номер телефона</span> <br />
+      <span class="text-info">{{ user.phoneNumber }}</span>
     </div>
     <div class="btn">
       <button (click)="editInfo()" class="btn-edit">Изменить</button>
@@ -21,6 +21,7 @@
 
   <ng-template #profile_org>
     <app-profile-org></app-profile-org>
-  </ng-template>
+  </ng-template> -->
+
   <app-footer class="footer"></app-footer>
 </div>
