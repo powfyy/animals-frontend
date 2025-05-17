@@ -1,84 +1,115 @@
-.container{
+.container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
+.header {
+  margin: 4vh 0vh 5vh;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  h2 {
+    font-size: 26px;
+  }
+}
+
 .content {
   border-radius: 15px;
   border: 2px solid rgb(250, 164, 73);
-  margin: 5vh auto;
-  padding: 0 0 20px 0;
-  flex-direction: column;
-  display: flex;
-  flex-grow: 1;
-  width: 55vh;
-  max-height: a0;
+  margin: 5vh auto 5vh auto;
   background-color: white;
-  h2{
-    text-align: center;
-    margin-bottom: 2vh;
-  }
+  width: 70vh;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
-.icon-account{
-  font-size: 10vh;
-  width: auto;
-  margin: 40px 0 20px 0;
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 30px 0px;
+}
+
+.info-user {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 60%;
+  gap: 8vh;
+  margin: 0 auto 5vh auto;
+}
+
+.info-user-column {
+  display: flex;
+  flex-direction: column;
+  margin-left: 5vh;
+}
+
+.info-user-column-item {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-align: left;
+  margin-bottom: 3vh;
+}
+
+.subtitle {
+  color: gray;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.text-info {
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.btn {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8vh;
 }
 
-.info{
-  text-align: left;
-  font-size: 16px;
-  margin: 0 10vh;
-}
-
-.text-info{
-  display: inline-block;
-  margin: 10px 0 30px 0;
-}
-
-.subtitle{
-  color: gray;
-margin: 0;
-}
-
-.btn{
-  display: flex;
-  justify-content: space-between;
-  margin: 7vh 30px 15px 30px;
-}
-
-.btn-del{
-
+.btn-edit, .btn-del {
   background-color: white;
   border: none;
+  font-size: 15px;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 30px;
+}
+
+.btn-edit:hover {
+  color: #3b3b3b;
+}
+
+.btn-del {
   color: #808080;
-  text-decoration: underline;
-  &:hover{
-    cursor: pointer;
-    color: #b2b2b2;
-  }
 }
 
-.btn-edit{
-  background-color: white;
-  border: none;
-  font-size: 14px;
-  text-decoration: underline;
-  &:hover{
-    cursor: pointer;
-    color: #3b3b3b;
-  }
+.btn-del:hover {
+  color: #b2b2b2;
 }
 
-.icon-edit{
-  font-size: 20px;
+.footer-image {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
 }
 
-.footer{
+.footer-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.footer {
   margin-top: auto;
 }

@@ -30,7 +30,11 @@ export class NavigationMenuComponent implements OnInit {
     this.router.navigate(['chat']);
   }
   goProfilePage() {
-    this.router.navigate(['profile']);
+    if(this.isAuthenticated()) {
+      this.router.navigate(['profile']);
+    } else {
+      this.router.navigate(['login'])
+    }
   }
   goAbout(){
     this.router.navigate(['about']);

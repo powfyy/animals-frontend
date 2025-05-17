@@ -58,11 +58,16 @@
           </ng-template>
         </div>
         <div class="pet-info">
-          <h2>{{ animal.name }}</h2>
-          <p>Пол: {{ getGender(animal.gender) }}</p>
-          <p>Возраст: {{ getPetAge(animal.birthDay) }}</p>
-          <p>Вид: {{ animal.type }}</p>
-          <p>Порода: {{ getPetBreed(animal.breed) }}</p>
+          <div class="info-block">
+            <h2>{{ animal.name }}</h2>
+            <p>Пол: {{ getGender(animal.gender) }}</p>
+            <p>Возраст: {{ getPetAge(animal.birthDay) }}</p>
+            <p>Вид: {{ animal.type }}</p>
+            <p>Порода: {{ getPetBreed(animal.breed) }}</p>
+          </div>
+          <div class="desc-block">
+            <p>{{ animal.description | slice:0:300 }}<span *ngIf="animal.description.length > 300">...</span></p>
+          </div>
         </div>
       </div>
     </div>
