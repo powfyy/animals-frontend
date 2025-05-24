@@ -20,6 +20,7 @@ import { EditPetDialogWrapperComponent } from '../edit-pet-dialog-wrapper/edit-p
 })
 export class ProfileOrgComponent implements OnInit {
 
+  displayedColumns: string[] = ['status', 'type', 'name', 'gender', 'age', 'breed', 'actions'];
   pets:Pet[];
   filterPets:Pet[];
   showFrozenPet:boolean = false;
@@ -148,7 +149,7 @@ export class ProfileOrgComponent implements OnInit {
     if(breed===null){
       return "Нет породы";
     }
-    return "Метис "+ breed;
+    return breed;
   }
 
   editInfo(){

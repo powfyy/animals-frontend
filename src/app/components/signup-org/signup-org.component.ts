@@ -15,7 +15,7 @@ export class SignupOrgComponent implements OnInit {
     username:"",
     password:'',
     phoneNumber:'',
-    nameOrganization: '',
+    name: '',
     city:'',
     passportSeries:'',
     passportNumber:''

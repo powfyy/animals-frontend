@@ -2,7 +2,7 @@ export class SignupOrgInfo{
   username:string;
   password:string;
   phoneNumber:string;
-  nameOrganization:string;
+  name:string;
   city:string
   passportSeries:string;
   passportNumber:string;
@@ -11,7 +11,7 @@ export class SignupOrgInfo{
     this.username = username;
     this.password = password;
     this.phoneNumber = phoneNumber;
-    this.nameOrganization = nameOraginzation;
+    this.name = nameOraginzation;
     this.city=city;
     this.passportSeries = passportSeries;
     this.passportNumber = passportNumber;

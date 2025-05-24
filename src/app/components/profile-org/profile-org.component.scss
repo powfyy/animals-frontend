@@ -6,104 +6,107 @@
   flex-direction: column;
   display: flex;
   width: 80%;
-  background-color: white;
-  h2{
+  min-height: 80%;
+  background-color: rgb(245, 245, 245);
+  h2 {
     text-align: center;
-    margin-bottom: 2vh;
+    margin: 4vh 0;
   }
 }
 
-.icon-account{
-  font-size: 10vh;
-  width: auto;
-  margin: 40px 0 20px 0;
+.account-info {
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.info-pets{
-  display: flex;
-  justify-content: space-between;
-  margin: 0 5vh;
-  align-items:  flex-start;
+  justify-content: space-around;
+  margin-left: 5vh;
+  align-items: flex-start;
   flex-wrap: wrap;
 }
 
-.info{
-  margin:0;
-  padding: 0;
-}
-
-.fields{
+.first-column {
   display: flex;
-  text-align: left;
-  font-size: 16px;
-  margin: 3vh 10vh 0 0vh;
-  justify-content: space-between;
+  flex-direction: column;
+  width: 40vh;
 }
 
-.firstcollumn{
-  margin-right: 10vh;
-}
-
-.text-info{
-  display: inline-block;
-  margin: 10px 0 30px 0;
-}
-
-.subtitle{
-  color: gray;
-  margin: 0;
-}
-
-.btn{
-  display: flex;
-  margin: 14vh 0 2vh 0;
-}
-
-.btn-del-acc{
+.photo-card {
   background-color: white;
-  border: none;
-  color: #808080;
-  text-decoration: underline;
-  &:hover{
-    cursor: pointer;
-    color: #b2b2b2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: center;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
+  img {
+    height: auto;
+    width: 35%;
+    margin: 2vh 0;
   }
 }
 
-.btn-edit{
+.link {
+  display: flex;
+  justify-content: center;
+  gap: 5vh;
+  margin-top: 5vh;
+  img {
+    height: 6vh;
+    width: auto;
+  }
+}
+
+.second-column {
+  display: flex;
+  flex-direction: column;
+  width: 80vh;
+  gap: 6vh;
+}
+
+.org-info-table {
+  width: 100%;
+  border-collapse: collapse;
   background-color: white;
-  border: none;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
+}
+
+.org-info-table tbody tr {
   font-size: 14px;
-  text-decoration: underline;
-  margin-left:12vh;
-  &:hover{
-    cursor: pointer;
-    color: #3b3b3b;
-  }
+  line-height: 5vh;
+  color: #444441;
+  border-bottom: 1px solid #d1d1d1;
 }
 
-.icon-edit{
-  font-size: 20px;
+.org-info-table td:first-child {
+  padding-left: 2vh;
+  font-weight: bold;
+  white-space: nowrap;
 }
 
-.par-pets{
+.org-info-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.pets-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.pets-info-filter {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  input{
-    height: 20px;
-    width: 300px;
+
+  .pet-search {
+    height: 4vh;
+    width: 100%;
     margin-right: auto;
-  }
-  p{
-    margin: 0 2vh 0 0;
-    font-size: 20px;
+    font-size: 14px;
   }
 
-  .btni{
+  .btni {
     color: black;
     width: 40px;
     height: 40px;
@@ -114,98 +117,80 @@
       margin: 0;
       padding: 0;
     }
-    &:hover{
+    &:hover {
       background-color: rgb(245, 245, 245);
       transition: 0.2s;
     }
   }
 }
 
-::ng-deep .activeCheckbox.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+::ng-deep
+  .activeCheckbox.mat-checkbox-checked.mat-accent
+  .mat-checkbox-background {
   background-color: rgb(99, 172, 84) !important;
 }
 
-::ng-deep .frozenCheckbox.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+::ng-deep
+  .frozenCheckbox.mat-checkbox-checked.mat-accent
+  .mat-checkbox-background {
   background-color: rgb(24, 197, 209) !important;
 }
 
-::ng-deep .adoptedCheckbox.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+::ng-deep
+  .adoptedCheckbox.mat-checkbox-checked.mat-accent
+  .mat-checkbox-background {
   background-color: rgb(250, 164, 73) !important;
 }
-.list-pets{
-  background-color: #cacaca;
-  border-radius: 2%;
-  padding: 1px;
-  max-height: 80%;
-  height: 46vh;
-  max-width: 900vh;
-  overflow-y: scroll;
-  ul{
-    list-style:none;
-    display: flex;
-    align-items: center;
-    border: 2px solid rgb(195, 195, 195);
-    margin: 5px;
-    background-color:#ededed;
-    padding: 0 0 0 1vh;
-  }
 
-  ul li{
-    font-size: 20px;
-    padding: 0;
-  }
+.pet-table-wrapper {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 
-  .statusDot{
-    font-size: 20px;
-  }
+.mat-table {
+  width: 100%;
+}
 
-  img{
-    height: 5vh;
-    width: 5vh;
-    margin: 0 2vh 0 2vh ;
-  }
+.mat-header-cell {
+  padding: 0 2vh;
+  vertical-align: middle;
+  text-align: center;
+  white-space: nowrap;
+}
 
-  .btnActionsPet{
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 24px;
-    width: 24px;
-    margin-right: 4px;
+.mat-cell {
+  padding: 0 2vh;
+  vertical-align: middle;
+  text-align: center;
+  white-space: nowrap;
+}
 
-    mat-icon{
+.btn {
+  display: flex;
+  margin: 4vh 0;
+  justify-content: space-between;
+}
 
-      position: absolute;
-      font-size: 24px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-    &:hover{
-      background-color: #dadada;
-    }
-  }
-  .li-list{
-    margin-left: auto;
-  }
-
-  .unit{
-    color: rgb(24, 214, 228);
-  }
-  .active{
-    color: rgb(96, 212, 72);
-  }
-  .del{
-    color:rgb(255, 50, 50);
-
-  }
-
-  .rightField{
-    margin-right: auto;
+.btn-del-acc {
+  background-color: white;
+  border: none;
+  color: #808080;
+  text-decoration: underline;
+  &:hover {
+    cursor: pointer;
+    color: #b2b2b2;
   }
 }
 
-.gender-icon{
-  font-size: 35px;
-  margin: 0 2vh 0 0;
+.btn-edit {
+  background-color: white;
+  border: none;
+  font-size: 14px;
+  text-decoration: underline;
+  &:hover {
+    cursor: pointer;
+    color: #3b3b3b;
+  }
 }

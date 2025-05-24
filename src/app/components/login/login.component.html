@@ -1,31 +1,44 @@
-<body>
-  <div class="main-wrapper">
-    <app-navigation-menu></app-navigation-menu>
+<div class="main-wrapper">
+  <app-navigation-menu></app-navigation-menu>
 
-    <div class="container">
-      <h1 mat-title class="title">Авторизация</h1>
-      <div mat-content class="content">
-        <mat-form-field class="input">
-          <input matInput type="text" placeholder="Логин" [(ngModel)]="form.username" required>
-          <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
-        </mat-form-field>
+  <div class="container">
+    <h1 mat-title class="title">Авторизация</h1>
 
-        <mat-form-field class="input password">
-          <input matInput type="text" placeholder="Пароль" [(ngModel)]="form.password" required>
-          <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
-        </mat-form-field>
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm" mat-content class="content">
+      <mat-form-field class="input">
+        <input
+          matInput
+          type="text"
+          placeholder="Логин"
+          [(ngModel)]="form.username"
+          name="username"
+          required>
+        <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+      </mat-form-field>
 
-        <mat-error class="errorMessageLogin" *ngIf="errorMessageLogin">{{ errorMessageLogin }}</mat-error>
+      <mat-form-field class="input password">
+        <input
+          matInput
+          type="password"
+          placeholder="Пароль"
+          [(ngModel)]="form.password"
+          name="password"
+          required>
+        <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+      </mat-form-field>
 
-        <div mat-actions class="actions">
-          <button mat-raised-button class="btn signin" (click)="onSubmit()">Войти</button>
-          <a href="signup/user" style="text-decoration: none;">
-            <p class="btn signup">Зарегистрироваться</p>
-          </a>
-        </div>
+      <mat-error class="errorMessageLogin" *ngIf="errorMessageLogin">
+        {{ errorMessageLogin }}
+      </mat-error>
+
+      <div mat-actions class="actions">
+        <button mat-raised-button class="btn signin" type="submit">Войти</button>
+        <a href="signup/user" style="text-decoration: none;">
+          <p class="btn signup">Зарегистрироваться</p>
+        </a>
       </div>
-    </div>
-
-    <app-footer></app-footer>
+    </form>
   </div>
-</body>
+
+  <app-footer></app-footer>
+</div>
