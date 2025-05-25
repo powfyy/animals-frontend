@@ -1,5 +1,6 @@
 .content {
-  margin-left: 50vh;
+  width: 70vw;
+  margin-left: 25vw;
   margin-top: 5vh;
   padding: 0px 10px;
   display: flex;
@@ -10,6 +11,8 @@
 
 .table {
   border: 2px solid rgb(250, 164, 73);
+  width: 90%;
+  font-size: 14px;
 }
 
 .table-name {
@@ -17,39 +20,43 @@
   font-family: 'Gothic L';
 }
 
-.animal-type-table {
-  font-size: 14px;
-  width: 90%;
-}
-
 .attribute-table {
-  font-size: 14px;
-  width: 90%;
   margin-bottom: 10vh;
 }
 
-th.mat-header-cell {
-  padding: 0 8vh 0 0;
+mat-header-cell {
+  padding: 0 0vh 0 0;
 }
 
 td.mat-cell {
   margin-bottom: auto;
 }
 
-.mat-column-priority {
-  text-align: center;
-}
-
-.mat-column-attributes {
-  width: 100%;
-}
-
-.mat-column-values {
-  width: 100%;
-}
-
 mat-icon {
   &:hover {
     cursor: pointer;
   }
+}
+
+::ng-deep .mat-column-action {
+  flex: 0 0 5vw;
+}
+
+::ng-deep .mat-column-name {
+  flex: 0 0 20vw;
+}
+
+::ng-deep .mat-column-priority {
+  flex: 0 0 10vw;
+  text-align: center;
+}
+
+::ng-deep .mat-column-attributes
+::ng-deep .mat-column-values {
+  width: 100%;
+}
+
+.dragCursor {
+  margin-left: 0.5vw;
+  cursor: move !important;
 }

@@ -30,6 +30,10 @@ export class AttributeService {
     return this.http.post<void>(`${url}`, attribute, httpOptions)
   }
 
+  updatePriorities(attributes: AttributeDto[]): Observable<void> {
+    return this.http.put<void>(`${url}/priority`, attributes, httpOptions)
+  }
+
   delete(name:string) {
     return this.http.delete<void>(`${url}/${name}`, httpOptions)
   }

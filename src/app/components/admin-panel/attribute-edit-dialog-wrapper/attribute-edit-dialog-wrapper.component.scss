@@ -65,3 +65,9 @@
     color:rgb(69, 164, 90);
   }
 }
+
+::ng-deep .chips-list .mat-chip {
+  background-color: white !important;
+  border: 2px solid rgb(73, 180, 96) !important;
+  color: rgb(48, 48, 48) !important;
+}

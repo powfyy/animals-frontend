@@ -31,6 +31,10 @@ export class AnimalTypeService {
     return this.http.post<AnimalTypeDto>(`${url}`, type, httpOptions)
   }
 
+  updatePriorities(types: AnimalTypeDto[]): Observable<void> {
+    return this.http.put<void>(`${url}/priority`, types, httpOptions);
+  }
+
   delete(name:string) {
     return this.http.delete<void>(`${url}/${name}`, httpOptions)
   }

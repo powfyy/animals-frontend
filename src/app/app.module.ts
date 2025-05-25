@@ -43,6 +43,7 @@ import { RequestDialogWrapperComponent } from './components/request-dialog-wrapp
 import { ChatPageComponent } from './components/chat-page/chat-page.component';
 import { MessagePageComponent } from './components/message-page/message-page.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
@@ -96,6 +97,7 @@ registerLocaleData(localeRu);
     MatRadioModule,
     MatDividerModule,
     MatTableModule,
+    DragDropModule,
     MatListModule,
     MatProgressBarModule,
     MatSelectModule,

@@ -6,6 +6,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { AttributeDto } from 'src/app/models/AttributeDto';
 import { AttributeService } from 'src/app/services/attribute.service';
 import { MatDialog } from '@angular/material/dialog';
+import {CdkDragDrop, CdkDragStart, moveItemInArray, transferArrayItem, CdkDragHandle} from '@angular/cdk/drag-drop';
 import { AttributeEditDialogWrapperComponent } from '../attribute-edit-dialog-wrapper/attribute-edit-dialog-wrapper.component';
 
 @Component({
@@ -55,12 +56,35 @@ export class AnimalTypeSettingsComponent implements OnInit {
     this.router.navigate([`/animal-type-settings/${name}`])
   }
 
+  getTruncatedAttributes(attributes: { [key: string]: Set<string> }): string {
+    const names = Object.keys(attributes);
+    const joined = names.join(', ');
+    return joined.length > 70 ? joined.slice(0, 70) + '…' : joined;
+  }
+
   typePageLoad(event: PageEvent): void {
     this.typePage = event.pageIndex;
     this.typeSize = event.pageSize;
     this.animalTypeService.getAll(this.typePage, this.typeSize).subscribe(data => {
       this.animalTypes = data.content;
     })
+  }
+
+  typeDrop(event: CdkDragDrop<AnimalTypeDto[]>) {
+    moveItemInArray(this.animalTypes, event.previousIndex, event.currentIndex);
+
+    const offset = this.typePage * this.typeSize;
+
+    this.animalTypes.forEach((item, index) => {
+      item.priority = offset + index + 1;
+    });
+
+    this.animalTypeService.updatePriorities(this.animalTypes).subscribe(() => {
+      this.animalTypeService.getAll(this.typePage, this.typeSize).subscribe(data => {
+        this.animalTypes = data.content;
+        this.typeTotalElements = data.totalElements;
+      });
+    });
   }
 
   attributePageLoad(event: PageEvent): void {
@@ -89,14 +113,26 @@ export class AnimalTypeSettingsComponent implements OnInit {
     });
   }
 
-  getTruncatedAttributes(attributes: { [key: string]: Set<string> }): string {
-    const names = Object.keys(attributes);
-    const joined = names.join(', ');
-    return joined.length > 70 ? joined.slice(0, 70) + '…' : joined;
-  }
-
   getTruncatedAttributeValues(values: string[]): string {
     const result = values.join(', ');
     return result.length > 70 ? result.slice(0, 70) + '…' : result;
   }
+
+  attributeDrop(event: CdkDragDrop<AttributeDto[]>) {
+    moveItemInArray(this.attributes, event.previousIndex, event.currentIndex);
+
+    const offset = this.attributePage * this.attributeSize;
+
+    this.attributes.forEach((item, index) => {
+      item.priority = offset + index + 1;
+    });
+
+    this.attributeService.updatePriorities(this.attributes).subscribe(() => {
+      this.attributeService.getAll(this.attributePage, this.attributeSize).subscribe(data => {
+        this.attributes = data.content;
+        this.attributeTotalElements = data.totalElements;
+      });
+    });
+  }
+
 }
