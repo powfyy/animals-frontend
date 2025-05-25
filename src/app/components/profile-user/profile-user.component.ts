@@ -59,8 +59,8 @@ export class ProfileUserComponent implements OnInit {
       }
     })
   }
-  isAuthenticatedUser(){
-    if(this.tokenStorageService.getAuthorities()==="USER"){
+  isAuthenticatedOrg(){
+    if(this.tokenStorageService.getAuthorities()==="ORG"){
       return true;
     }
     return false;

@@ -1,7 +1,7 @@
 <app-navigation-menu></app-navigation-menu>
 
 <div class="container">
-  <div class="content" *ngIf="isAuthenticatedUser(); else profile_org">
+  <div class="content" *ngIf="!isAuthenticatedOrg(); else profile_org">
     <div class="info">
       <div class="header">
         <h2>Ваши данные</h2>

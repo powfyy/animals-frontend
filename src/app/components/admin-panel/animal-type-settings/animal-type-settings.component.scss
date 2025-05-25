@@ -1,0 +1,55 @@
+.content {
+  margin-left: 50vh;
+  margin-top: 5vh;
+  padding: 0px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10vh;
+}
+
+.table {
+  border: 2px solid rgb(250, 164, 73);
+}
+
+.table-name {
+  font-size: 18px;
+  font-family: 'Gothic L';
+}
+
+.animal-type-table {
+  font-size: 14px;
+  width: 90%;
+}
+
+.attribute-table {
+  font-size: 14px;
+  width: 90%;
+  margin-bottom: 10vh;
+}
+
+th.mat-header-cell {
+  padding: 0 8vh 0 0;
+}
+
+td.mat-cell {
+  margin-bottom: auto;
+}
+
+.mat-column-priority {
+  text-align: center;
+}
+
+.mat-column-attributes {
+  width: 100%;
+}
+
+.mat-column-values {
+  width: 100%;
+}
+
+mat-icon {
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -9,6 +9,7 @@ import { ProfileUserComponent } from './components/profile-user/profile-user.com
 import { PetPageComponent } from './components/petpage/petpage.component';
 import { ChatPageComponent } from './components/chat-page/chat-page.component';
 import { MessagePageComponent } from './components/message-page/message-page.component';
+import { AnimalTypeSettingsComponent } from './components/admin-panel/animal-type-settings/animal-type-settings.component';
 
 
 
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'home/:animalId',component: PetPageComponent},
   {path: 'chat',component: ChatPageComponent},
   {path: 'chat/:chatId',component: MessagePageComponent},
+  {path: 'animal-type-settings',component: AnimalTypeSettingsComponent},
 ];
 
 @NgModule({

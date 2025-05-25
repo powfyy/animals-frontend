@@ -42,9 +42,13 @@ import { FooterComponent } from './components/footer/footer.component';
 import { RequestDialogWrapperComponent } from './components/request-dialog-wrapper/request-dialog-wrapper.component';
 import { ChatPageComponent } from './components/chat-page/chat-page.component';
 import { MessagePageComponent } from './components/message-page/message-page.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
+import { AnimalTypeSettingsComponent } from './components/admin-panel/animal-type-settings/animal-type-settings.component';
+import { AdminPanelNavigationMenuComponent } from './components/admin-panel/admin-panel-navigation-menu/admin-panel-navigation-menu.component';
+import { AttributeEditDialogWrapperComponent } from './components/admin-panel/attribute-edit-dialog-wrapper/attribute-edit-dialog-wrapper.component';
 
 registerLocaleData(localeRu);
 
@@ -70,6 +74,9 @@ registerLocaleData(localeRu);
     RequestDialogWrapperComponent,
     ChatPageComponent,
     MessagePageComponent,
+    AnimalTypeSettingsComponent,
+    AdminPanelNavigationMenuComponent,
+    AttributeEditDialogWrapperComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,6 +92,7 @@ registerLocaleData(localeRu);
     MatDialogModule,
     MatCheckboxModule,
     MatPaginatorModule,
+    MatChipsModule,
     MatRadioModule,
     MatDividerModule,
     MatTableModule,

@@ -5,6 +5,7 @@
     <li><button class="btn" (click)="goProfilePage()">Профиль</button></li>
     <li><button class="btn" (click)="goChatPage()">Сообщения</button></li>
     <li><button class="btn" (click)="goAbout()">О фонде</button></li>
+    <li *ngIf="isAdmin()"><button class="btn" (click)="goAnimalTypeSettings()">Панель администрирования</button></li>
     <li *ngIf="isAuthenticated(); else loginLink">
       <a (click)="logout()" class="btn-logout" >Выйти</a>
     </li>

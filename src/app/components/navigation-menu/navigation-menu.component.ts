@@ -9,34 +9,49 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./navigation-menu.component.scss']
 })
 export class NavigationMenuComponent implements OnInit {
+
   constructor(private router:Router, public dialog: MatDialog, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
   }
-  isAuthenticated(){
+
+  isAuthenticated(): boolean {
     if(this.tokenStorageService.getToken()){
       return true
     }
     return false;
   }
-  logout(){
+
+  isAdmin(): boolean {
+    return this.isAuthenticated() && this.tokenStorageService.getAuthorities() === 'ADMIN';
+  }
+
+  logout(): void {
     this.tokenStorageService.signOut();
     this.router.navigate(['home']);
   }
-  goHome(){
+
+  goHome(): void {
     this.router.navigate(['home']);
   }
-  goChatPage() {
+
+  goChatPage(): void {
     this.router.navigate(['chat']);
   }
-  goProfilePage() {
+
+  goProfilePage(): void {
     if(this.isAuthenticated()) {
       this.router.navigate(['profile']);
     } else {
       this.router.navigate(['login'])
     }
   }
-  goAbout(){
+
+  goAbout(): void {
     this.router.navigate(['about']);
+  }
+
+  goAnimalTypeSettings(): void {
+    this.router.navigate(['animal-type-settings']);
   }
 }

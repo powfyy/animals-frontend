@@ -1,0 +1,52 @@
+<div class="content">
+  <div class="input-container">
+    <mat-form-field class="input-form">
+      <input
+        matInput
+        type="text"
+        placeholder="Название"
+        [(ngModel)]="attribute.name"
+        maxlength="40"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="input-form">
+      <input
+
+        matInput
+        type="number"
+        placeholder="Приоритетность"
+        [(ngModel)]="attribute.priority"
+        min="0"
+        max="999"
+        required
+      />
+      <mat-error *ngIf="attribute.priority < 0 || attribute.priority > 999">
+        Значение должно быть от 0 до 999
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="chips-container">
+    <mat-form-field class="chips-input-form">
+      <mat-label>Новое значение</mat-label>
+      <input
+        matInput
+        placeholder="Введите и нажмите Enter"
+        [(ngModel)]="newValue"
+        (keydown.enter)="addValue(newValue)"
+      />
+    </mat-form-field>
+
+    <mat-chip-list class="chips-list">
+      <mat-chip *ngFor="let value of valuesArray" [removable]="true" (removed)="removeValue(value)">
+        {{ value }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <div class="buttons-container">
+    <button class='buttons cancel' (click)="close()">Отмена</button>
+    <button class="buttons save"(click)="save()">Сохранить</button>
+  </div>
+</div>

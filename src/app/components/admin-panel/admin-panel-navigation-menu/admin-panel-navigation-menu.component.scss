@@ -1,0 +1,34 @@
+.sidenav {
+  height: 80%;
+  margin-top: 5%;
+  width: 25vh;
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 2vh;
+  background-color: rgb(255, 255, 255);
+  overflow-x: hidden; /* Disable horizontal scroll */
+  border-radius: 15px;
+  border: 2px solid rgb(250, 164, 73);
+  padding: 0;
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+}
+
+.btn {
+  background-color: white;
+  border: none;
+  font-size: 14px;
+  color: rgb(99, 99, 99);
+  padding: 1vh 0;
+  width: 100%;
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.active {
+    background-color: rgb(238, 238, 238);
+  }
+}
