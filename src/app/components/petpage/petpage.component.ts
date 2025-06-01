@@ -107,7 +107,8 @@ export class PetPageComponent implements OnInit {
 
   updatePet(){
     const dialogEditPet = this.dialog.open(EditPetDialogWrapperComponent,{
-      width: '900px',
+      width: '85vw',
+      height: '90vh',
       data: this.animal,
       autoFocus: false,
     })

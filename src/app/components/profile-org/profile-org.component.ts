@@ -1,17 +1,19 @@
+import { AnimalService } from 'src/app/services/animal/animal.service';
 import { OrganizationDto } from './../../models/organization/OrganizationDto';
-import { PetService } from './../../services/pet.service';
 import { OrganizationService } from './../../services/organization.service';
 import { FindAgeAnimalService } from './../../services/find-age-animal.service';
 import { Component, OnInit } from '@angular/core';
 import { DeleteConfirmDialogComponent } from '../delete-confirm-dialog/delete-confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Pet } from 'src/app/models/pet';
 import { DialogEditWrapperComponent } from '../dialog-edit-wrapper/dialog-edit-wrapper.component';
 import {AddPetDialogWrapperComponent} from '../add-pet-dialog-wrapper/add-pet-dialog-wrapper.component';
 import { ListRequestDialogComponent } from './list-request-dialog/list-request-dialog.component';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { Router } from '@angular/router';
 import { EditPetDialogWrapperComponent } from '../edit-pet-dialog-wrapper/edit-pet-dialog-wrapper.component';
+import { AnimalDto } from 'src/app/models/animal/AnimalDto';
+import { AnimalSaveDto } from 'src/app/models/animal/AnimalSaveDto';
+import { AnimalStatusType } from 'src/app/models/type/animal/AnimalStatusType';
 
 @Component({
   selector: 'app-profile-org',
@@ -21,17 +23,17 @@ import { EditPetDialogWrapperComponent } from '../edit-pet-dialog-wrapper/edit-p
 export class ProfileOrgComponent implements OnInit {
 
   displayedColumns: string[] = ['status', 'type', 'name', 'gender', 'age', 'breed', 'actions'];
-  pets:Pet[];
-  filterPets:Pet[];
-  showFrozenPet:boolean = false;
-  showActivePet: boolean = true;
-  showAdoptedPet: boolean = false;
+  animals:AnimalDto[];
+  filterAnimals:AnimalDto[];
+  showFrozenAnimal:boolean = false;
+  showActiveAnimal: boolean = true;
+  showAdoptedAnimal: boolean = false;
   org:OrganizationDto;
 
   constructor(public dialog: MatDialog,
     public findAgeAnimal:FindAgeAnimalService,
     private organizationService:OrganizationService,
-    private petService:PetService,
+    private animalService: AnimalService,
     private tokenStorageService: TokenStorageService,
     private router: Router) {}
 
@@ -45,36 +47,35 @@ export class ProfileOrgComponent implements OnInit {
     this.organizationService.getByUsername(this.tokenStorageService.getUsername()).subscribe(data => {
       this.org = data;
     });
-    this.petService.getAllPets().subscribe(data=>{
-      this.pets= data;
-      this.filterPets = data;
-      this.filterPet("");
+    this.animalService.getAll(0, 100).subscribe(data=>{
+      this.animals= data.content;
+      this.filterAnimals = data.content;
+      this.filterAnimal("");
     })
   }
 
-  filterPet(text:string) {
+  filterAnimal(text:string) {
     if (!text) {
-      this.filterPets=this.pets;
-      this.statusFilterPets();
+      this.filterAnimals=this.animals;
+      this.statusFilterAnimals();
       return;
     }
-    this.filterPets = this.pets.filter(pet =>{
-
-      return pet?.name.toLowerCase().includes(text.toLowerCase())
+    this.filterAnimals = this.animals.filter(animal => {
+      return animal?.name.toLowerCase().includes(text.toLowerCase())
     });
-    this.statusFilterPets();
+    this.statusFilterAnimals();
   }
 
-  statusFilterPets(){
-    this.filterPets = this.filterPets.filter(pet=>{
-      if(this.showActivePet && pet.status==="ACTIVE"){
-        return pet;
+  statusFilterAnimals(){
+    this.filterAnimals = this.filterAnimals.filter(animal=>{
+      if(this.showActiveAnimal && animal.status === AnimalStatusType.ACTIVE){
+        return animal;
       }
-      if(this.showFrozenPet && pet.status==="FREEZE"){
-        return pet;
+      if(this.showFrozenAnimal && animal.status === AnimalStatusType.FREEZE){
+        return animal;
       }
-      if(this.showAdoptedPet && pet.status==="ADOPTED"){
-        return pet;
+      if(this.showAdoptedAnimal && animal.status === AnimalStatusType.ADOPTED){
+        return animal;
       }
       return null;
     })
@@ -107,45 +108,49 @@ export class ProfileOrgComponent implements OnInit {
     return false;
   }
 
-  isActivePet(status:string){
+  isActiveAnimal(status:string){
     if(status==="ACTIVE"){
       return true;
     }
     return false;
   }
 
-  isAdoptedPet(status:string):boolean{
+  isAdoptedAnimal(status:string):boolean{
     if(status==="ADOPTED"){
       return true;
     }
     return false
   }
 
-  activePet(petId:number){
-    this.petService.updateStatusPet("ACTIVE",petId).subscribe(()=>{
-      this.petService.getAllPets().subscribe(data=>{
-        this.pets=data;
-        this.filterPets=data;
-        this.filterPet("");
+  activeAnimal(animalId:number) {
+    const animal = this.mapToSaveDto(this.animals.find(animal => animal.id === animalId))
+    animal.status = AnimalStatusType.ACTIVE
+    this.animalService.update(animal).subscribe(()=>{
+      this.animalService.getAll(0, 100).subscribe(data=>{
+        this.animals= data.content;
+        this.filterAnimals = data.content;
+        this.filterAnimal('');
       })
     });
   }
 
-  freezePet(petId:number){
-    this.petService.updateStatusPet("FREEZE",petId).subscribe(()=>{
-      this.petService.getAllPets().subscribe(data=>{
-        this.pets=data;
-        this.filterPets=data;
-        this.filterPet("");
+  freezePet(animalId:number){
+    const animal = this.mapToSaveDto(this.animals.find(animal => animal.id === animalId))
+    animal.status = AnimalStatusType.FREEZE
+    this.animalService.update(animal).subscribe(()=>{
+      this.animalService.getAll(0, 100).subscribe(data=>{
+        this.animals= data.content;
+        this.filterAnimals = data.content;
+        this.filterAnimal('');
       })
     });
   }
 
-  getAgePet(date:string):string{
+  getAnimalAge(date:string):string{
     return this.findAgeAnimal.getAge(date);
   }
 
-  getPetBreed(breed:string|null):string{
+  getAnimalBreed(breed:string|null):string{
     if(breed===null){
       return "Нет породы";
     }
@@ -183,52 +188,54 @@ export class ProfileOrgComponent implements OnInit {
     })
   }
 
-  addPet(){
-    const dialogAddPet = this.dialog.open (AddPetDialogWrapperComponent, {
-      width: '900px',
-      data: null,
+  addAnimal(){
+    const dialogAddAnimal = this.dialog.open (AddPetDialogWrapperComponent, {
+      width: '85vw',
+      height: '90vh',
+      data: new AnimalDto(),
       autoFocus: false,
     });
-    dialogAddPet.afterClosed().subscribe(()=>{
-      this.petService.getAllPets().subscribe(data=>{
-        this.pets= data;
-        this.filterPets = data;
-        this.filterPet('');
-      });
+    dialogAddAnimal.afterClosed().subscribe(()=>{
+      this.animalService.getAll(0, 100).subscribe(data=>{
+        this.animals= data.content;
+        this.filterAnimals = data.content;
+        this.filterAnimal('');
+      })
     });
   };
 
-  updatePet(pet:Pet){
-    const dialogEditPet = this.dialog.open(EditPetDialogWrapperComponent,{
-      width: '900px',
-      data: pet,
+  updateAnimal(animal: AnimalDto){
+    const dialogEditAnimal = this.dialog.open(EditPetDialogWrapperComponent,{
+      width: '85vw',
+      height: '90vh',
+      data: animal,
       autoFocus: false,
     })
-    dialogEditPet.afterClosed().subscribe(()=>{
-      this.petService.getAllPets().subscribe(data=>{
-        this.pets= data;
-        this.filterPets = data;
-        this.filterPet('');
+    dialogEditAnimal.afterClosed().subscribe(()=>{
+      this.animalService.getAll(0, 100).subscribe(data=>{
+        this.animals= data.content;
+        this.filterAnimals = data.content;
+        this.filterAnimal('');
       })
     })
   }
 
-  listRequest(pet:Pet){
+  listRequest(animal: AnimalDto){
     const dialogListRequest = this.dialog.open (ListRequestDialogComponent, {
       width: '800px',
-      data:pet,
+      data:animal,
       autoFocus: false,
     });
     dialogListRequest.afterClosed().subscribe(()=>{
-      this.petService.getAllPets().subscribe(data=>{
-        this.pets= data;
-        this.filterPets = data;
-        this.filterPet('');
+      this.animalService.getAll(0, 100).subscribe(data=>{
+        this.animals= data.content;
+        this.filterAnimals = data.content;
+        this.filterAnimal('');
       })
     })
   }
 
-  deletePet(id: number){
+  deleteAnimal(id: number){
     const dialogDelete = this.dialog.open(DeleteConfirmDialogComponent, {
       width: '400px',
       data: "Вы действительно хотите удалить этого питомца?",
@@ -236,15 +243,34 @@ export class ProfileOrgComponent implements OnInit {
     });
     dialogDelete.afterClosed().subscribe(result=>{
       if(result===true){
-        this.petService.deletePet(id).subscribe(()=>{
-          this.petService.getAllPets().subscribe(data=>{
-            this.pets= data;
-            this.filterPets = data;
-            this.filterPet('');
+        this.animalService.delete(id).subscribe(()=>{
+          this.animalService.getAll(0, 100).subscribe(data => {
+            this.animals= data.content;
+            this.filterAnimals = data.content;
+            this.filterAnimal('');
           })
           });
       }
 
     })
+  }
+
+  mapToSaveDto(dto: AnimalDto | undefined): AnimalSaveDto{
+    if(dto === undefined) {
+      console.log("mapToSaveDto: передан undefined")
+      return new AnimalSaveDto();
+    }
+    const toSaveAnimal: AnimalSaveDto = new AnimalSaveDto();
+    toSaveAnimal.id = dto.id
+    toSaveAnimal.name = dto.name
+    toSaveAnimal.gender = dto.gender
+    toSaveAnimal.type = dto.type
+    toSaveAnimal.birthDay = dto.birthDay
+    toSaveAnimal.breed = dto.breed
+    toSaveAnimal.description = dto.description
+    toSaveAnimal.status = dto.status
+    toSaveAnimal.organizationUsername = this.tokenStorageService.getUsername()!;
+    toSaveAnimal.attributes = dto.attributes
+    return toSaveAnimal
   }
 }

@@ -9,6 +9,14 @@
   gap: 10vh;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  align-items: center;
+  margin-bottom: 1vh;
+}
+
 .table {
   border: 2px solid rgb(250, 164, 73);
   width: 90%;
@@ -17,6 +25,7 @@
 
 .table-name {
   font-size: 18px;
+  margin: 0;
   font-family: 'Gothic L';
 }
 

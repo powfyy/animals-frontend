@@ -2,13 +2,17 @@
 <app-admin-panel-navigation-menu></app-admin-panel-navigation-menu>
 <div class="content">
   <div class="animal-type-table">
-    <p class="table-name">Виды животных</p>
+    <div class="header">
+      <p class="table-name">Виды животных</p>
+      <button mat-raised-button (click)="createType()">Добавить</button>
+    </div>
+
     <div class="table">
       <mat-table
         [dataSource]="animalTypes"
         matSort
         cdkDropList
-        (cdkDropListDropped)="attributeDrop($event)"
+        (cdkDropListDropped)="typeDrop($event)"
       >
         <ng-container matColumnDef="action">
           <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
@@ -69,7 +73,10 @@
   </div>
 
   <div class="attribute-table">
-    <p class="table-name">Атрибуты</p>
+    <div class="header">
+      <p class="table-name">Характеристики</p>
+      <button mat-raised-button (click)="createAttribute()">Добавить</button>
+    </div>
     <div class="table">
       <mat-table
         [dataSource]="attributes"

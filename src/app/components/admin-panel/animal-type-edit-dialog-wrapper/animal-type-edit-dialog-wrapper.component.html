@@ -1,0 +1,107 @@
+<div class="content">
+  <div class="input-container">
+    <mat-form-field class="input-form">
+      <input
+        matInput
+        type="text"
+        placeholder="Название"
+        [(ngModel)]="animalType.name"
+        maxlength="40"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="input-form">
+      <input
+        matInput
+        type="number"
+        placeholder="Приоритетность"
+        [(ngModel)]="animalType.priority"
+        min="0"
+        max="999"
+        required
+      />
+      <mat-error *ngIf="animalType.priority < 0 || animalType.priority > 999">
+        Значение должно быть от 0 до 999
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="attribute-header">
+    <h4>Выбранные атрибуты</h4>
+    <h4>Все атрибуты</h4>
+  </div>
+
+  <div class="attribute-container">
+    <!-- Атрибуты вида -->
+    <div
+      class="animal-type-attributes"
+      cdkDropList
+      id="animalTypeAttributesList"
+      [cdkDropListData]="selectedAttributes"
+      [cdkDropListConnectedTo]="['allAttributesList']"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <mat-chip-list class="selected-chip">
+        <ng-container *ngFor="let attr of selectedAttributes">
+          <div cdkDrag>
+            <mat-chip
+              (click)="onAttributeClick(attr.name, false)"
+              [class.active-chip]="
+                activeAttributeName === attr.name && !isReadOnlyValuesView
+              "
+              [class.chip-error]="attributeValidationErrors[attr.name]"
+            >
+              {{ attr.name }}
+            </mat-chip>
+          </div>
+        </ng-container>
+      </mat-chip-list>
+    </div>
+
+    <!-- Все доступные атрибуты -->
+    <div
+      class="all-attributes"
+      cdkDropList
+      id="allAttributesList"
+      [cdkDropListData]="availableAttributes"
+      [cdkDropListConnectedTo]="['animalTypeAttributesList']"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <mat-chip-list class="all-chip">
+        <ng-container *ngFor="let attr of availableAttributes">
+          <div cdkDrag>
+            <mat-chip (click)="onAttributeClick(attr.name, true)">
+              {{ attr.name }}
+            </mat-chip>
+          </div>
+        </ng-container>
+      </mat-chip-list>
+    </div>
+  </div>
+
+  <!-- Выбранные значения -->
+  <div class="selection-area" *ngIf="activeAttribute">
+    <div class="attribute-values-group">
+      <div class="value-buttons">
+        <button
+          *ngFor="let value of activeAttribute.values"
+          type="button"
+          [disabled]="isReadOnlyValuesView"
+          (click)="
+            !isReadOnlyValuesView &&
+              toggleAttributeValue(activeAttribute.name, value)
+          "
+          [class.selected]="isValueSelected(activeAttribute.name, value)"
+          class="value-button"
+        >
+          {{ value }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="buttons-container">
+    <button class="buttons cancel" (click)="close()">Отмена</button>
+    <button class="buttons save" (click)="save()">Сохранить</button>
+  </div>
+</div>

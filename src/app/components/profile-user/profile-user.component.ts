@@ -20,7 +20,7 @@ export class ProfileUserComponent implements OnInit {
     private userService:UserService) { }
 
   ngOnInit() {
-    if(this.tokenStorageService.getAuthorities()==='USER'){
+    if(this.tokenStorageService.getAuthorities()!=='ORG'){
       this.user = new User;
     this.loadData();
     }

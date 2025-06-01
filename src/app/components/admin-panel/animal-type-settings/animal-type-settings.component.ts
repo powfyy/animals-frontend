@@ -8,6 +8,7 @@ import { AttributeService } from 'src/app/services/attribute.service';
 import { MatDialog } from '@angular/material/dialog';
 import {CdkDragDrop, CdkDragStart, moveItemInArray, transferArrayItem, CdkDragHandle} from '@angular/cdk/drag-drop';
 import { AttributeEditDialogWrapperComponent } from '../attribute-edit-dialog-wrapper/attribute-edit-dialog-wrapper.component';
+import { AnimalTypeEditDialogWrapperComponent } from '../animal-type-edit-dialog-wrapper/animal-type-edit-dialog-wrapper.component';
 
 @Component({
   selector: 'app-animal-type-settings',
@@ -52,9 +53,46 @@ export class AnimalTypeSettingsComponent implements OnInit {
     })
   }
 
-  editType(name: string): void {
-    this.router.navigate([`/animal-type-settings/${name}`])
+  createType() {
+    const dialog = this.dialog.open(AnimalTypeEditDialogWrapperComponent, {
+      width: '45vw',
+      data: {
+        model: new AnimalTypeDto(),
+        attributes: this.attributes
+      },
+      autoFocus: false,
+    });
+
+    dialog.afterClosed().subscribe(() => {
+      this.animalTypeService.getAll(this.typePage, this.typeSize).subscribe(data => {
+        this.animalTypes = data.content;
+      });
+    });
   }
+
+  editType(name: string): void {
+    const animalType = this.animalTypes.find(type => type.name === name);
+    if (!animalType) {
+      console.warn(`Вид с названием "${name}" не найден`);
+      return;
+    }
+
+    const dialog = this.dialog.open(AnimalTypeEditDialogWrapperComponent, {
+      width: '45vw',
+      data: {
+        model: animalType,
+        attributes: this.attributes
+      },
+      autoFocus: false,
+    });
+
+    dialog.afterClosed().subscribe(() => {
+      this.animalTypeService.getAll(this.typePage, this.typeSize).subscribe(data => {
+        this.animalTypes = data.content;
+      });
+    });
+  }
+
 
   getTruncatedAttributes(attributes: { [key: string]: Set<string> }): string {
     const names = Object.keys(attributes);
@@ -95,6 +133,19 @@ export class AnimalTypeSettingsComponent implements OnInit {
     })
   }
 
+  createAttribute(): void {
+    const dialog = this.dialog.open(AttributeEditDialogWrapperComponent, {
+      width: '35vw',
+      data: new AttributeDto(),
+      autoFocus: false,
+    });
+    dialog.afterClosed().subscribe(() => {
+      this.attributeService.getAll(this.attributePage, this.attributeSize).subscribe(data => {
+        this.attributes = data.content;
+      })
+    });
+  }
+
   editAttribute(name: string): void {
     const attribute = this.attributes.find(attr => attr.name === name);
     if (!attribute) {
@@ -107,7 +158,7 @@ export class AnimalTypeSettingsComponent implements OnInit {
       autoFocus: false,
     });
     dialog.afterClosed().subscribe(() => {
-      this.attributeService.getAll(this.typePage, this.typeSize).subscribe(data => {
+      this.attributeService.getAll(this.attributePage, this.attributeSize).subscribe(data => {
         this.attributes = data.content;
       })
     });

@@ -50,6 +50,7 @@ import localeRu from '@angular/common/locales/ru';
 import { AnimalTypeSettingsComponent } from './components/admin-panel/animal-type-settings/animal-type-settings.component';
 import { AdminPanelNavigationMenuComponent } from './components/admin-panel/admin-panel-navigation-menu/admin-panel-navigation-menu.component';
 import { AttributeEditDialogWrapperComponent } from './components/admin-panel/attribute-edit-dialog-wrapper/attribute-edit-dialog-wrapper.component';
+import { AnimalTypeEditDialogWrapperComponent } from './components/admin-panel/animal-type-edit-dialog-wrapper/animal-type-edit-dialog-wrapper.component';
 
 registerLocaleData(localeRu);
 
@@ -78,6 +79,7 @@ registerLocaleData(localeRu);
     AnimalTypeSettingsComponent,
     AdminPanelNavigationMenuComponent,
     AttributeEditDialogWrapperComponent,
+    AnimalTypeEditDialogWrapperComponent,
   ],
   imports: [
     BrowserModule,

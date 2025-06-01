@@ -108,9 +108,10 @@ export class HomePageComponent implements OnInit {
   }
 
   addPet(){
-    const dialogAddPet = this.dialog.open (AddPetDialogWrapperComponent, {
-      width: '900px',
-      data: null,
+    const dialogAddPet = this.dialog.open(AddPetDialogWrapperComponent, {
+      width: '85vw',
+      height: '90vh',
+      data: new AnimalDto(),
       autoFocus: false,
     });
     dialogAddPet.afterClosed().subscribe(()=>{

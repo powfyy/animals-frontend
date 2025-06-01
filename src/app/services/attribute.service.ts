@@ -26,6 +26,10 @@ export class AttributeService {
     return this.http.get<AttributeDto>(`${url}/${name}`, httpOptions)
   }
 
+  getByTypeName(typeName: string): Observable<AttributeDto[]> {
+    return this.http.get<AttributeDto[]>(`${url}/type/${typeName}`, httpOptions)
+  }
+
   save(attribute:AttributeDto): Observable<void> {
     return this.http.post<void>(`${url}`, attribute, httpOptions)
   }

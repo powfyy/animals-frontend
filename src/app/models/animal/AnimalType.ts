@@ -1,5 +1,5 @@
-export interface AnimalTypeDto {
+export class AnimalTypeDto {
   name: string;
   priority: number;
-  attributes: { [key: string]: Set<string> };
+  attributes: { [key: string]: string[] };
 }
