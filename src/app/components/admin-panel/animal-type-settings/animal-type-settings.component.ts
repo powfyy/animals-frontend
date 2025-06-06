@@ -125,6 +125,15 @@ export class AnimalTypeSettingsComponent implements OnInit {
     });
   }
 
+  deleteType(name: string) {
+    this.animalTypeService.delete(name).subscribe(() => {
+      this.animalTypeService.getAll(this.typePage, this.typeSize).subscribe(data => {
+        this.animalTypes = data.content;
+        this.typeTotalElements = data.totalElements;
+      });
+    });
+  }
+
   attributePageLoad(event: PageEvent): void {
     this.attributePage = event.pageIndex;
     this.attributeSize = event.pageSize;
@@ -158,6 +167,14 @@ export class AnimalTypeSettingsComponent implements OnInit {
       autoFocus: false,
     });
     dialog.afterClosed().subscribe(() => {
+      this.attributeService.getAll(this.attributePage, this.attributeSize).subscribe(data => {
+        this.attributes = data.content;
+      })
+    });
+  }
+
+  deleteAttribute(name: string) {
+    this.attributeService.delete(name).subscribe(() => {
       this.attributeService.getAll(this.attributePage, this.attributeSize).subscribe(data => {
         this.attributes = data.content;
       })

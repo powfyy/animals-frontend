@@ -145,7 +145,10 @@ export class EditPetDialogWrapperComponent implements OnInit {
     toSaveAnimal.status = this.animal.status
     toSaveAnimal.organizationUsername = this.animal.organizationUsername
     toSaveAnimal.attributes = this.animalAttributes
-
+    toSaveAnimal.adoptionRequestUserUsernames = this.animal.adoptionRequestUsers.map(user => user.username);
+    if(this.animal.userOwner) {
+      toSaveAnimal.userUsername = this.animal.userOwner.username
+    }
     this.animalService.update(toSaveAnimal).subscribe(() => {
       this.uploadPhotos();
       this.deletePhotos();

@@ -12,6 +12,7 @@ import { RequestDialogWrapperComponent } from '../request-dialog-wrapper/request
 import { ChatService } from 'src/app/services/chat.service';
 import { AnimalService } from 'src/app/services/animal/animal.service';
 import { OrganizationDto } from 'src/app/models/organization/OrganizationDto';
+import { AnimalSaveDto } from 'src/app/models/animal/AnimalSaveDto';
 
 @Component({
   selector: 'app-petpage',
@@ -19,25 +20,27 @@ import { OrganizationDto } from 'src/app/models/organization/OrganizationDto';
   styleUrls: ['./petpage.component.scss']
 })
 export class PetPageComponent implements OnInit {
+
   images:SafeUrl[] = [];
   currentImage:SafeUrl;
-  animal:AnimalDto;
+  animal:AnimalDto = new AnimalDto();
   org:OrganizationDto;
-  IsThereRequest: boolean = true;
 
-  constructor(private animalService:AnimalService,
+  requestButtonDisabled: boolean = true;
+
+  constructor(
+    private animalService:AnimalService,
     private minioService:MinioService,
     private route: ActivatedRoute,
     private sanitizer:DomSanitizer,
     private findAgeAnimal:FindAgeAnimalService,
     private tokenStorageService:TokenStorageService,
     private dialog:MatDialog,
-    private userService:UserService,
     private chatService:ChatService,
-    private router:Router) { }
+    private router:Router
+  ) { }
 
   ngOnInit(): void {
-    this.animal = new AnimalDto;
     this.loadData();
   }
 
@@ -46,8 +49,7 @@ export class PetPageComponent implements OnInit {
       const animalId = this.route.snapshot.paramMap.get('animalId');
       this.animalService.getById(Number(animalId)).subscribe((data) => {
         this.animal = data;
-        this.checkRequest();
-
+        this.requestButtonDisabled = this.userRequestExists();
         if (this.animal.photoRefs.length > 0) {
           this.animal.photoRefs.forEach((reference) => {
             this.minioService.getImage(this.animal.id, reference).subscribe((blob) => {
@@ -60,16 +62,12 @@ export class PetPageComponent implements OnInit {
     }
   }
 
-  checkRequest(): void {
-    if(this.tokenStorageService.getAuthorities()==='USER'){
-      this.userService.checkRequest(this.animal.id).subscribe((data) => {
-        this.IsThereRequest= data.isThereRequest;
-      });
-    }
-    else{
-      this.IsThereRequest = false;
-    }
+  userRequestExists(): boolean {
+    const bool = this.tokenStorageService.getAuthorities() === 'USER' &&
+      this.animal.adoptionRequestUsers.some(user => user.username === this.tokenStorageService.getUsername())
+    return bool;
   }
+
 
   isOrg():boolean{
     if(this.tokenStorageService.getAuthorities()==='ORG'){
@@ -81,8 +79,8 @@ export class PetPageComponent implements OnInit {
     return false;
   }
 
-  getPetBreed(breed:string|null):string{
-    if(breed===null){
+  getBreed(breed:string|null):string{
+    if(breed === null){
       return "Нет породы";
     }
     return breed;
@@ -93,7 +91,7 @@ export class PetPageComponent implements OnInit {
     return 'Девочка'
   }
 
-  getPetAge(date:string):string{
+  getAge(date:string):string{
     return this.findAgeAnimal.getAge(date);
   }
 
@@ -105,7 +103,7 @@ export class PetPageComponent implements OnInit {
     return false;
   }
 
-  updatePet(){
+  updateAnimal(){
     const dialogEditPet = this.dialog.open(EditPetDialogWrapperComponent,{
       width: '85vw',
       height: '90vh',
@@ -118,24 +116,44 @@ export class PetPageComponent implements OnInit {
     })
   }
 
-  sendRequest(){
-    if(this.tokenStorageService.getAuthorities()==="USER"){
-      this.userService.sendRequest(this.animal.id).subscribe(()=>{
-        const dialogInfo = this.dialog.open(RequestDialogWrapperComponent,{
-          width: "400px",
-          autoFocus:false,
-        })
-        dialogInfo.afterClosed().subscribe(()=>{
-          this.IsThereRequest=true;
-        })
-      })
+  sendUserRequest() {
+    if(this.tokenStorageService.getAuthorities() === "USER") {
       const userUsername = this.tokenStorageService.getUsername();
-      if(userUsername!==null){
+      if(userUsername !== null) {
+        this.animalService.createAdoptionRequest(this.animal.id).subscribe(()=>{
+          const dialogInfo = this.dialog.open(RequestDialogWrapperComponent,{
+            width: "400px",
+            autoFocus:false,
+          })
+        })
         this.chatService.addRequestMessage(this.animal.id, userUsername, this.animal.organizationUsername).subscribe(() => {})
+        this.requestButtonDisabled = true;
       }
-    }
-    else{
+    } else {
       this.router.navigate(['login']);
     }
+  }
+
+  mapToSaveDto(dto: AnimalDto | undefined): AnimalSaveDto{
+    if(dto === undefined) {
+      console.log("mapToSaveDto: передан undefined")
+      return new AnimalSaveDto();
+    }
+    const toSaveAnimal: AnimalSaveDto = new AnimalSaveDto();
+    toSaveAnimal.id = dto.id
+    toSaveAnimal.name = dto.name
+    toSaveAnimal.gender = dto.gender
+    toSaveAnimal.type = dto.type
+    toSaveAnimal.birthDay = dto.birthDay
+    toSaveAnimal.breed = dto.breed
+    toSaveAnimal.description = dto.description
+    toSaveAnimal.status = dto.status
+    toSaveAnimal.organizationUsername = this.tokenStorageService.getUsername()!;
+    toSaveAnimal.attributes = dto.attributes
+    toSaveAnimal.adoptionRequestUserUsernames = dto.adoptionRequestUsers.map(user => user.username);
+    if(dto.userOwner) {
+      toSaveAnimal.userUsername = dto.userOwner.username
+    }
+    return toSaveAnimal
   }
 }

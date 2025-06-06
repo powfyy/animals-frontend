@@ -1,5 +1,6 @@
 import { AnimalStatusType } from "../type/animal/AnimalStatusType";
 import { GenderType } from "../type/animal/GenderType";
+import { User } from "../user";
 
 export class AnimalDto {
   id: number;
@@ -14,5 +15,7 @@ export class AnimalDto {
   city: string;
   organizationName: string;
   organizationUsername: string;
+  userOwner: User
   attributes: { [key: string]: string };
+  adoptionRequestUsers: User[] = [];
 }

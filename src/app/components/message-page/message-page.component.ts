@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Chat } from 'src/app/models/chat';
 import { Message } from 'src/app/models/message';
@@ -10,7 +10,9 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
   templateUrl: './message-page.component.html',
   styleUrls: ['./message-page.component.scss'],
 })
-export class MessagePageComponent implements OnInit {
+export class MessagePageComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
+
   page = 0;
   size = 100;
   chat!: Chat;
@@ -37,6 +39,10 @@ export class MessagePageComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    this.scrollToBottom();
+  }
+
   ngOnDestroy(): void {
     if (this.intervalId) {
       clearInterval(this.intervalId);
@@ -49,6 +55,14 @@ export class MessagePageComponent implements OnInit {
       .subscribe((response) => {
         this.groupMessagesByDate(response.content);
       });
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
+    } catch (err) {
+      console.error('Scroll error:', err);
+    }
   }
 
   groupMessagesByDate(messages: Message[]): void {
@@ -71,14 +85,20 @@ export class MessagePageComponent implements OnInit {
       }));
   }
 
-  isOrg(): boolean {
-    return this.tokenStorageService.getAuthorities() === 'ORG';
+  isUser(): boolean {
+    return this.tokenStorageService.getAuthorities() === 'USER';
   }
 
   sendMessage(): void {
     const newMsg = new Message();
     newMsg.chatId = this.chat.id;
     newMsg.message = this.newMessageText;
+    debugger
+    if(this.isUser()) {
+      newMsg.userUsername = this.tokenStorageService.getUsername()!
+    } else {
+      newMsg.organizationUsername = this.tokenStorageService.getUsername()!
+    }
 
     this.chatService.addMessage(newMsg).subscribe();
     this.newMessageText = ''

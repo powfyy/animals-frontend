@@ -13,6 +13,6 @@ export class AnimalSaveDto {
   organizationUsername: string;
   userUsername?: string;
   attributes: { [key: string]: string };
-
+  adoptionRequestUserUsernames: string[]
   constructor() {}
 }

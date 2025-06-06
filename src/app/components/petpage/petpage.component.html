@@ -27,9 +27,9 @@
       <h2>{{ animal.name }}</h2>
       <p class="org-city">{{ animal.organizationName }} / {{ animal.city }}</p>
       <p><strong>Пол:</strong> {{ getGender(animal.gender) }}</p>
-      <p><strong>Возраст:</strong> {{ getPetAge(animal.birthDay) }}</p>
+      <p><strong>Возраст:</strong> {{ getAge(animal.birthDay) }}</p>
       <p><strong>Вид:</strong> {{ animal.type }}</p>
-      <p><strong>Порода:</strong> {{ getPetBreed(animal.breed) }}</p>
+      <p><strong>Порода:</strong> {{ getBreed(animal.breed) }}</p>
 
       <!-- Характеристики -->
       <div class="attributes-block" *ngIf="animal.attributes && (animal.attributes | keyvalue).length > 0">
@@ -51,11 +51,11 @@
 
   <!-- Кнопки -->
   <div class="buttons">
-    <button mat-raised-button class="sendRequest" (click)="sendRequest()" [disabled]="IsThereRequest">
+    <button mat-raised-button class="sendRequest" (click)="sendUserRequest()" [disabled]="requestButtonDisabled">
       Отправить заявку
     </button>
 
-    <button mat-raised-button *ngIf="isOrg()" class="update" (click)="updatePet()">
+    <button mat-raised-button *ngIf="isOrg()" class="update" (click)="updateAnimal()">
       Изменить
     </button>
   </div>

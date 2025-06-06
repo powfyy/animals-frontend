@@ -16,8 +16,9 @@
       >
         <ng-container matColumnDef="action">
           <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
-          <mat-cell *matCellDef="let row" (click)="editType(row.name)">
-            <mat-icon>create</mat-icon>
+          <mat-cell *matCellDef="let row">
+            <mat-icon (click)="editType(row.name)">create</mat-icon>
+            <mat-icon (click)="deleteType(row.name)">delete</mat-icon>
             <mat-icon class="dragCursor">reorder</mat-icon>
           </mat-cell>
         </ng-container>
@@ -88,6 +89,7 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
           <mat-cell *matCellDef="let row">
             <mat-icon (click)="editAttribute(row.name)">create</mat-icon>
+            <mat-icon (click)="deleteAttribute(row.name)">delete</mat-icon>
             <mat-icon class="dragCursor">reorder</mat-icon>
           </mat-cell>
         </ng-container>

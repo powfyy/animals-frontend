@@ -33,7 +33,7 @@ export class ChatService {
     return this.http.post<void>("/api/chat/message", message, httpOptions);
   }
 
-  addRequestMessage(petId:number, userUsername:string, orgUsername:string): Observable<any>{
-    return this.http.post<any>(`/api/chat?orgUsername=${orgUsername}&userUsername=${userUsername}&petId=${petId}`, httpOptions);
+  addRequestMessage(animalId:number, userUsername:string, orgUsername:string): Observable<any>{
+    return this.http.post<any>(`/api/chat?orgUsername=${orgUsername}&userUsername=${userUsername}&animalId=${animalId}`, httpOptions);
   }
 }

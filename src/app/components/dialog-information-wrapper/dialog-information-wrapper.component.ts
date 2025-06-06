@@ -8,10 +8,11 @@ import { MessageResponse } from 'src/app/models/message-response';
   styleUrls: ['./dialog-information-wrapper.component.scss']
 })
 export class DialogInformationWrapperComponent implements OnInit {
-message:MessageResponse;
+  message: string;
   constructor(public dialogRef: MatDialogRef<DialogInformationWrapperComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.message=data;
+
+    @Inject(MAT_DIALOG_DATA) public data: string) {
+      this.message = data;
     }
 
   ngOnInit(): void {

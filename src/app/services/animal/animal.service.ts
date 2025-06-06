@@ -24,6 +24,10 @@ export class AnimalService {
     return this.http.get<Page<AnimalDto>>(`${url}?page=${page}&size=${size}`, httpOptions);
   }
 
+  getAllByOrganization(): Observable<AnimalDto[]> {
+    return this.http.get<AnimalDto[]>(`${url}/organization`, httpOptions);
+  }
+
   getById(id:number): Observable<AnimalDto> {
     return this.http.get<AnimalDto>(`${url}/${id}`, httpOptions)
   }
@@ -53,5 +57,9 @@ export class AnimalService {
 
   deletePhoto(id: number, photoRef: string): Observable<void> {
     return this.http.delete<void>(`${url}/photo/${id}?photoRef=${photoRef}`, httpOptions);
+  }
+
+  createAdoptionRequest(animalId: number): Observable<void> {
+    return this.http.post<void>(`${url}/adoption-request/${animalId}`, httpOptions);
   }
 }

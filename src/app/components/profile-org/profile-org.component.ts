@@ -25,9 +25,9 @@ export class ProfileOrgComponent implements OnInit {
   displayedColumns: string[] = ['status', 'type', 'name', 'gender', 'age', 'breed', 'actions'];
   animals:AnimalDto[];
   filterAnimals:AnimalDto[];
-  showFrozenAnimal:boolean = false;
+  showFrozenAnimal:boolean = true;
   showActiveAnimal: boolean = true;
-  showAdoptedAnimal: boolean = false;
+  showAdoptedAnimal: boolean = true;
   org:OrganizationDto;
 
   constructor(public dialog: MatDialog,
@@ -47,9 +47,9 @@ export class ProfileOrgComponent implements OnInit {
     this.organizationService.getByUsername(this.tokenStorageService.getUsername()).subscribe(data => {
       this.org = data;
     });
-    this.animalService.getAll(0, 100).subscribe(data=>{
-      this.animals= data.content;
-      this.filterAnimals = data.content;
+    this.animalService.getAllByOrganization().subscribe(data=>{
+      this.animals= data;
+      this.filterAnimals = data;
       this.filterAnimal("");
     })
   }
@@ -126,9 +126,9 @@ export class ProfileOrgComponent implements OnInit {
     const animal = this.mapToSaveDto(this.animals.find(animal => animal.id === animalId))
     animal.status = AnimalStatusType.ACTIVE
     this.animalService.update(animal).subscribe(()=>{
-      this.animalService.getAll(0, 100).subscribe(data=>{
-        this.animals= data.content;
-        this.filterAnimals = data.content;
+      this.animalService.getAllByOrganization().subscribe(data=>{
+        this.animals= data;
+        this.filterAnimals = data;
         this.filterAnimal('');
       })
     });
@@ -138,9 +138,9 @@ export class ProfileOrgComponent implements OnInit {
     const animal = this.mapToSaveDto(this.animals.find(animal => animal.id === animalId))
     animal.status = AnimalStatusType.FREEZE
     this.animalService.update(animal).subscribe(()=>{
-      this.animalService.getAll(0, 100).subscribe(data=>{
-        this.animals= data.content;
-        this.filterAnimals = data.content;
+      this.animalService.getAllByOrganization().subscribe(data=>{
+        this.animals= data;
+        this.filterAnimals = data;
         this.filterAnimal('');
       })
     });
@@ -196,9 +196,9 @@ export class ProfileOrgComponent implements OnInit {
       autoFocus: false,
     });
     dialogAddAnimal.afterClosed().subscribe(()=>{
-      this.animalService.getAll(0, 100).subscribe(data=>{
-        this.animals= data.content;
-        this.filterAnimals = data.content;
+      this.animalService.getAllByOrganization().subscribe(data=>{
+        this.animals= data;
+        this.filterAnimals = data;
         this.filterAnimal('');
       })
     });
@@ -212,9 +212,9 @@ export class ProfileOrgComponent implements OnInit {
       autoFocus: false,
     })
     dialogEditAnimal.afterClosed().subscribe(()=>{
-      this.animalService.getAll(0, 100).subscribe(data=>{
-        this.animals= data.content;
-        this.filterAnimals = data.content;
+      this.animalService.getAllByOrganization().subscribe(data=>{
+        this.animals= data;
+        this.filterAnimals = data;
         this.filterAnimal('');
       })
     })
@@ -227,9 +227,9 @@ export class ProfileOrgComponent implements OnInit {
       autoFocus: false,
     });
     dialogListRequest.afterClosed().subscribe(()=>{
-      this.animalService.getAll(0, 100).subscribe(data=>{
-        this.animals= data.content;
-        this.filterAnimals = data.content;
+      this.animalService.getAllByOrganization().subscribe(data=>{
+        this.animals= data;
+        this.filterAnimals = data;
         this.filterAnimal('');
       })
     })
@@ -244,9 +244,9 @@ export class ProfileOrgComponent implements OnInit {
     dialogDelete.afterClosed().subscribe(result=>{
       if(result===true){
         this.animalService.delete(id).subscribe(()=>{
-          this.animalService.getAll(0, 100).subscribe(data => {
-            this.animals= data.content;
-            this.filterAnimals = data.content;
+          this.animalService.getAllByOrganization().subscribe(data => {
+            this.animals= data;
+            this.filterAnimals = data;
             this.filterAnimal('');
           })
           });
@@ -271,6 +271,10 @@ export class ProfileOrgComponent implements OnInit {
     toSaveAnimal.status = dto.status
     toSaveAnimal.organizationUsername = this.tokenStorageService.getUsername()!;
     toSaveAnimal.attributes = dto.attributes
+    toSaveAnimal.adoptionRequestUserUsernames = dto.adoptionRequestUsers.map(user => user.username);
+    if(dto.userOwner) {
+      toSaveAnimal.userUsername = dto.userOwner.username
+    }
     return toSaveAnimal
   }
 }

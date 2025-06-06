@@ -128,10 +128,11 @@ export class AddPetDialogWrapperComponent implements OnInit {
 
   createAnimal() {
     if(!this.animal.name || !this.animal.gender || !this.animal.type || !this.animal.birthDay) {
+      console.log('Не удалось создать анкету питомца: пропущено обязательное поле')
       return;
     }
 
-    if(this.animal.breed !== null) {
+    if(this.animal.breed !== null && this.animal.breed !== undefined) {
       this.animal.breed.toLowerCase();
       this.animal.breed = this.animal.breed.replace('метис ', '');
     }
@@ -147,7 +148,7 @@ export class AddPetDialogWrapperComponent implements OnInit {
     toSaveAnimal.status = this.animal.status
     toSaveAnimal.organizationUsername = this.tokenStorageService.getUsername()!;
     toSaveAnimal.attributes = this.animalAttributes
-
+    toSaveAnimal.adoptionRequestUserUsernames = [];
     this.animalService.create(toSaveAnimal).subscribe((savedAnimal) => {
       this.animal = savedAnimal
       this.uploadPhotos();
