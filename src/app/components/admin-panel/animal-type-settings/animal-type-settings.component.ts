@@ -76,12 +76,13 @@ export class AnimalTypeSettingsComponent implements OnInit {
       console.warn(`Вид с названием "${name}" не найден`);
       return;
     }
+    this.attributeService.getAll(0, 1000).subscribe(data => {
 
     const dialog = this.dialog.open(AnimalTypeEditDialogWrapperComponent, {
       width: '45vw',
       data: {
         model: animalType,
-        attributes: this.attributes
+        attributes: data.content
       },
       autoFocus: false,
     });
@@ -91,6 +92,8 @@ export class AnimalTypeSettingsComponent implements OnInit {
         this.animalTypes = data.content;
       });
     });
+    })
+
   }
 
 
